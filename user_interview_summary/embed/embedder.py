@@ -29,6 +29,8 @@ class Embedder(Chain):
         self.index = pinecone.Index(self.INDEX)
 
     def embed(self, doc: Document) -> list[Embedding]:
+        if not doc.metadata.get("facts"):
+            return []
         embeddings = self.embeddings.embed_documents(doc.metadata["facts"])
         return [Embedding(doc, f, e) for f, e in zip(doc.metadata["facts"], embeddings)]
 

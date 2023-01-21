@@ -1,3 +1,4 @@
+import logging
 from itertools import chain
 from pathlib import Path
 from typing import Generator, Iterable, TextIO
@@ -23,13 +24,17 @@ class Pipeline(Chain):
         self.persist = persist
 
     def _process_doc(self, doc: Document) -> Document:
-        doc.metadata["facts"] = self.factifier.factify(doc)
-        doc.metadata["classes"] = self.classifier.classify_all(doc)
-        doc.metadata["summary"] = self.summarizer.summarize_doc(doc)
-        doc.metadata["embeddings"] = (
-            self.embedder.persist(doc) if self.persist else self.embedder.embed(doc)
-        )
-        return doc
+        try:
+            doc.metadata["facts"] = self.factifier.factify(doc)
+            doc.metadata["classes"] = self.classifier.classify_all(doc)
+            doc.metadata["summary"] = self.summarizer.summarize_doc(doc)
+            doc.metadata["embeddings"] = (
+                self.embedder.persist(doc) if self.persist else self.embedder.embed(doc)
+            )
+        except Exception as e:
+            logging.error(f"Error processing {doc.metadata['file']}: {e}")
+        finally:
+            return doc
 
     def _process_blob(self, blob: TextIO) -> Iterable[Document]:
         docs = Splitter().split(Path(blob.name).stem, blob.read())

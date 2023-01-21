@@ -1,19 +1,16 @@
 from textwrap import dedent
 
 from langchain import FewShotPromptTemplate, PromptTemplate
+from langchain.chains import LLMChain
 from langchain.docstore.document import Document
 from langchain.llms import OpenAI
-from langchain.chains import LLMChain
 
 from user_interview_summary.classify.classes import Classes
+from user_interview_summary.shared.chain import Chain
 
 
-class Classifier:
-
-    def __init__(self) -> None:
-        self.llm = OpenAI(temperature=0.0)
-
-    #def classify(self, doc: Document) -> list[Classes]:
+class Classifier(Chain):
+    # def classify(self, doc: Document) -> list[Classes]:
     def classify(self, doc: Document):
         text, title = doc.page_content, doc.metadata["file"]
 

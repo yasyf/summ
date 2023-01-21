@@ -117,6 +117,7 @@ ipython_config.py
 
 # IPython
 notebooks/
+*.ipynb
 
 # pyenv
 #   For a library or package, you might want to ignore these files since the code is

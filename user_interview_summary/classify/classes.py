@@ -16,14 +16,14 @@ class Classes(StrEnum):
                 pass
 
     # Title
-    TITLE_IC = auto()
-    TITLE_MANAGER = auto()
-    TITLE_EXECUTIVE = auto()
+    JOB_TITLE_INDIVIDUAL_CONTRIBUTOR = auto()
+    JOB_TITLE_MANAGER = auto()
+    JOB_TITLE_EXECUTIVE = auto()
 
     # Company Category
-    COMPANY_RPA = auto()
-    COMPANY_CUSTOMER = auto()
-    COMPANY_CONSULTANCY = auto()
+    COMPANY_CATEGORY_RPA = auto()
+    COMPANY_CATEGORY_CUSTOMER = auto()
+    COMPANY_CATEGORY_CONSULTANCY = auto()
 
     # Department
     DEPARTMENT_SALES = auto()
@@ -66,3 +66,4 @@ class Classes(StrEnum):
     INDUSTRY_TELECOMMUNICATIONS = auto()
     INDUSTRY_TRANSPORTATION = auto()
     INDUSTRY_RPA_SOFTWARE = auto()
+    INDUSTRY_CONSULTING = auto()

@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import Type
 
 from langchain import FewShotPromptTemplate, PromptTemplate
 from langchain.chains import LLMChain
@@ -16,6 +17,16 @@ class BaseClassifier(ABC, Chain):
     VARS: dict[str, str]
     PREFIX: str
     SUFFIX: str
+
+    classifiers: dict[str, "Type[BaseClassifier]"] = {}
+
+    def __init_subclass__(cls: "Type[BaseClassifier]", **kwargs):
+        super().__init_subclass__(**kwargs)
+        cls.classifiers[cls.CATEGORY] = cls
+
+    @classmethod
+    def classify_all(cls, doc: Document):
+        return {c: klass().classify(doc) for c, klass in cls.classifiers.items()}
 
     def example_template(self, dynamic=set()) -> str:
         return "\n".join(

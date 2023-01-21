@@ -1,28 +1,31 @@
 from itertools import chain
 from pathlib import Path
-from typing import Iterable, Iterator, TextIO
+from typing import Iterable, TextIO
 
 from langchain.docstore.document import Document
 
 from user_interview_summary.classify.classifier import BaseClassifier
+from user_interview_summary.embed.embedder import Embedder
 from user_interview_summary.factify.factifier import Factifier
 from user_interview_summary.shared.chain import Chain
 from user_interview_summary.splitter.splitter import Splitter
-from user_interview_summary.summarize.summarizer import Summarizer
 
 
 class Pipeline(Chain):
-    def __init__(self):
+    def __init__(self, persist: bool = False):
         super().__init__()
         self.splitter = Splitter()
         self.factifier = Factifier()
         self.classifier = BaseClassifier
-        self.summarizer = Summarizer()
+        self.embedder = Embedder()
+        self.persist = persist
 
     def _process_doc(self, doc: Document) -> Document:
         doc.metadata["facts"] = self.factifier.factify(doc)
         doc.metadata["classes"] = self.classifier.classify_all(doc)
-        doc.metadata["summary"] = self.summarizer.summarize_doc(doc)
+        doc.metadata["embeddings"] = (
+            self.embedder.persist(doc) if self.persist else self.embedder.embed(doc)
+        )
         return doc
 
     def _process_blob(self, blob: TextIO) -> Iterable[Document]:

@@ -21,10 +21,10 @@ class Classifier:
 
         # First, create the list of few shot examples.
         examples = [
-            {"title": "Brendan - UiPath - Sales", "department": "Sales"},
+            {"title": "Brendan - UiPath - Sales", "department": "DEPARTMENT_SALES"},
             {
                 "title": "Amy - Blue Prism - Lead Automation Developer",
-                "department": "RPA Development",
+                "department": "DEPARTMENT_RPA_DEVELOPMENT",
             },
         ]
 
@@ -50,22 +50,22 @@ class Classifier:
             prefix=dedent(
                 """
             The following is a title of a user interview. The user interviewed works in one or more of the following departments:
-            Sales
-            Finance
-            HR
-            IT
-            Marketing
-            Engineering
-            Data Science
-            Legal
-            Medical
-            Operations
-            C-Suite
-            RPA Center of Excellence
-            RPA Developement
-            Customer Success
+            DEPARTMENT_SALES
+            DEPARTMENT_FINANCE
+            DEPARTMENT_HR
+            DEPARTMENT_IT
+            DEPARTMENT_MARKETING
+            DEPARTMENT_ENGINEERING
+            DEPARTMENT_DATA_SCIENCE
+            DEPARTMENT_LEGAL
+            DEPARTMENT_MEDICAL
+            DEPARTMENT_OPERATIONS
+            DEPARTMENT_C_SUITE
+            DEPARTMENT_RPA_COE
+            DEPARTMENT_CUSTOMER_SUCCESS
+            DEPARTMENT_RPA_DEVELOPMENT
 
-            Return only a list of departments, no explanation. For example: "Operations, Sales" if the user works in both Operations and Sales. The form of the title is "Name - Name of Company - Role". Note if a user works at a company that builds RPA software or is an RPA consultancy, they do not work at the RPA Center of Excellence, it means they are an RPA developer to external customers.
+            Return only a list of department variables, no explanation. For example: "DEPARTMENT_OPERATIONS, DEPARTMENT_SALES" if the user works in both Operations and Sales. The form of the title is "Name - Name of Company - Role". Note if a user works at a company that builds RPA software or is an RPA consultancy, they do not work at the RPA Center of Excellence, it means they are an RPA developer to external customers.
             """
             ),
             # The suffix is some text that goes after the examples in the prompt.
@@ -76,38 +76,6 @@ class Classifier:
             # The example_separator is the string we will use to join the prefix, examples, and suffix together with.
             example_separator="\n",
         )
-
-        # We can now generate a prompt using the `format` method.
-        # PROMPT_TEMPLATE = few_shot_prompt.format(
-        #         input=title
-        #     )
-        
-        # The following is a title of a user interview. The user interviewed works in one or more of the following departments:
-        # Sales
-        # Finance
-        # HR
-        # IT
-        # Marketing
-        # Engineering
-        # Data Science
-        # Legal
-        # Medical
-        # Operations
-        # C-Suite
-        # RPA Center of Excellence
-        # RPA Developement
-        # Customer Success
-
-        # Return only a list of departments, no explanation. For example: "Operations, Sales" if the user works in both Operations and Sales. The form of the title is "Name - Name of Company - Role". Note if a user works at a company that builds RPA software or is an RPA consultancy, they do not work at the RPA Center of Excellence, it means they are an RPA developer to external customers.
-
-        # User Interview Title: Brendan - UiPath - Sales
-        # Department Classification: Sales
-
-        # User Interview Title: Amy - Blue Prism - Lead Automation Developer
-        # Department Classification: RPA Development
-
-        # User Interview Title: Ricardo - Automation Anywhere - Customer Success
-        # Department:
 
         chain = LLMChain(llm=self.llm, prompt=self.PROMPT_TEMPLATE)
         results = chain.run(title)

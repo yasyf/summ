@@ -2,7 +2,10 @@ from pathlib import Path
 
 import pytest
 
-from user_interview_summary.classify.classifier import Classifier
+from user_interview_summary.classify.classifier import (
+    BaseClassifier,
+    DepartmentClassifier,
+)
 from user_interview_summary.factify.factifier import Factifier
 from user_interview_summary.splitter.splitter import Splitter
 
@@ -26,17 +29,29 @@ class TestInterviews:
 
     @pytest.fixture
     def classifier(self):
-        return Classifier()
+        return DepartmentClassifier()
+
+    def test_classifier(
+        self,
+        interview: Path,
+        splitter: Splitter,
+        classifier: BaseClassifier,
+    ):
+        text = interview.read_text()
+        docs = splitter.split(interview.stem, text)
+        classes = classifier.classify(docs[1])
+        print(classes)
+        assert True
 
     def test_one_interview(
         self,
         interview: Path,
         splitter: Splitter,
         factifier: Factifier,
-        classifier: Classifier,
+        classifier: BaseClassifier,
     ):
         text = interview.read_text()
-        docs = splitter.split(interview.name, text)
+        docs = splitter.split(interview.stem, text)
         facts = factifier.factify(docs[1])
         classes = classifier.classify(docs[1])
         print(facts, classes)

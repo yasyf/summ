@@ -21,7 +21,7 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
-dependencies = ["langchain"]
+dependencies = ["langchain", "openai", "tiktoken"]
 dynamic = ["version"]
 
 [project.urls]

@@ -10,4 +10,10 @@ class Splitter:
         )
 
     def split(self, title: str, text: str):
-        return self.splitter.create_documents([text], [{"file": title}])
+        chunks = [
+            speaker_chunk[1]
+            for utterance in text.split("\n\n")
+            for speaker_chunk in [utterance.split("\n")]
+            if "\n" in utterance and "markie" not in speaker_chunk[0].lower()
+        ]
+        return self.splitter.create_documents(chunks, [{"file": title}] * len(chunks))

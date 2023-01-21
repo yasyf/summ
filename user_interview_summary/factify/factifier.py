@@ -49,10 +49,7 @@ class Factifier(Chain):
             if p
         ]
 
-    def factify(self, doc: Document) -> list[Document]:
+    def factify(self, doc: Document) -> list[str]:
         chain = LLMChain(llm=self.llm, prompt=self.PROMPT_TEMPLATE)
         results = chain.run(doc.page_content)
-        return [
-            Document(page_content=d, metadata=doc.metadata)
-            for d in self._parse(results.splitlines())
-        ]
+        return self._parse(results.splitlines())

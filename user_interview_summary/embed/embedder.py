@@ -26,10 +26,9 @@ class Embedder(Chain):
         super().__init__()
         self.embeddings = OpenAIEmbeddings()
         self.index = pinecone.Index(self.INDEX)
-        self.hasher = pyhash.fnv1_32()
 
     def embed(self, doc: Document) -> list[Embedding]:
-        embeddings = self.embeddings.embed_documents([doc.metadata["facts"]])
+        embeddings = self.embeddings.embed_documents(doc.metadata["facts"])
         return [Embedding(doc, f, e) for f, e in zip(doc.metadata["facts"], embeddings)]
 
     def persist(self, doc: Document) -> list[Embedding]:

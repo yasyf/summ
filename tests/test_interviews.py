@@ -52,6 +52,12 @@ class TestInterviews:
     def industry_classifier(self):
         return IndustryClassifier()
 
+    def test_splitter(self, interview: Path, splitter: Splitter):
+        text = interview.read_text()
+        docs = splitter.split(interview.stem, text)
+        print(docs)
+        assert len(docs) == 62
+
     def test_title_classifier(
         self,
         interview: Path,
@@ -102,6 +108,7 @@ class TestInterviews:
 
     def test_pipeline(self, interviews: list[Path], pipeline: Pipeline):
         pipe = pipeline.run([f.open(mode="r") for f in interviews])
+        next(pipe)
         doc = next(pipe)
         print(doc)
         assert doc.metadata["facts"] is not None

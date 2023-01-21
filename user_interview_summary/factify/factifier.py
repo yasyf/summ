@@ -6,9 +6,9 @@ from langchain import PromptTemplate
 from langchain.chains import LLMChain
 from langchain.docstore.document import Document
 from langchain.llms import OpenAI
-from langchain.text_splitter import CharacterTextSplitter
 
 from user_interview_summary.classify.classes import Classes
+from user_interview_summary.shared.chain import Chain
 
 
 @dataclass
@@ -24,7 +24,7 @@ class Fact:
     source: str
 
 
-class Factifier:
+class Factifier(Chain):
     PROMPT_TEMPLATE = PromptTemplate(
         template=dedent(
             """
@@ -40,9 +40,6 @@ class Factifier:
         ),
         input_variables=["chunk"],
     )
-
-    def __init__(self) -> None:
-        self.llm = OpenAI(temperature=0.0)
 
     def _parse(self, results: list[str]):
         return [

@@ -2,13 +2,22 @@ from textwrap import dedent
 
 from langchain import FewShotPromptTemplate, PromptTemplate
 from langchain.docstore.document import Document
+from langchain.llms import OpenAI
+from langchain.chains import LLMChain
 
 from user_interview_summary.classify.classes import Classes
 
 
 class Classifier:
-    def classify(self, doc: Document) -> list[Classes]:
+
+    def __init__(self) -> None:
+        self.llm = OpenAI(temperature=0.0)
+
+    #def classify(self, doc: Document) -> list[Classes]:
+    def classify(self, doc: Document):
         text, title = doc.page_content, doc.metadata["file"]
+
+        print("Title: ", title)
 
         # First, create the list of few shot examples.
         examples = [
@@ -31,7 +40,7 @@ class Classifier:
         )
 
         # Finally, we create the `FewShotPromptTemplate` object.
-        few_shot_prompt = FewShotPromptTemplate(
+        self.PROMPT_TEMPLATE = FewShotPromptTemplate(
             # These are the examples we want to insert into the prompt.
             examples=examples,
             # This is how we waånt to format the examples when we insert them into the prompt.
@@ -69,11 +78,10 @@ class Classifier:
         )
 
         # We can now generate a prompt using the `format` method.
-        print(
-            few_shot_prompt.format(
-                input="Ricardo - Automation Anywhere - Customer Success"
-            )
-        )
+        # PROMPT_TEMPLATE = few_shot_prompt.format(
+        #         input=title
+        #     )
+        
         # The following is a title of a user interview. The user interviewed works in one or more of the following departments:
         # Sales
         # Finance
@@ -100,3 +108,8 @@ class Classifier:
 
         # User Interview Title: Ricardo - Automation Anywhere - Customer Success
         # Department:
+
+        chain = LLMChain(llm=self.llm, prompt=self.PROMPT_TEMPLATE)
+        results = chain.run(title)
+
+        return results

@@ -1,0 +1,338 @@
+Markie Maraya Robertson-Wagner  00:00
+Nice to meet you. Yeah, nice to meet you as well thanks so much for taking the time to hop on the call.
+
+Unknown Speaker  00:05
+No problem. Did you run into me Did you by any chance, because my former boss actually spent some time in Stanford and oh, did you meet PDC P thing.
+
+Markie Maraya Robertson-Wagner  00:18
+I don't think I did some what I was looking around, looking at ml plus ui path. So, I guess, for some context happy to give a quick intro about myself so I went to Stanford University, which I guess you saw, so the computer science, while there I spent a lot of time doing artificial intelligence work both in the cloud, or in academia as well as within industry so worked out way mo on some fun self driving car stuff falls up and running. Yeah consultancy along the way. And so, ended up brushing up against automation a decent amount and so I wanted to learn about the role that ML plays in automation at ui path and just kind of better getting to the space.
+
+Unknown Speaker  00:55
+Okay. All right. Okay. From a business standpoint or technical standpoint or what kind of, what are you interested in, like, this is
+
+Markie Maraya Robertson-Wagner  01:07
+all the standpoints really like, I, you know, I've worked with companies ranging from Day Zero baby startups all the way up to companies going public on different AI projects so I'm pretty familiar with like both sides of the coin, but just wanting to hear kind of the lowdown on like what's happening there.
+
+Unknown Speaker  01:28
+It's been incredibly interesting story we started three years ago, three years and it's a really long time. It's a lot of stuff. Stuff has changed and constant kind of iterating and learning along the way customers and stuff so the first thing is that we're in the enterprise space so we deal with very large customers that have really strict requirements on a bunch of, like, security, data privacy like a lot of them are on prem, which means it's very difficult to like the infrastructure, you don't have access, you don't know how they use it, all that stuff because they have to host everything on premises. It's kind of a lot of other things on the right path are kind of anachronistic in the sense in which, like, everything could succeed on the cloud and whatever. These days, and, you know, social media, blah blah blah but we're like, started in the unsexiest of like enterprise shrinkwrapped style software that everybody thought was hidden buried. Back in the 90s but a lot of public sector, a lot of big banks, a lot of giant corporations, basically were the are a lot of the money is which is not in the news every single day, actually is in these companies that actually what drew me to the company because I was kind of sick and tired of the hype and all the fashionable, social media stuff out there and I was like okay, we see, you know, a lot of, like, a lot of the business gets done that we rely on day to day you know because you can live without Facebook but he can't. He can't live without food, and we refer to Walmart, a Walmart not exactly a hotbed of innovation, but still a giant corporation that a lot of people kind of rely on for their livelihoods and. And many of many, many other things like that, like, health, healthcare, financial services, that's kind of where we are. And so, so doing AI, you know that the biggest problem was all this data getting data, because you can't, like, these companies they own their data through hard to, like, we don't run product doesn't run on mobile where we steal everybody's data we have to work very hard to collect realistic data in order to getting customers agreement on it is very diverse, like for one customer to the next doesn't necessarily work the same way. So we have to have an infrastructure that we distribute to customers where they can train their own models on their own data, so that it's relevant for their own business processes and then the, our core product or core platform integrates into their business is like automates the end to end process where you have to, you know, maybe some email comes in, you get the attachment and then you extract some data out of that document using some machine learning to understand the data and the document, you look it up into this database you cross reference it with some of the database. Place and business logic, you know, get some approval from some human like some people they need to prove some kind of payment. Yeah, they need to, they will connect you. And then you recorded in some other system of record. All of these things have different authentication methods and different security protocols and access and permissions and environments have firewalls, and so it's kind of a mess. It's somewhere in there you need to fit in a machine learning model that maybe does, maybe you know, like something kind of trivial like an OCR, just read text all the way to an LP type understanding, you know intention sentiment or whatever name recognition stuff. And, I mean I'm focused on the because semi structured documents. So, another unsexy thing in our space is that you know a lot of people talk about big data, and you hear about all these companies like Google and Facebook you know doing like Tesla doing like these giant machine learning things and giant volumes of data. But on the other end of the spectrum where they're a little bigger. We have to train models on a dozen samples, you know, maybe 100 samples, like people ideally would want to, you know, do it on a single sample
+
+Unknown Speaker  06:29
+controller, and so it's a very different set of constraints. But what is possible. So, you know, like I said I'm working on semi structured documents and structured documents are things like releases receipts, things that are not like tax forms, which is what we would call a structured, where everything's always in the same place, even though it's not really always seem to have variations but anyway, it's kind of very predictable, and the other end of the spectrum is the arm structure which is like contracts, just kind of pure text. But in the middle you have invoices, receipts and purchase orders and delivery bills and utility bills and annual reports that all kinds of like data like supplier technical documentation diagrams all kinds of documentation where the data is presented in a kind of visual way it's not actual. There's no language sentences explaining blah blah blah. This is this and this is this like on a contract is just a bunch of things printed all over the page, and you kind of have to figure out from context, where, where is your piece of data that you want, like Where's, Where's the total amount where's the due date where is the whatever the account number, address shipping address all that stuff. And sometimes it says explicitly shipping address, sometimes it doesn't really just kind of have to infer that from, from the Document and solve. Suddenly, so yeah that's kind of, oh so basically we have this infrastructure this platform which we call AI Center, which is available also in the cloud and in on premises and also in air gapped environments, which means no, no connection to the outside world whatsoever, and customers can upload data they can label it, they have labeling interface and then they train them on, they can deploy it, and then they can use our robots which is our core kind of platform to invoke those models and take the outputs and do other stuff with them and just kind of integrate it with the business logic and with the rest of the infrastructure that they have within their enterprise. And so the main the main challenges is on is data and access to data, both for testing. And we've been able to do that, it's just that, like I said it's nowhere near the amount in the scale that other companies do we still have to make things that are intelligent to bring business value, because these companies have in some cases, 10s of millions, hundreds of millions, and I've seen one or two customers that have over 1 billion pages a year to process. And there's like 10s of 1000s of people in India, Philippines and Vietnam, whatever that currently do the stuff manually. And they also make mistakes, but we try to find ways to automate some of that. Some of them are not just low wage things because a lot of them. Actually, I would say probably more than, more than half some of these like very large customers need to need to outsource it. But other customers need still need to understand the document itself, like you have to have some kind of training by courier service, simple example that I've seen recently is delivery notes, basically, bills of lading from shipping industry. It's really hard to figure out what to say if you don't understand the shipping industry like some random person from Vietnam, that just barely knows English he's definitely know that understand well that's not mean you have to you have to have domain knowledge about shipping understand all the different segments on those documents and the same thing for like insurance Documents. Legal documents legal documents are the worst but you really have to know the law of that particular country in order to understand which clauses, what, what exactly do you need to extract from a contract and so on. So, so I don't know anything more specific that you are curious about,
+
+Markie Maraya Robertson-Wagner  11:08
+yeah yeah I mean, that's great. So what are you specifically working on like semi structured or completely unstructured like invoice stuff.
+
+Unknown Speaker  11:16
+We call invoice semi structured. So I'm working on. So I'm the product owner for the semi structured and models. So, everything like invoices and purchase orders and anything like that company that contains tables of data that don't always look the same way. We also have models for like tax forms and stuff in insurance forms and things like that anyway so I'm on that. Also the OCR engine we are proprietary OCR is the more and more sophisticated and there's no constraints on it from resource and compute perspective because everything goes through it, and it's competitive with with Google and Microsoft's OCR engines, as far as accuracy. Language coverage is very noisy, and we don't have, probably the same level of resources invested in, as Google and Microsoft. But, but any case so that other thing and then I'm also learning some of the other user facing kind of user interfaces, where the user kind of goes in and builds these AI solutions. And we're going more in that direction toward more like less technical people. So, till now like you kind of had to understand a little bit about my caulk and label some data and stuff. From now on, we want to go more and more in, like,
+
+Unknown Speaker  13:01
+what we call
+
+Unknown Speaker  13:03
+business users or citizen developers. Anyway, not necessarily with the technical background on the footprint, interesting in the company,
+
+Markie Maraya Robertson-Wagner  13:15
+and you are the pm on this project right
+
+Unknown Speaker  13:19
+on a few, like I said OCR is a separate projects in the storage models a separate project, and the front, front end product, separate project for data the actual document or standing up, we kind of bring all these threads together. So that's at least three big chunks that I'm product owner on.
+
+Markie Maraya Robertson-Wagner  13:45
+Got it. Interesting, um, Got it. And so, try to think more about, like, trying to understand a bit more about that. Why sir what what exact part of this product, like, you know, map Do you Do you own personally.
+
+Unknown Speaker  14:02
+Like I said, like you're serving, like the model itself, the data labeling of the data the labeling the deployment, infrastructure, and the different deployment types there's like I said cloud on prem. And then it's also, as part of the robot so there's like three or four different ways in which we deployed, and then the integration with the rest of the automated RPA framework, which involves pre processing and post processing so everything that has to do with that semi structured is just the technology itself. And then, and then all the different models, like we have like eight to 10 that are provided out of the box to be trained and we provide to the customers pre trained. And so all those, so I'm responsible for making sure that they get better over time and that we collect more data and we get customer feedback and improving it expanding language coverage and all that stuff. So that involves working with a data science team so I'm working very closely with the data science team on all kinds of features it's quite complex, because of because of for example, post processing. If you, you know the morning predicts some stuff on a page, but then you have to concatenate and group it into some coherent strings like an address or a date to like parse like formatting and parsing dates is very complicated because he lists style dates and then European style dates month first or day first, and then you know they may have like eight in Asia and they can, Japan and China have totally different format for the data, it's just, you know, even just any small issues like that, you know like numbers, you got to detect the decimal point, because there's like different decimals so corridors that are used around the world. And you kind of have to figure out which one it is so there's lots of sub, like there's one big no model there's a few like smaller ml models here there that have to do to suspect various kinds of things like currency currency just detecting the currency is a challenging thing, because a lot a lot of times a document will not actually contain the name of the currency or even the symbol, it'll just kind of be a document to you. For example, you know if you have an invoice from Australia. You kind of have to know that, you know, New South Wales is a region of Australia and then therefore that invoice is really likely to be denominated in Australian dollars rather than Canadian dollars or US dollars, even though the light is English and in every other way it resembles almost perfectly us invoice. But just from what he tell you as a human can infer like oh, this is definitely Australian.
+
+Markie Maraya Robertson-Wagner  16:57
+Yeah, so, yeah. Interesting, huh. And are you doing a lot of user input stuff to get that kind of information, or are you relying mostly on, you know, our users expecting that stuff to be abstracted away and so you have a lot of rule based stuff internally AI models and rule based stuff.
+
+Unknown Speaker  17:15
+Well, it's a mix in the case of like, for example, invoices, so, sorry, in the case of currency there's an ML model, just for that, but but it's a simpler one. It's not like a deep learning one because it's not necessary for that and the compute cost is like customers don't have. They don't want to do and don't want to spend money on GPUs left and right, because they, they don't afford
+
+Markie Maraya Robertson-Wagner  17:39
+linear regression or something like some are like a Saturday you have a bunch of simpler models.
+
+Unknown Speaker  17:46
+It just depends, you know if it's just a simple one that will work. And the whole point is to keep it, keep it simple, keep it light and make it easy on the computer if possible. If it's not possible then you make it more sophisticated for you. But, you know, that's another kind of decision that I have to make all the time, you know, to justify to go to this like, much more sophisticated and heavy overhead and conflict thing or just keep it simple and creating some rules or putting some homage to move to the customer. We can actually tweak, because they have the knowledge and as a complex information, folks there are scenarios and commerce decisions will be made automatically. for the, of the different recruiters our persona is the person who brings it all together for the customer. We have large ecosystem partners around the world like system integrators, is what they're called 1000s of people who do these automations. So the the user for the user platform for the final customer potential the so they have to understand a lot of things about tools, and then decide what makes sense and what doesn't make sense. context. And so and so, Yeah, we'll make your product was making those kinds of decisions like, what do we expose to the user as a choice, or what do we do automatically. Behind the scenes, like for example formatting dates. That's thing we do behind the scenes.
+
+Markie Maraya Robertson-Wagner  19:29
+Yeah, I mean I guess the less you can involve everyone the better right so that makes sense.
+
+Unknown Speaker  19:34
+Yeah, exactly, exactly. I mean if we are confident that we can get it right, and we do it ourselves. Then it's like okay maybe we do it right 90 to 90% of the time but then at least a few larger likely not need some other behavior, then forces us to expose that as an options, okay you can do it this way it's up to you to decide so. So there's a bunch of, there's a bunch of explicit logic like there's, you know, for some things, there's some, A lot of reg X involved. If, for some kinds of parsing and stuff like that. And then, and then some other. Let's say explicit algorithms for involving like various fudge factors to get it to work. So, in the team that kind of culture within the team is very pragmatic. We don't necessarily try to do the cool thing just the effective thing like, if, if, you know, if somebody can spend a couple of hours and write a few reg X's and solve it. Only add more complexity if you're actually justified by some customer requests like if somebody complains, well, that's perfect, because that means, you know, yeah, we solve we solve the problem, with a low cost, cost benefit is the main kind of driver behind every decision, you know, what's the cost, what's the benefit. That makes sense. And one of the challenges. One of the challenges with AI is the cost I think a lot of people don't appreciate that basically AI, like humans are underrated. Like humans are incredibly flexible and incredibly adaptable, and like creating machine learning models if you need to change one little thing, need to recreate the thing. Infrastructure is expensive takes time to get the data, it takes time to label any state takes time. GPUs are expensive. You got to deploy it. You got originate and all this stuff, this is audible read. And, and so we're kind of painfully aware of the fact that, you know AI is not necessarily the right tool for every problem. And that's why I think the combination of rpa, which is, you know, dodging simple rules and simple. Basically, kind of imperative type code is very powerful because it's actually, sometimes it's, it's, it has major advantages like one of the major advantages that find between traditional style code which is in our cases that RPA robotic process automation flows like workflows, is that there's such a thing as, as a bug, like something either works, you can put a test it either works or it doesn't it's really clear. Whenever something fails, you got a bug and got to be an exception and then you have some human handle the exception. Whereas with AI, it's not even clear whenever it's like, because it's so fuzzy it's a lie to you know f1 score of 90 to 92%. Is that good or bad, it's like, I don't know it's a bug, who's doing well is not doing well. Well, it depends on what you're expecting it's not very clear. Like, if 92 is, is a regression or not, or maybe the data has changed or maybe. So, you have to really understand what you're doing and it's just too long so what we're thinking, and thinking costs money. To understand what a model is doing and if it's doing well or not well or if it's relative it has regressed or maybe there's the data has drifted or the data distribution has changed or maybe you got a new language in your workflow in your business process or maybe you've expanded to a new region and the invoices in Australia look different from the invoices in India or Malaysia, and all of a sudden your models not performing well, but it's not its fault, etc etc so you got all the stuff. Just kind of gray area which traditional code does have its, you know, it either works or it fails and if it fails, you get an error and then you can go fix it. So, so anyway, so yeah the TWI thing the combination of kind of old school RPA workflow, combined with, with AI eyes is very powerful. To turn the knob. Yeah definitely ever wouldn't work in the intelligence.
+
+Markie Maraya Robertson-Wagner  24:11
+Yeah, I tend, I definitely agree with that, I guess thinking about it, have you guys considered using AI to help aid the mapping of, say, like, you know, a process to what would be like a UI path file that has actions and things like that in it or you mainly just focus on these very well scoped modules. I'm not sure what you mean by that. Can you can you, yeah, you know, um, you know, there's this thing called like task mining process mining that helps you uncover processes. I'm here to tell you. Yeah, I think UiPath in the early days thought a lot about using AI to automate processes that I don't know. Were you a part of that.
+
+Unknown Speaker  24:54
+No, visit product client that we have where basically you record where people do on their screen for people on their computers for a period of time and then it detects patterns like repetitive actions and things like that and kind of even plots them in a visual way so there is a product line that does a test called Test mining, which I think it's supposed to have been released. I don't know the details I'm involved directly the data science team that I work with is the same, I mean it's the same data science with that has built that but, But definitely that's one of the areas. It has taken a little bit longer, was delayed, like there was one version which didn't work very well then he got re done about works much better and so it's kind of a little that
+
+Markie Maraya Robertson-Wagner  25:45
+use AI.
+
+Unknown Speaker  25:48
+We Ida definitely saw that can uses a combination of of computer vision basically identifying what's on the screen, like buttons and what the customer what the person is actually clicking on. So, basically computer which are those object detection like detecting buttons and menus and tabs and drop downs and windows. The text fields and things like that so it's got a computer vision component understanding what's on the screen. And, and also language component in defining like the meaning of what the person's clicking on it's like text wise like what the text is on the screen like clicking on, you know, button that says, I don't know, login and password or whatever you understand that it's logging something, you know. So, basic things like that,
+
+Markie Maraya Robertson-Wagner  26:44
+and that product or that product does that help you automate it, it's just for detection, right.
+
+Unknown Speaker  26:53
+So I'm not sure. So, first of all, it's the first. The first job is to detect candidates for automation. Um, and then I'm not sure about like actually generating the automation flow itself, like automatically I'm not sure if they have that yet. They may have like a basic version of that but I'm not sure because it's not really that hard because once you record, because we, the recorder that we have, I mean, our basic RP product one of the first features that I had like many years ago when he got started, it was a record where you record actions on the screen and then it automatically generates the, the automation RP workflow for doing that exact sequence of tackles of actions
+
+Markie Maraya Robertson-Wagner  27:38
+that AIG. During the day, or now.
+
+Unknown Speaker  27:41
+No, no no no no back in the day was purely just recording the actions on the screen and converting them into converting them into a format that can be executed repeatedly, so it wasn't. There's no machine, machine learning, back at the time you will. Yeah, I mean the, the whole industry the whole RPA industry used the term, you know, intelligence in a very kind of loose, loose way for for a while. Yeah,
+
+Markie Maraya Robertson-Wagner  28:08
+that's fascinating and now you know with that recording tool, you're not sure if it actually if there's any ml that's being used to map from actions to say like an automation
+
+Unknown Speaker  28:24
+mapping from the actions. I'm not familiar with all the stuff that it does, I think, but I mean, it detects the pain, it does use ml to detect patterns so basically, because when you repeat, when you repeat certain kinds of tasks, you don't repeat them in exactly the same way. If you repeat it kind of in a similar way but you don't click on exactly the same region of the screen or exactly the same button but the result is the same. So, this kind of clustering of sequences where you try to figure out that the, even though the detailed types and click actions or whatever, copy paste or whatever it was slightly different but the result you achieved was the same, that park does use machine learning, definitely. But then to actually to actually generate the workflow which would do the same kind of task. I'm not sure about that. Yeah, I mean, I guess I could.
+
+Markie Maraya Robertson-Wagner  29:27
+Oh sorry you cut off Hello.
+
+Unknown Speaker  29:30
+No, I mean I guess I could ask somebody, but I mean, there's documentation or you can probably look on the UI path. Yes mining document and see exactly what the features of the product are so
+
+Markie Maraya Robertson-Wagner  29:44
+fascinating. Um, yeah, I mean it's interesting talk to you because you're obviously really sharp at the ML stuff which, you know like you know you're thoughtful about this stuff, you're not just randomly throwing models in there willy nilly because you know your customers and you know that they, that they're very like price conscious about some of these things. And so, I guess looking at like where AI is in the company right now, it seems like there are in a process there are decision points, then there are you know actions and an action might be something like clicking a button or, you know, converting this document from picture into text, but there also our decision points so like, Is this is this, you know, is this email spam or not, you know, things like that. Do you use AI much for decision points, or is it mainly for just like actions,
+
+Unknown Speaker  30:36
+or SEO co uses a term is like human emulation we emulate the kinds of things that humans do and one of the things like reading and understanding screen computer screens and documents and things like that so that's kind of like the primary thing. Now, about actual, like, business decisions involving input from a number of different fields like there are platforms that do potentially things more like that. Like we haven't really seen that much appetite for that because most of the customers that we have, they have, like, business processes where, you know, it has to go through some steps and then involves, and it's all very, especially when it involves like money or resources and things like that, HR, finance, legal, there has to be a human who approves something in the end. So, a lot of enterprises. Even, even the stuff that we do, is very very cutting edge, like enterprises move a lot slower than the consumer space. And, and most of them don't do any AI at all, and even now there are a lot of them are just kind of exploring dipping dipping their toes in the water because, like I said, they're running into all kinds of downsides, and there's inertia and they can't change overnight, basically, like, well first of all, is what the cost of the infrastructure that's one thing because for example, a lot of AI runs on Linux, and a lot of enterprises have no Linux they just run on Windows, that's just a really basic thing like their IT departments, you have to continue retool and re train,
+
+Markie Maraya Robertson-Wagner  32:26
+I mean ml Linux I feel like ML runs on anything.
+
+Unknown Speaker  32:33
+Well, are you to practice, you got to deploy it using Docker containers and that's kind of, because it's Python, Python was not really intended to run on Windows in theory it can, but like, I think you're gonna have a hard time finding a data scientist that works on a Windows operating system.
+
+Markie Maraya Robertson-Wagner  32:55
+I work a lot on Mac, because I work with mostly like
+
+Unknown Speaker  32:58
+virtual Mac. Yeah, the MAC MAC is kind of related, it's kind of like the Unix type operating system so it's related to Linux to Windows. So so that that's for sure. That's Yes, that's correct. But in any case, it involves changing well established kind of traditions in a lot of enterprises, that's one thing the other thing is,
+
+Markie Maraya Robertson-Wagner  33:22
+they don't run on VMs because of privacy and security right like is that why there's a problem, because they need to run it on their local machines but their local machines are all windows.
+
+Unknown Speaker  33:32
+They don't necessarily need to run it, but they need to have a server like this AI center platform that we have the need to just provision a Linux server with potentially a GPU and a lot of them have never procured GPUs the procurement departments, kind of balk at that it's like, yeah, we need to buy this $5,000 piece of hardware Are you crazy, Like we're not going to get that approved. There's all these very practical barriers to things that, you know, you know, you know, see a lot on TechCrunch, or on other things but when the when the rubber hits the road. You run into all these very practical issues in, in, especially in the larger the customer the more difficult it is, because they have a lot of bureaucracy and they have to justify every expense, and it's kind of a chicken and egg you have to prove the value but they won't put in the money before we prove the value we can prove the value if they don't have the interest rate.
+
+Markie Maraya Robertson-Wagner  34:32
+In other biggest expenses collector like like AWS like are they not using that because of security and privacy reasons, and so they need to procure their own GPUs that why they don't want to run their data on a cloud provider.
+
+Unknown Speaker  34:46
+Well some of them do so the don't sue them. You know, especially like public sector and large banks in general data centers and stuff, some of them are starting to use the cloud, but it's kind of, you know, carefully starting going in that direction but some of them don't, don't have any plans in that, in that sense. And then, and then. But even the ones that do, it still like AWS and Azure costs run up very quickly because you provision something and it's there and you keep paying for it. A lot of times even if you don't use it like the VM is up and running. And you got to pay, even if you're not trying anymore. Or maybe you're just waiting, waiting to collect the data sometimes collecting the data takes weeks or months. And during those weeks, weeks and months you just keep paying for that GPU, you know, and that's a lot of exactly why, you know, a lot of that's exactly the kind of scenario that they want to avoid. So anyway, so there's that aspect. The other aspect is just making decision like you've got to make intelligent decisions. Yeah, that sounds really that sounds really cool but if somebody needs to make some bad decisions, who's gonna who's gonna be responsible. Yeah,
+
+Markie Maraya Robertson-Wagner  36:03
+yeah, he's a director of ml at Levi's and interesting because they use AI to set prices and determine when to lower prices and like, do all this stuff but you know people are often augmented quote unquote or like, you know, someone has to approve it, just kind of like to do that stuff, but they're, they're trying to move away from that because at this point now all the decisions just like automatically get approved, and so they just want to like save people's times.
+
+Unknown Speaker  36:31
+Well yeah so that's, that's, that's an interesting kind of thing but it still takes some time to put into the right safeguards so they've gotten to that point because they've probably done it for a while and then the the kind of inputs and outputs are fairly well known, and they know that you know if, if, some price gets gets predicted there's like way too high or way too low. Probably kicks off some kind of accept exception and then they handle that and so on. So they've, they've probably done that enough. But that's, that's a that's an example of a niche kind of thing. I mean, that's another kind of scenario that we're not likely to go into. At least, not in the same way that probably Levi's is doing about UiPath yet, because the, the, we're trying to we want to be a platform right we don't want to build vertical solutions. We want other people to build vertical solutions on our platform so we try to provide these basic capabilities, kind of, like, you know as Azure provides you know Azure doesn't, it gives you the tools to build solutions but it doesn't really provide, you know, vertical solutions for this or that industry they like at all industries.
+
+Markie Maraya Robertson-Wagner  37:55
+So if you like models as a service like you know, Google has dialogue flow and like, stuff like that, or spread, I said there are a couple of vertical things where like they're their models as a service, but a lot of those aren't like fully vertical sort of like a recommender system which you can use for E commerce or me or like E or media, You know, so it's more like model specific.
+
+Unknown Speaker  38:26
+Yeah, I mean, I don't think we have any plans of going into that kind of stuff but there are ideas about about robots and like making like he's tracking into like, you know somebody builds an actual explicit coded Robot workflow for doing some action like sending collecting some information you're sending it somewhere, and then another robot gets to get the response from that, like you know you submit some kind of text thing and then you get the response. And then there's some kind of correlation between those two robots like what one run one robot does collect some information. And if it gets like accepted or rejected, you can use that you can use the second robot as a training data for the for the actions of the first so you could potentially build the kind of record, kind of generic on recommending system to by learning from the actions of different robots
+
+Markie Maraya Robertson-Wagner  39:30
+like. Explain that again,
+
+Unknown Speaker  39:31
+like, like it's like, if you imagine a robot may, Like I said, may collect some data and send an email, and then you get a response. Email to some person to some human person, or to some other
+
+Markie Maraya Robertson-Wagner  39:46
+organizations for training data.
+
+Unknown Speaker  39:51
+And then you have another robot that reads the response the email response. Yeah, and print and detect and detective was accepted or rejected by by using whatever NLP or using something because they Okay, was it was the email sent was the was the submissions successful or not. And then you can use that to detect okay what kind of submissions are likely to succeed and what permissions are likely to fail and then you can maybe, like, avoid descending, those are likely to fail and just kind of send advice like hey, you know, this might be there might be a problem here reconsider this and, you know, maybe send it later or something like that so like prevent some of the rejections, or prevent
+
+Markie Maraya Robertson-Wagner  40:33
+like online learning a lot of it.
+
+Unknown Speaker  40:38
+Yeah, something like that. Could that that could use an engineering capability that those robots are doing and what industries are working on or what kind of information but if it's, if, if you have two robots that have some kind of correlation between what kind of business process they're running, you could potentially feed that into a model, you know, like there's like, things like data robot or h2 or whatever it likes these these tabular data kind of focused platforms, but if you could have the capability integrated into the RPA workflows, you could learn from the workflows themselves, that could potentially be very powerful but that's not that's like a long term,
+
+Markie Maraya Robertson-Wagner  41:26
+yeah that makes sense. Interesting. Ah, that's a really fascinating idea in my mind. Yeah, the other thing that's really interesting to me is talking about, you know, the, like, the fact that you like UiPath has to manage many many models right like, or actually, well, how many models these AI models you think you have in production that you want to pass.
+
+Unknown Speaker  41:50
+Well, given that customers can retrain their own ones it's probably you know 1000s Yeah, but
+
+Markie Maraya Robertson-Wagner  41:57
+you asked our hosts. right like you have to host the models that a customer, fine tune right.
+
+Unknown Speaker  42:08
+Yes, so we provide the general model. A few model architectures which are some of them are returnable some of them are asking for example the OCR is not returnable or the OCR has to provide it and that is what it is. And then there's another couple of models like that. And then there's some other models which are returnable which which we provide, and those you know the customers can retrain as many as the many times as they want and they can deploy as many versions as they want, with different data sets and different
+
+Markie Maraya Robertson-Wagner  42:42
+you have to pay, like a different amount because, like, on the UI path side you have to host an endpoint or something like this, of that of that customers like fine tune model right
+
+Unknown Speaker  42:56
+well if they run on prem they hosted on their own hardware. If they run in cloud in the cloud and then the hosted on our cloud but they pay for the, for the luxury. Yeah. So, they have the the the BI, we call it, AI robots, which basically is when a robot has like two CPU cores, basically yeah
+
+Markie Maraya Robertson-Wagner  43:16
+so, so, and then you on your end, end up like programmatically creating this model training it on their data and then hosting it,
+
+Unknown Speaker  43:27
+they do it themselves. I mean they they create the
+
+Markie Maraya Robertson-Wagner  43:30
+weather. You are right. Of course they do with any UI right.
+
+Unknown Speaker  43:38
+Yeah, it's easy user interface where the, they can upload some data like some PDF files they label it and labeling tool, and they export it to a date to a storage, and then they have a thing where they can create a pipeline like a training pipeline, which basically is just, you know you. It's a UI where you select the data set that you want. And then you basically click run, and then it runs the training for you and then at the end, the result you can click on a button to deploy it, and you get a URL, and then that URL you can use in your RP workflow to to invoke to that prediction
+
+Markie Maraya Robertson-Wagner  44:25
+event, said, Oh, go for it, you're you're saying
+
+Unknown Speaker  44:35
+there isn't a user interface and then they could have a GPU or not depending if they want one or not if they bought a GPU, then they can have access if not turns on a CPU which takes a really long time so some of these pipelines can take hours or days depending on the size of the data set.
+
+Markie Maraya Robertson-Wagner  44:49
+I mean hours and days for like a batch processing job.
+
+Unknown Speaker  44:55
+Just one training. Training on a large, large data set to 1000s of data documents thing, and if you're running on a, on a CPU, then that's going to take a really long time. When we strongly recommend that customers get a GPU because otherwise they're going to be waiting a lot
+
+Markie Maraya Robertson-Wagner  45:14
+longer. That makes sense. Very fascinating okay and then I guess the last question I asked them to ask is, Is it difficult to manage that money models in production and make sure that like they're doing well and validation is working and things like this.
+
+Unknown Speaker  45:32
+Yes, we provide so there's a training plan and there's also an evaluation pipeline capability that they have so that
+
+Markie Maraya Robertson-Wagner  45:40
+you don't do it as much. So you try to let them manage and monitor as much as possible.
+
+Unknown Speaker  45:46
+Yeah, so there's documentation and we can look like okay you know you should definitely have an evaluation set and you should always run these relevant valuation pipelines and keep it up to date and all that stuff so they they're supposed to do. A lot of that themselves what we do is we test our, our algorithms on our own like pre trained model and make sure that the pre train models, never you know always get better from one release to the next.
+
+Markie Maraya Robertson-Wagner  46:18
+But then they still retrain on their data and stuff so then they come out. Are
+
+Unknown Speaker  46:21
+they stupid, they still yeah they still return on their data and the results are not guaranteed, because depending on how well the data was labeled how large data cities, how will the configuration was defined. Things can keep my kid can get worse or better and so on. So, but the only thing, the only thing we really can control is are the pre train models that we provide kind of as starting points because he can take those as starting points and they can recreate on top of those, which gives them a leg up, because they don't instead of having to label 5000 documents, maybe they have to wait only 500 to get a result because they use our own model as a base.
+
+Markie Maraya Robertson-Wagner  47:03
+That's fascinating. And so, you said you, you host probably on the order like 1000s of models including the MOT like the per customer models.
+
+Unknown Speaker  47:17
+Yeah, so I mean, it's kind of hard to, like I said, since most. I mean maybe more than half of the customers are on premises, we don't get to really see how many of the models we just kind of, because we charged by the page we just see the number of pages at the process but exactly how many different models they've trained. Well I guess we should have that in the partially in the telemetry, but given that it's already like hundreds of customers. It's very likely that the number of models is in the 1000s.
+
+Markie Maraya Robertson-Wagner  47:55
+Interesting. Okay, fascinating, um, those are five main questions, I guess the other thing is, like, how do you guys do monitoring for the like the pre train models. Do you do you have like alerting setup and do you have pipelines for automatic retraining of the of the pre train models and things like this, like, do you have online retraining without a human in the loop that gets triggered automatically or No,
+
+Unknown Speaker  48:19
+no, no, no, no, so we have releases that are every few months, and it's automated we have some you know, automated pipelines for running automated tests and metrics and all kinds of things and regressions and blah blah blah. But, but
+
+Markie Maraya Robertson-Wagner  48:34
+you're not like retraining daily or weekly.
+
+Unknown Speaker  48:39
+No, no, no, it's because the data doesn't, doesn't get fed back automatically it's just data that we have internally then we have a team we have labeling team to labels data whenever there's enough new data that has been labeled, we say okay and then you know the bright like the code has been committed to master branch and it's, it's all kind of stabilized, you know, we're ready to do another release and then we build another release, but because, since it's because we don't have a legal, we don't have legally the right to use customer and we don't actually have access to customer data, except the data that customers explicitly. Share with us, which is, which is a special event. It's not every day that customers decide to share data with us so it's not like, you know, I don't know, a search engine or some of these other big, you know,
+
+Unknown Speaker  49:41
+platforms.
+
+Markie Maraya Robertson-Wagner  49:44
+Interesting, okay yeah that's that's very shaken so you, you have to have your people they what are there any. What are the main models pre train models that you have, like, you have like your document models, you have your you have like an invoice model and then separately like, I don't know, like a, like a legal contract model and like do you have pre trained models for types of data.
+
+Unknown Speaker  50:08
+So I guess the most, the most important ones are okay the OCR, that's, that's a big one the other one is invoices and a bunch of other variants of similar to invoice
+
+Markie Maraya Robertson-Wagner  50:21
+structured data stuff
+
+Unknown Speaker  50:23
+here. The most common one is invoices that's like 80% of the traffic goes to invoices.
+
+Markie Maraya Robertson-Wagner  50:28
+Oh, and 80% of the of the AI that people are doing is just going to invoices.
+
+Unknown Speaker  50:34
+No of the of the semi structured documents. I mean, different purchase, purchase orders and receipts and stuff for the universe's by far the most common one. But then, okay, then the other one is computer vision computer vision which involves robots that need to understand what's on screen like clicking buttons and scraping text and opening menus and copy pasting stuff,
+
+Markie Maraya Robertson-Wagner  51:01
+how good, how good are the robots like detecting, you know, intent and commonalities, like for example, you know, someone goes and logs in, and, you know, they see over and over again that someone is clicking the login button on this site like, how good are your models at checking that stuff in your opinion.
+
+Unknown Speaker  51:22
+Well, we don't we're not doing that stuff. Detecting intent, at least not right now, it's just understanding the elements on the screen,
+
+Markie Maraya Robertson-Wagner  51:32
+sorry yeah that's what I bet how good do you feel like your models are understanding elements on the screen and then, you know, kind of making that data meaningful.
+
+Unknown Speaker  51:42
+Well, I mean that's a very good read that, I think we're pretty clearly I think the best in the industry in the whole like automation as far as UI automation and automating robots that click that need to do operations on computer screens like UiPath UiPath is by far the best in the business I mean, the other the other RPA companies are not don't even don't really have this capability, anywhere near the same the same level. So, I mean I don't know exactly what the number is like the f1 scores are, I don't know but in any case, it's, it's, it's very high and it's, we have very strict. Because it's, it's business critical because if, if, if, if a robot, you know, can't find something where it needs to do some action then it will just basically stop and waterfall is broken. That is like super critical.
+
+Markie Maraya Robertson-Wagner  52:40
+You use AI for selectors or is it just for that agent that helps you process mining like where, where does AI and detecting buttons and things like that live within like the common product. The UiPath studio
+
+Unknown Speaker  52:54
+product. Well, you know, understanding of the detection, if you look at your screen right now, you probably have a browser opened in a browser open there's a bunch of tabs in there, like for example there's a close button on the window at the top left, there's an x, which is the window close button. Or there's another, you know, icon, I don't know what browser you use but you know you got like the Back button or the forward button or the refresh button. Well, with the text those buttons and you can do a few. If you design a robot that says okay, you know needs to click refresh on a browser. It's able to detect that, refresh button and click it every single time, the right way. Even if, Even if the browser window was smaller size or bigger size display. The theme is dark or white, or the browser is Firefox or Chrome. And, you know the screen resolution may be different. The languages use may be different, etc etc but it's should still be able to detect that refresh button click it correctly. So, that kind of stuff so nice to detect all the different things on the screen and that's it uses, You know, deep learning object detection, kind of models to do that, and that does added really extremely high accuracy, because any slight fail, means that the automation breaks, and the automation is our main business, so we can't break automations. Yeah,
+
+Markie Maraya Robertson-Wagner  54:36
+So as in your product, you can use AI to detect buttons or you can use divs, right, like there are two approaches you can have. Yeah, exactly, that's trying to see, so there's a lot of people doing OCR selectors and that's what you're talking about, or OCR is not the right word but like you know, like object detection
+
+Unknown Speaker  54:59
+stuff here you know they use your CV. A lot of times in situations where, for some reason you don't have access, I mean there's all kinds of systems where you, where you can't, like, presumably if you're trying to automate, like a Linux system. It doesn't it doesn't have the windows, the way the windows, men handles selectors, so you have to use computer vision if you want to automate stuff on a Mac or on a core on Linux.
+
+Markie Maraya Robertson-Wagner  55:32
+Sorry, continue.
+
+Unknown Speaker  55:35
+Yeah, so there's so there's many situations in which the selectors route doesn't work for a variety of reasons. And then you have to rely on the computer vision stuff.
+
+Markie Maraya Robertson-Wagner  55:48
+Interesting, okay, I guess the last question is like where do you I know it's hard to get the document training data, but like, where did you get the training data for the CV stuff here.
+
+Unknown Speaker  56:01
+Just to generate ourselves because it's just, you know, you can collect screenshots from lots of people in the company and then collect your funding from the internet and. And also, like, the product itself whenever people have a robot and computer vision robot where something fails or doesn't do what it's supposed to do, even. You can even say submit submit that, it sends it back to us so we can be included in our training or testing or whatever. So, over the, over the years, we've collected. So on the other computer vision we have pretty good amounts of data that was easier because, because it's so critical, people are very very forthcoming with with the screenshots has been especially since a lot of the screenshots don't necessarily contain sensitive information so they're a lot more comfortable about sharing those things sometimes it's just weird, weird fonts or weird. Yeah, whatever. I mean, sometimes operating systems are really old mainframes from like the 80s companies have all kinds of crazy stuff that consumers don't even know exists, but banks banks still have that stuff running for like 40 years ago, so
+
+Markie Maraya Robertson-Wagner  57:27
+that makes sense. So I guess the last thing I have is like, Are you training, see, so a lot of my research at Stanford was computer vision and a lot of Waymo, of course, self driving it's like a lot of it's computer vision so I was actually on the perception team there. Um, are you are you working on like the order like for the Back button you have a model or is it like a multi class model for lots of different buttons.
+
+Unknown Speaker  57:54
+So it's suitable for class, yeah it's it's a, it's a model with a few dozen types of classes and it just returns the bounding boxes type stuff.
+
+Markie Maraya Robertson-Wagner  58:07
+Do you like, oh yeah, do you let people train their own model for example, Think about like an internal pool with a very specific button or something like this, people want to have clicked.
+
+Unknown Speaker  58:19
+No, they have to just submit that sample there's lots of things like Java type interfaces lots of kind of edge cases that we've covered over, over time, not. I'm not familiar with the details of their project I don't work on the computer vision a lot and I know that they have some more cooler stuff in the future but along the lines of that semantic stuff, You mentioned was Danny Watson login screen is or, or understanding like a settings view or understanding that, you know, it's like a URL, input on a browser just kind of, not necessarily the object itself on the screen but the meaning of that option can say okay, you know maybe having a more sophisticated understanding so that might be in the future what they're trying to do, but that's not my, it's not my area.
+
+Markie Maraya Robertson-Wagner  59:17
+Yeah, well, it's crazy because I mean, I think so many people just like only understand their area but you're, you have a pretty broad knowledge of this stuff, and I guess yeah it's great cuz you're European but you're also like highly technical, which is like the area that I tend to run it as well.
+
+Unknown Speaker  59:32
+Yeah, well let me No, no, the most probably one of the older hands in the in the area and one of the first people that got hired in the AI space, back when the company didn't even have. I mentioned that we need to start getting data or collecting data, people thought I was crazy. No we that's like no no we don't do that we don't, we don't do that here like, no, sorry, say no no we have to
+
+Markie Maraya Robertson-Wagner  59:58
+write the right call.
+
+Unknown Speaker  1:00:01
+But, but, but it's in the in this enterprise space it's kind of in some ways it's an uphill struggle, but at the same time. That means you have to be really creative and really innovative about. It's a scar it's an even an environment of scarcity, basically it's kind of like those, you know, crazy things that survive in this car desert, it's like, how did it, how do they do it, you know, we have to kind of survive that way. I mean I'm exaggerating a little bit, but, but, but still we have to be very innovative in a, in a different way. Then, then people that have provides a data at their disposal like Tesla does or Amazon does stuff like that.
+
+Markie Maraya Robertson-Wagner  1:00:45
+Yeah, what's the order of magnitude that you're operating on here is it like, you know way mo we're working with billions of data points but you know other companies I've worked with are working with millions and 10s of 1000s but it's hundreds of 1000s Like, what kind of data do you actually need to make a dent in, in terms of like detecting buttons and things like this.
+
+Unknown Speaker  1:01:04
+Well, in the, I guess. I know better than the document stuff so the documents tougher models could be cleaner in the hundreds to 1000s of of pages, but then if you look at the bounding boxes that's more in the hundreds of 1000s of bounding boxes because each page has a couple of 100 bounding boxes and if you have a few 100 pages that's already 10s of 1000s. God, it depends, depending on how you count, but then in the computer vision stuff. It's probably 10s of 1000s of images, which means maybe hundreds of 1000s of bounding boxes or more, I would say, because it's an older project has got more data, and it's, it's more optimized, it's extremely optimized. And then, then for the OCR the OCR is much more complicated because it's got many components, some of them are pre trained. There's a lot of synthetic data being used like large amounts of synthetic data so it's much more complicated to know how much I don't even know, like, if there's a good way to count because there's so many things that go into it, of which only a small part is like manually labeled data. So, it's hard to say I don't know. But in any case it's not it's not like you don't have we don't create a millions of anything.
+
+Markie Maraya Robertson-Wagner  1:02:31
+Yes.
+
+Unknown Speaker  1:02:33
+That's not very there's all kinds of new technologies these days where you train on things that are on, on label like self supervised learning where you're just, you know you can train on data that's not labeled. And still, the model can learn some stuff. So, then you can feed a massive much larger amounts of data, because it's much cheaper. You don't have to label it. So, so that's, that's the kind of things that are being tried out, and stuff like that but but like I said yeah it's relatively small amounts of data that are being used, and we have to squeeze as much value out of them as we can and be competitive with the likes of Google and Microsoft, which are retrieved definitely are I mean, think the OCR engine is up there. Then, I think the ML. The semi structured extraction capabilities, I think, or better, than. Then when I grew up Microsoft have, but also they haven't focused on it to the same degree that we have so and so, you know, you win some you lose some.
+
+Markie Maraya Robertson-Wagner  1:03:51
+Yeah, that makes a lot of sense. Um, so yeah I mean I think these are actually a lot of my core questions that I had, and so I appreciate you, I mean, you're obviously super sharp, and a lot of people that are engaged with all this stuff are like, Oh, AI like it's a buzzword but we do it I'm like wait what you know I think a lot of people just don't don't like really understand what what isn't, isn't the value prop of AI, especially within context like this and what isn't isn't possible in these contexts so it's been very refreshing talking to you because you've clearly had a really holistic overview of what has been hasn't been possible on the UI path side what has and hasn't been valuable. And what has been a challenge so this has been extremely, extremely helpful and extremely fun. And, yeah, I mean, it's your what you do is very cool. So I appreciate you taking the time to chat with me about it. Yeah, was useful, very useful. I'd love to stay in touch and then you know if I have any question just like ping you because I'm just like thinking a lot about this space and kind of learning more about it.
+
+Unknown Speaker  1:04:52
+Yeah and yeah I'm also curious to know like this is part of a project or like what are the results you have to submit some kind of some kind of analysis or goal or summary. Yeah,
+
+Markie Maraya Robertson-Wagner  1:05:06
+I think we were running a kind of a master's thesis on this and so it'd be, it'd be just kind of like a write up I like to say to the world and AI and RPA and like there aren't many people who are experts at that stuff so talking to you has been wonderful. And then, that's something that I'm thinking about but I'm still exploring so appreciate the time and you have a wonderful rest of your day. All right, Bye. Bye.

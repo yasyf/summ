@@ -38,6 +38,6 @@ class TestInterviews:
         text = interview.read_text()
         docs = splitter.split(interview.name, text)
         facts = factifier.factify(docs[1])
-        classes = classifier.classify(interview.name, docs[1])
+        classes = classifier.classify(docs[1])
         print(facts, classes)
         assert True

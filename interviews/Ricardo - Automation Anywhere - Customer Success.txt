@@ -1,0 +1,218 @@
+Markie Maraya Robertson-Wagner  00:00
+Great to meet you. Thanks for hopping on. Yeah, thank you very much for the opportunity to speak to you today. Oh, no worries, um my camera's gonna be off because I'm in an area with not that I'm at my family's home this was just how I was like very mediocre Wi Fi for whatever reason right now so I'm going to camera off but yeah thank you for hopping on, you know, I know I didn't get the chance to give too much context over LinkedIn. But, you know, I'm happy to do a quick intro now, and then I'd love to hear about what you're up to on your day to day. Sounds great. Cool. So, I am a recent graduate of Stanford University where I studied artificial intelligence and dropped out of my masters. While at Stanford I spent a lot of time doing AI research both in industry as well as academia. So I set up a lot of core infrastructure at Waymo and also ran an AI consulting firm along the way and so what that means is I would work with companies ranging from Day Zero startups all the way up to, you know, working founders who are preparing to take their companies, public. And so, you know, I ended up brushing up against automation, very often, in a way that was very interesting to me so I'm trying to learn more about the space now. Very nice. Yeah, congratulations for completing your course. Thank you.
+
+Unknown Speaker  01:13
+Yeah, so, I've been working for automation anywhere seems to be for yourself, and I'd like to give you an overview of my role. So based on the things that I do we can select subjects and areas that I can probably help you in your research, as I understand, so I joined the company. How was a technical program manager for automation so my responsibility was to implement our product from a very technical point of view use case development, and really work with customers to start their journey and grow with our product, and now I am a customer success manager, I am managing a portfolio of customers, and my role is to ensure to make sure I I'll do anything to keep them happy, right, a especially to drive growth. So it's very unstructured in nature, it can involve many things in terms of coordinating conversations guiding them advising them. But yeah, I own right now some of the largest accounts that we have in the company, driving their adoption, their utilization, and also working with them to define a growth strategy for our products to be more used inside their organizations.
+
+Markie Maraya Robertson-Wagner  02:31
+Got it, got it, okay cool and then do you have a couple clients that you specifically work with.
+
+Unknown Speaker  02:37
+Yes, I have a yeah I have two Fortune 10 I have all of them are fortune 500 Yeah, big, big names in the industry in finance, ie, healthcare, and also we have food processing, it's very diverse, and what I like about our product is this aspect that you can apply to pretty much any industry yeah
+
+Markie Maraya Robertson-Wagner  03:01
+it's not vertical specific which is super fun, cool and so you manage his account. And are you often working working directly with the Center of Excellence or a particular business unit or who do you end up interfacing with often.
+
+Unknown Speaker  03:13
+Absolutely, yes, I helped set up many centers of excellence in the past, so I'm mostly interacting with them and I guide them in the conversations to involve more business units because the only way to grow is really bringing in our industry, at least, is to bring more people into your automation program, identify more processes more ideas to be automated, which is our end goal, and yeah but some, some series are led by business units. Most of the time they are into the IT organization yeah
+
+Markie Maraya Robertson-Wagner  03:50
+that's what I have seen a bit too. Very cool. And so, are you often have you been with a lot of these customers since day zero when they first signed up with automation anywhere.
+
+Unknown Speaker  04:00
+Yes, and we had some very good experiences working with them Day Zero onboarding, starting the training, many times. I even created with our company a package called Getting Started, and it included the train to get on boarded. And then we would select to use case ideas to business processes to ideas to be implemented in with the customer being mentored because I think the best programs out there are self sufficient. So what I like about this package is that gave customers the opportunity to get started, become self sufficient and we Manford them through the process. In parallel, I would mentor them in terms of creating a center of excellence, because you really need to be self sustaining. One thing that's very important information and it doesn't matter which automation you do automation is never easy, it costs a lot of initial investments so you need to teach your Corp how to make, how to be self sufficient, how to make a good business case, so they can always fight for their budget for resources, if people cannot really accuse you for not generating revenue and not generating value for the company right so yes so there are lots of implications from day one.
+
+Markie Maraya Robertson-Wagner  05:23
+Yeah but awesome. Can you talk a little bit about what it means to be self sufficient and what happens if you don't become that.
+
+Unknown Speaker  05:29
+Right, so you have to make business processes so that's what we do for, in a nutshell, imagine any employee doing repetitive work is a target for us. Yes, automate, so what does a good business case look like you need to teach them to select automations that have high value, you can explain value in at least what I call value with the least amount of complexity as possible. Yeah,
+
+Markie Maraya Robertson-Wagner  06:03
+I guess you have to figure out like, it's not obvious to business people, their intuition about what is an easy versus hard process to automate, you know, like if it's very, if it's many steps, sometimes it's easy because there are great, you know, actions and abstractions, but other things are harder, I guess. Yeah, so
+
+Unknown Speaker  06:19
+let's talk about the two dimensions right yeah one thing value, what I consider a good value is something that has high volume, a high volume is not just a mechanical volume you do on a keyboard on a mouse. It's the high dollar value or whatever currency you're using. And the way to get there is, give me, once you have that uses the largest amount of people, the things you do the most frequently. The things that take the longest to do, and especially the resources that are costing a lot of money because we, in our automation nation we want to free up those resources to do things that have even better value right so we don't want to be automating necessarily the cheap processes but we want the expensive ones first. A we've seen use cases go. Some of them even go up to the $5 million mark each, and I'd like to say something below 30,000 That's where you don't have as much of a business case.
+
+Markie Maraya Robertson-Wagner  07:26
+And when you, where do you don't have a business case like $30,000 Saved annually.
+
+Unknown Speaker  07:33
+Yes. So I think that is on the low Mark Yeah, after you exhaust, everything else, that's a good area to chase right but I like to look at the total value, like when you think about total cost of ownership, I like to think about, total value of doing that. And to answer your question, how to be self sufficient. You really need to have a very good backlog that justifies your operation because let's say you need $2 million. To get started, I want to help these organizations and I have helped in the past, sometimes go up to 75 million per year sometimes go to 20 million 30 million but we need to have a goal, so no one can ever say that this project cannot be justified right so we need that.
+
+Markie Maraya Robertson-Wagner  08:18
+That makes sense. Okay. And so, what are the types of automations that tend to be high value, not just in terms of like characteristics about them but like concretely, you know, things like employee onboarding Accounts Payable budget reconciliation, things like that.
+
+Unknown Speaker  08:34
+Yeah, that's a great question. So, whenever, whenever you go to finance that you get a lot of value and I explain why because finance specially Accounting has a lot of resources that are not adapted that are expansive. Alright, that's the first thing. The second aspect of it, they are already used to doing algorithms in their minds, every day. So, their work is a very good target for automation so they can work on things with better value like audits and you name it, right. So there are lots of opportunities in finance, usually in accounting and financial operations, and you mentioned something accounts because filiation Yes, That is a big one, like, consolidating cash accounts with payment accounts and really anything that, let me define a good use case this way, it has high value. Second, you're dealing with information that is as structured as possible. Yes, input for that right in, then you don't have too many steps so one of the things that I did in the in the company I created the methodologies for just like a child has a number of points for the complexity I created an approach that based on a number of steps, based on the comments you're using some technologies are a lot easier to automate and others, you're going to get a point grade so you can easily say, Okay, this one has $2 million, but it has 500 points. This one has $2 billion, but it has only 200 points. Oh wow, we're gonna chase this first, because it's a way to end those quantitative models are never perfect, but it's a way to have a more tangible. A more precise way to evaluate because many times, I participated in many meetings that involved use case evaluation and backlog prioritization, it becomes a little bit of an ego, fight or political fight of one department against another. If you have a methodology to really create a backlog, then you can avoid a lot of that conflict, a and you can be more productive.
+
+Markie Maraya Robertson-Wagner  10:52
+Is that because it's more subjective than because, like, oh yes, this makes sense, you know.
+
+Unknown Speaker  10:58
+Yeah. And one other thing that I would like to say that in automation, people. The biggest mistake I think people make is to assume that anything should be automated and could be automated. Yeah, right, and use case selection is probably one of the most important areas, you should focus when you start this journey, because not everything can be automated, right, especially, yeah I was reading your profile you are machine learning, and information that's variants that were unstructured, you have your information, the harder it's going to get.
+
+Markie Maraya Robertson-Wagner  11:40
+Yeah, Totally.
+
+Unknown Speaker  11:41
+I know we are progressing right but we're quite not there, in many ways, like there's, there are certain things you can do with unstructured data sentiment analysis, and there'll be techniques in there, there's a lot of great research and work being done in that area, but in terms of business results, especially as most organizations are starting right now. Start with the easy ones. Yeah right, and I'm pretty sure there are plenty out there.
+
+Markie Maraya Robertson-Wagner  12:07
+Yeah, have you gotten to the point in certain orgs where you've run out of those like high value automations so you go to,
+
+Unknown Speaker  12:14
+sometimes they think they do, and then the more you talk to them, the more you're going to uncover your, here's the deal 2021 automation its still in its childhood though, I would say it's probably a five year olds right yeah, you know, the lifecycle from zero to 100 years I think it's a very, it's just not well behaved kids. Yeah, we define it,
+
+Markie Maraya Robertson-Wagner  12:38
+that's not well understood either fully.
+
+Unknown Speaker  12:41
+Yes, there's a lot of maturity that needs to be gained. And there are, there are those there, there's gold everywhere. So everywhere you look. There somebody's doing repetitive work that they think it's discretionary work they think they're doing creative work, but they're not. They're just executing algorithms in their mind and I imagined that at least I mean, other research, like McKinsey says that maybe 80% can be automated, I would say, based on my experience at least half of what people do can be automated. Mm hmm,
+
+Markie Maraya Robertson-Wagner  13:18
+interesting, fascinating and what percent do you think a lot of your customers are, through the way they're like just benchmark ranges.
+
+Unknown Speaker  13:26
+There's still in their early stages, I would say some of them are big in terms of having a large Corp and they have many processes we have customers with 200 processes, automated right and that gives you a 1000s of bots. In the end of the day but I think there's the, the effort has just begun for everyone. What do you think
+
+Markie Maraya Robertson-Wagner  13:51
+that's so fascinating. I mean, you mentioned the point scale, what are, what kind of things are on the point scale again, you mentioned like yeah like is the data structure, like, say, say you're about to talk like talk to someone about the point scale. What do you what's on it.
+
+Unknown Speaker  14:07
+Right. So, first, suppose you are working in office, right, and you say, Ricardo I cannot stand. Doing this manual work anymore. So what I would do with you. I'm going to record what you do from the beginning to and especially the main flow the happy deaf we can work on exceptions, yeah to watch you do later. But I want to focus on, what do you spend most of your time on, we can record that I get your number of,
+
+Markie Maraya Robertson-Wagner  14:36
+what do you what do you record it with your, your agent that like capture screen recordings.
+
+Unknown Speaker  14:41
+Yes, we have a product called the discovery box, and it can help, record your processes so you don't have that that are alternatives, right, even Windows has a tool that allows you to record watch it when I screen, not as good as a discovery box and we can talk about that later. But yes, I want to understand, do you do 100 steps 200 steps 1000 steps I need to have an order of magnitude of what you do. Second thing I'm very interested. How do you obtain your inputs to what you do because if you tell me, somebody sends you a spreadsheet with the information you need to get started. That's great. That's automation friendly. Now if you tell me that you receive a bunch of contracts and a bunch of emails, and all the data is scrambled inside all these unstructured data, Then I'm worried that maybe we would need to have some sort of maybe a human, organizing the information first, or if it is semi structured for example is say, I get started with a bunch of invoices. And sometimes, the price is on the bottom some price, price is on the top for that we have another product called the IQ bot, and the IQ bot can help with semi structured kind of scenarios, just like the one.
+
+Markie Maraya Robertson-Wagner  16:02
+Yeah, like a lot of the document processing stuff.
+
+Unknown Speaker  16:07
+Yes, the IQ bot yes that's where we do the document processing and it can extract that information. So with our automation products you can manipulate, however you need to. But to answer your question, so yes, I will. And then I want to know what are the applications you use some applications are much easier to implement for example web pages when they are not dynamic. At least they're much easier, but I really need to know when to work with you to understand which applications are used, for example you use Windows application you use SAP you use a web application, so I need to do that assessment with you, because we have a checklist, called the feasibility analysis and certain things cannot or should not be automated right so I need to really filter depth, and sometimes that can be a little bit of a frustrating experience for some customers because they are in that mode that they expect everything to be automated. Some areas are tricky.
+
+Markie Maraya Robertson-Wagner  17:08
+Yeah, yeah. And so, when you are using, what kind of applications make you say yes this is a good process versus no this is a bad process. Great question. So, anything web is bad,
+
+Unknown Speaker  17:21
+tends to be a good candidate, some dynamic ones, some dynamic pages are hard to track because the IDs in the HTML they change all the time. Yeah, but that's something else, anything, Microsoft Office related you're going to read from exhale word, because the, there are lots of components that allow you to read from that. Anything API based is very easy to work with because we have rest, a support. Yeah, API support. Let me tell you what is hard, unstructured data, especially freeform text, anything related to some older legacy Windows applications. Yeah. What are some examples of those ActiveX Silverlight. Flash, any of those legacy technologies those names you used to see on the web 10 years ago a lot is tricky.
+
+Markie Maraya Robertson-Wagner  18:22
+Yeah. Oh, that's great. This is so so so helpful. Okay, I'm thinking about the point system is anything else on that point system.
+
+Unknown Speaker  18:30
+Yeah. And then, yeah, there's the value on the top, there's the visibility second, and I want to run through a check yes I'm about to filter everything. The third I'm going to input how many steps we've done in, then, which applications you're using. In based on the applications, I can't, the easier ones are going to give a smaller weight, the harder ones I'm going to give a bigger Wait, for example, anything that if you tell me that you need to do a lot of image recognition. If you tell me that you work in a Citrix environment and I need to do a image recognition. I didn't know how to image your creation goals right, it's not
+
+Markie Maraya Robertson-Wagner  19:08
+perfect. Yeah, is Citrix really hard to work with.
+
+Unknown Speaker  19:12
+Yeah, in OCR can be tricky sometimes, sometimes recognizing objects. So, yeah, so I think if you do a lot of this filtering, right in the beginning, and I've been loved for that approach in the past, I've been hated for that in the past, and I, one time I was presenting in a conference at IBM and I talked about suitability analysis and and I emphasize it a lot. It was a great discussion. But one of the leaders said, but Ricardo, aren't you going to kill too many deals, if you're that strict with your feasibility analysis. And my answer was plain and simple yes you're going to cue all the deals you shouldn't have. Yeah, it is really, it's softer right, it needs to all the pieces need to connect together,
+
+Markie Maraya Robertson-Wagner  19:59
+I think customer qualification is extremely important so you don't waste time and people are like, just tell everybody like no sell to who you are going to do good work for you no murky,
+
+Unknown Speaker  20:09
+so frustrating. There was one project that I was leading that we and I, we were doing huge use case, we automated around 300 steps, because the thing, I got the project right in the middle the team that came before didn't do the proper visibility analysis. The last spring, I'm not kidding when you were about to do the last screen and click Submit. That button wasn't nothing could read that but we had to throw the whole effort imagine how the conversation goes with a customer scenario that you don't want to be having this constant
+
+Markie Maraya Robertson-Wagner  20:45
+horrible.
+
+Unknown Speaker  20:47
+Yeah. Bad news is not fine wine. The sooner you provide it, the better.
+
+Markie Maraya Robertson-Wagner  20:51
+Yeah, God that's horrible. Yeah, I agree with that and I think a lot of really good so I tend to work with like some of the more fancy schmancy high tech companies and they just so aggressively qualify their customers, they're like, I don't even want to talk to you if you don't have this exact use case, you know, and that's great because they get great customers you actually need with their product.
+
+Unknown Speaker  21:13
+Yes, you really need to be side by side with the customer and I can't emphasize more than need though of transparency, because so many times people will have different expectations based on conversations with other areas of the company and I think there's a lot of value for technologists, like myself, who are going to translate it from the business world, to the technology world, so we can make sure that we have a consistent technical plan to actually deliver right yeah not disappoint, which is in this appointment is a common theme in the automation industry right now.
+
+Markie Maraya Robertson-Wagner  21:49
+Yeah. Can you talk a bit about why that is. Yes.
+
+Unknown Speaker  21:53
+The first one is really not qualifying first not having a business case, I would say it's number one, some people, sometimes I was talking to a CEO, he and they were saying things like, say, Yeah, we're not achieving a good ROI. And I say, how do you select your use cases, their answer was, we select the most advanced and most complex technological areas we can find and we start right there. It's not a very good approach because not because something is complex, that something is going to provide your value, so that there's a misconception right more complexity doesn't mean. Yeah, so you really need to think not having a business case I would say one, second one is not doing your feasibility analysis, and what that means is whatever tool you're using to automate, you get your flow you map the whole process, and then you make sure that the tool that you're using can read in a right to every object you need to do along the way. If you do that ahead of time. For a lot of trouble.
+
+Markie Maraya Robertson-Wagner  23:01
+Yeah, what are those objects you're talking about like buttons, Excel sheets data downloads stuff like that. Exactly. So
+
+Unknown Speaker  23:09
+for example, so that example I was working with you, it was automating your work, and I know that you open a specific web application that has several fields and several buttons, I need to make sure that whatever technology I'm using can work with all the fields because guess what, if I miss one of those fields that might be the difference of say hey I'm sorry this automation has no value. Yeah, you see it. See the problem
+
+Markie Maraya Robertson-Wagner  23:37
+100% Yeah, interesting. And then I want to talk to you through Citrix stuff like, why are we not better at OCR and intent based automation right like we're so often looking for the done button where the class ID equals button 12, but not really looking for the done button, you know.
+
+Unknown Speaker  23:57
+Yes, I think it's getting a lot. It's getting better. And I wouldn't say it is bad, I would say that in the industry we don't manage expectation as well. Yeah, because many times you have sponsors to these programs, and they don't have a technology background like you and me. Right, we know how hard it is for a computer to read an image and make sense of it. Many people don't, right, so the way to approach for example, one, one good example handwritten documents. Yes, super hard for a computer. Are we getting better, yes we are getting better but is it perfect,
+
+Markie Maraya Robertson-Wagner  24:40
+definitely not.
+
+Unknown Speaker  24:42
+So it's, I think we need to approach it in a different way. For example, if we have a process with very structured input, then we can and we shoe that sector 100% success. Yeah, if you have handwritten documents. We cannot expect that. So how should we approach those problems, say, consider we have 1000 documents. Yeah, they all have handwritten fields. Yeah, if we can save half of them from being processed manually. Yeah, we're already making progress.
+
+Markie Maraya Robertson-Wagner  25:16
+Yeah. And so,
+
+Unknown Speaker  25:18
+like the the glass is half empty half full, take a different approach when because machines are not humans, and humans are good in certain things machines are good in other things.
+
+Markie Maraya Robertson-Wagner  25:30
+And do you think they just see like the customers or like if a person can do it, they should be able to do it and it's kind of a simplistic view. Yes. Sometimes we can blame them for not yeah a computer science degree. Right, yeah we need, What bothers us with the right background, these leads on purpose this. Yeah, cuz they don't need, they can't discern it and like, it's not fair to them so I think that's a really great approach.
+
+Unknown Speaker  25:59
+So I think it's going to be the job to educate and take the time and say hey I know the expectation is this but we really need to take a more realistic approach.
+
+Markie Maraya Robertson-Wagner  26:09
+Yeah, that's necessary. Uh huh. And then, like, what, what is the accuracy like for finding buttons in like a Citrix environment, like a done button on the screen
+
+Unknown Speaker  26:22
+right now it's, I would say it's much higher than it was before,
+
+Markie Maraya Robertson-Wagner  26:26
+what is the benchmark for like, I mean of course I know it totally depends but like, say, like, what are some numbers that might help me understand like the magnitude here,
+
+Unknown Speaker  26:36
+it's going to, yeah, there's really based on what I've seen right now I think we are at 90% in our current products. Our latest version
+
+Markie Maraya Robertson-Wagner  26:47
+is that 90% of buttons or 90% of the time, 90% of the data, all of the time. Yeah.
+
+Unknown Speaker  26:55
+Let me tell you, in the past those numbers were lower. But more important than knowing that percentage is really working with the specific implementation that you have with the VMs that you have. And I think there's a lot of value that will come from empirical research, rather than theoretical previous data sets, right. So because the customer only cares about that use case in their departments so you need to make sure that under those circumstances with their infrastructure you can deliver. So, it's, I would like to say that in in Europe, which will be more productive they're
+
+Markie Maraya Robertson-Wagner  27:35
+fascinating. Okay, interesting. And what do you mean by empirical approach there.
+
+Unknown Speaker  27:40
+What I mean is seeing is believing. So, okay, back to the example that I'm going to automate your process right, your company gives you like a VM, or a VDI for you to work with. I need to make sure that my product can work in your system. So, that's empirical. What I mean is, I need to prove that I can deliver and I can really work with all the fields.
+
+Markie Maraya Robertson-Wagner  28:08
+Interesting. And so, yeah. Can you talk a little bit more about like how you prove those things. Yes, and one way to do it is to really collect the process map it end to end, so I'm going to work with my architects to really do a quick assessment in this, this doesn't take like weeks right, this is something that in a couple hours they can run through the documentation and say, okay we can automate this process. So basically, there is a there is a command inside any automation, at least the bigger ones in the industry that's called recorder or object cloning. It has different things in different products. Yeah, it's going to recognize that object inside another application. Ah, okay.
+
+Unknown Speaker  28:58
+Yes, and here's the problem. If you can't, object, cloning something, you will have trouble because strings which change resolutions might change in the future extreme resolution and application speeds are going to change. So if you don't have object cloning in place, you don't get that level of flexibility you need specially with GUI automation that you need, right, so back in the day, back when I started this there were lots of automation tools, and they were based on screen coordinates. Does that ever work. I mean, if you have a simple application. Yeah, that doesn't change, and something that's going to remain the same forever. Yes. How often does that happen, right. So you really need automations that are what I call production grade to be flexible. If the objects shift a little bit in position, or if, even if they change the name. You can see identify them.
+
+Markie Maraya Robertson-Wagner  30:03
+Okay, I see that makes a lot of sense. Got it, got it. Okay, um, this. Yeah, I don't want to be Jewish, I mean this has been extremely helpful, like I can't even tell you how helpful this has been a lot of people I talked to are just like not that lucid about the things that make an automation work they're like, have weird ideas and you know we both come from technical backgrounds right so it's like, we can say, oh I really highly doubt that like your complex processes are driving all of your value and you know, hearing someone who's also had that experience and been able to pattern recognize over so many, many customers, it's been very refreshing.
+
+Unknown Speaker  30:39
+Awesome in what are your plans for the future so are you planning to join the automation industry well
+
+Markie Maraya Robertson-Wagner  30:44
+I'm not sure I'm figuring it out. But you know, thinking about it, and I'm just interested because I like AI and I like automation. So, thinking about everything, but you know I think I'm probably going to be doing even more research on it throughout the next couple of weeks like I'd love to, even you know I'll have more questions if you're available to hop on another call at some point, I'd love to like schedule another one to just like talk even more Yeah.
+
+Unknown Speaker  31:06
+The other thing I'd like to say yeah if you're interested in automation anywhere, and there are some openings, we have an office in San Jose, I'd love to refer you.
+
+Markie Maraya Robertson-Wagner  31:14
+Oh cool. Yeah, I'm not currently looking for jobs right now, but if I will if I do, I would, yeah I'll tell I'm happy to give, I would love to get the referral from you, I
+
+Unknown Speaker  31:24
+appreciate it. Because I know how it is when you're first. I know you have a lot of connections already.
+
+Markie Maraya Robertson-Wagner  31:31
+But yeah, of course, it's always it's always crazy. Well I appreciate taking the time I actually will probably pin you next week because I'm trying to learn more about everything but you know if we need another call it be great and, you know, I'm happy to also share about anything interesting to you on AI side of things so I appreciate it. Okay, I'd love to learn from your projects. Yes, yes, of course, well thank you so much and you know you've been absolutely wonderful. So have a great rest of your day. Have a great weekend. Thank you. Thank you.

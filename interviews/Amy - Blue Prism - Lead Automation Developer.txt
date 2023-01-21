@@ -1,0 +1,254 @@
+Unknown Speaker  00:03
+Okay, so I started teaching myself, basic back when I was in eighth grade. Oh, by the time I got out of high school I already knew some Java C++ C sharp, went in for a degree in game design trying to be an engine programmer. But then, the industry is notoriously difficult to get into so I fell back on my other strong suits, did a lot of web design, bounced around for a bit that bunch of kind of freelance game design portfolio work landed in the automation field in 2018 and been with ever since.
+
+Markie Maraya Robertson-Wagner  00:38
+Oh awesome. How did you end up landing in the automation field. I saw a job posting saying hey come work with robots. And I was like you know this sounds fascinating, interesting, and then did you have to do some kind of like, you know, like certifications or, you know what, how did you kind of like get yourself on boarded.
+
+Unknown Speaker  01:03
+So it was, it was interesting situation, I was salaried to a contract agency with all of my work was in for Fujitsu America and Fujitsu. The guy leading their automation team. He was also a self taught, Dev. And so he didn't care that I like, didn't have a CS degree or no bounced around and had like a multi disciplinary background, just like, you know, based on this interview I think you'll do fine. And so I got in there and I'll be honest I initially thought I was all in over my head. It's kind of that initial imposter syndrome course. And so I did a couple projects and then got my, what I was told anyway but by my employer was it a developer certificate for blue prism. Turned out that wasn't the case and so I actually went and got the certificate on my own. A couple years later. Oh, that's interesting.
+
+Markie Maraya Robertson-Wagner  02:07
+Oh, what happened, it wasn't it wasn't actually the, it wasn't actually the certificate. Yeah. Wait, so weird. What
+
+Unknown Speaker  02:14
+was interesting and messy I was leading teams, both onshore and offshore doing kind of a mix some programming and VA work kind of hybrid management development.
+
+Markie Maraya Robertson-Wagner  02:33
+Yeah, that makes sense. Very interesting. Um, and so I guess one, one thing I'm trying to understand is like the workflows of RPA right so you know what, you know they're I think they're like lots of anything about things that are supposed to be automated, a lot of the stuff is repetitive both within the company and then across companies, I'd love to hear, like, I mean I don't know how many bots are so do you think you've worked on at this point, at least 30 Is that a little more. Wow, that is so many, and then, you sound like your friends and VA works and process work and so I guess my first question is before I even like ask more about citizens across cities like what is this workflow look like, like, what do you what do you receive as inputs like what, you know what does the workflow look like. So
+
+Unknown Speaker  03:21
+we're talking specifically with blue prism or just automation in general,
+
+Markie Maraya Robertson-Wagner  03:25
+yes. Blue prism, yeah.
+
+Unknown Speaker  03:29
+Okay, well, the catch with this question is no two business entities will have the same idea of how that should go blue prism as an organization, pushes a very strict model of how you should approach it. For example, fan will under the weather. Example. You should do a scoping session with the client have them walk through the process and have a feasibility assessment or developer gets involved, then you drop the process definition document which is basically documenting. Here is your as his process we want to sign off from you saying, Yes, we understand that. From there, the developer draws up what's known as the solution design document whinges Here is what I'm going to do for the automation, and it may have deviations from the assets process because automation and do things differently than you do the development you deliver and you have testing in between basic development cycle, where that diverges, is no two, well okay, first off, there are two automation, companies like if I go to UiPath automation anywhere, they'll have their own structure. Yeah. If I stay working with imprisonments product in another business organization like when I was with at Fujitsu, we didn't use PDD or the STD we have our own hybrid document, and was like okay can you sign off on this, and we had different regulations for what needed to be done for testing. At the end of the day. I'm sure you know this development cycle is just whatever works best for your own organization. For as long as you can get capture done and have an accurate assessment. The biggest pitfall in that is you have to have a developer there, because so many times, especially here. I've seen where pre sales would go and be like, Oh, yeah. Anything a human can do a bot can do or oh no that application, super easy, developer goes in, like, No What are you talking about this can be three or four times as many hours as you were expecting that can cause major issues.
+
+Markie Maraya Robertson-Wagner  05:54
+And you say what what are some like characteristics or applications that end up being that. Are you familiar with the term service automation. No, what is this.
+
+Unknown Speaker  06:05
+So there's two main types of automation, one is using basic application, for example, perfect example actually, Internet Explorer, as remote procedure calls, so I can just use code to say, write to this field, click on this link, etc etc etc. And you can do that for a wide variety of other desktop applications, surface automation. Instead, replicates human actions as closely as possible, so instead of sending code to say, fill this field, you'll say, Okay, put the cursor here, click Send this string of text. Click here, do all these other things.
+
+Markie Maraya Robertson-Wagner  06:47
+It's not mapping to like functions and, yeah, Exactly. Why is the first call.
+
+Unknown Speaker  06:55
+Basic automation, really are some additional considerations for example, you have to have the screen, active at any given time. So, a lot of automations, if you aren't using surface sets are just an encode they don't need an active screen, and a lot of organizations will be like well we by default have all of our systems use a automatic screen lock. So you have that in place as a group policy and prevents certain service automation from working. So all the bots can see is, well here's the login screen. I don't know what to do. Yeah. So you have to have some negotiation with the owner of the system that the box can be running on say, Look, I know y'all have security policies for this and this reason, but this doesn't How about works. And also, it doesn't have a physical monitor or keyboard attached so most of what you're paranoid about doesn't actually apply here.
+
+Markie Maraya Robertson-Wagner  07:58
+Yeah. Interesting, interesting, fascinating and so surface automation is usually what takes longer than expected.
+
+Unknown Speaker  08:07
+Yeah, especially when you get into the image matching portion, because then you have to be concerned with consistent screen resolutions. If you're remote desktop into a system, it'll just use whatever resolution your local system. It's that when you disconnect from it, and let's say it's just a VM, it doesn't have a laundry patch, it's going to default to. If you haven't figured it probably 800 by 600 federal or less, and you can max out to like 1280 by 100 or something. So if you've been developing in 1600 by 1200 Well, now all of your image matching is going to break
+
+Markie Maraya Robertson-Wagner  08:43
+down, so I mean battery bank, look for the done button, things like that. Exactly, yeah. That's crazy, um, very interesting. And so, any other parts of the workflow like what was the workflow like if we get to
+
+Unknown Speaker  09:01
+changed a whole bunch of things. I mean, the most part it was what I would describe the the BA would get on call do scoping get developer involved, we draw up high level design document which is a hybrid of the hazards process with the automation was have. But the main problem we had with just using the hybrid document is more than half the time, even with internal clients, the end user didn't know what they were signing off on. So they just blindly say yes this is what we want. And then we get to develop It's like no, what is this, this isn't what we asked for, which I think is why blue prism pushes for having the SS and the to be defined separately. Oh, unfortunately, that also adds a heck of a lot of overhead and you can get stuck in documentation how easily.
+
+Markie Maraya Robertson-Wagner  09:49
+Yeah Would I imagine happens a lot, especially when the processes like aren't that well defined and you know, interesting. Um, okay, and then thinking about the workflows that you've seen, and also this is so interesting me so just like thank you so much for brain dumping all this stuff because it is very, it's very fun for me to learn, and so I mean thinking about the workflows you've done it sounds like you've done a lot of really cool work on all these companies, and like you've seen so many processes, you know, something that I'm thinking a lot about is like, what are the repetitive stuff some examples like some things are so repetitive that you need SAS for it and so workday Excel like manipulating tabular data, this is just like so common, but then RPA is like a subset of the common things were, you were to do this common workflow, you can't use API, so that's like software doesn't necessarily make sense but this other thing called RPA makes sense. And so thinking about what is the common like, what are some of the processes, you've seen over and over and over again,
+
+Unknown Speaker  10:45
+most of what we've seen is been like data entry, where we'll download a report, merge files Excel dump out and other reports and an overview, email, or civil see processes for service desks where we'll get an email, create a ticket for it or we'll monitor a ticket queue and then, you know tell another bot to go check on that system or something.
+
+Markie Maraya Robertson-Wagner  11:10
+What does that first one, you say, What's that one called or what does that one like Sorry You mentioned you mentioned like the cloud dumping like kind of like data transfer, or like, oh,
+
+Unknown Speaker  11:22
+just some basic data entry. Okay,
+
+Markie Maraya Robertson-Wagner  11:25
+so when you say basic data entry, does that mean like, what is that, what's an example of that.
+
+Unknown Speaker  11:32
+A lot of times we'll be either downloading data from a website and putting it into a spreadsheet or the other way around. So that kind of ties into like Asset Management tracking or tracking, it's a wide, wide variety of things.
+
+Markie Maraya Robertson-Wagner  11:51
+Got it. Interesting. So, that's that yeah so you'll be like, Okay, go into workday and like get the list of all the employees, and then put it in Excel, like who's you know who's on vacation things that put into Excel and then make a report on it, you put an Excel do some logic and make a report on it.
+
+Unknown Speaker  12:07
+Exactly. And I mean sometimes they'll do like Excel or Outlook or what have you. They'll probably the most complex, but repetitive thing I've seen personally worked on. We had a box I would wonder ticket queue for constructing and deconstructing VMs. And each ticket would have unique specifications for VM. So the box would download the information, remote desktop into a jump server go from the jump server to another Remote Desktop Connection, which then had the VM host software on it. So you're effectively having to surface automate through like three or four different actions, what could have done for a jump server is just an in between servers so like sometimes within an organization, you will have to RDP on to a specific system and use that as a node to get to the rest of a specific network.
+
+Markie Maraya Robertson-Wagner  12:58
+Oh, it jumps over to kind of like where this thing spawns kind of and then this is where this thing calls the other VMs and like enters that and stuff. Basically, yeah. Okay, got it and then and then so yeah they'll they'll like go into the server, and then go and get into a specific system, either your run it as like a, just like a computational job or to run it as like a virtual desktop. Exactly. Okay, cool. And then, so then, with that, well that was complicated and obviously not one several times now.
+
+Unknown Speaker  13:30
+Um, I have seen multiple cases where I needed to do remote desktop automation, but that particular one. I've only seen once.
+
+Markie Maraya Robertson-Wagner  13:42
+What do you mean by remote automation. I mean, Are you familiar with the remote desktop. Yeah, so I mean I use vi for AI stuff a lot for like do you, do you mean like, are you mean doing automation within one or do you mean like automating the setting up of one
+
+Unknown Speaker  14:04
+within some system running the bot, the bot from that system opens RDP connection and automates within that connection.
+
+Markie Maraya Robertson-Wagner  14:10
+Yes, okay.
+
+Unknown Speaker  14:12
+Sometimes you've had, we've had to go like three or four layers deep,
+
+Markie Maraya Robertson-Wagner  14:15
+when that's crazy. Why do you have to go why so many layers,
+
+Unknown Speaker  14:19
+because we can't get permission to install the automation software directly in the target system.
+
+Markie Maraya Robertson-Wagner  14:26
+And so Okay, interesting. So it's a weird permissioning thing. Okay, um, fascinating, what are some other common ones like you said, I think this basic data entry, either like you know going from a report and putting it where you, so I just tend to like, you know, That example of like download data from a site do business logic on it send a report or an email, what's the you said there's the opposite side of that, what is that opposite side of that,
+
+Unknown Speaker  14:52
+where we actually take an existing report, and then use that populate information in the website.
+
+Markie Maraya Robertson-Wagner  14:59
+Okay. And then what will you often, we deposit into like an API we are going to post something are you putting it into like SAP What do you end up doing.
+
+Unknown Speaker  15:08
+I mean if we can find an API, we can, we will absolutely prefer to use when possible saves a bunch of time. But otherwise, most of the time we're just automating web applications for data entry. Occasionally we had to use a Java version of Oracle. Ms. We do fully support, SAP, which is nice. Okay. Why does
+
+Markie Maraya Robertson-Wagner  15:36
+this make sense. Why does SCP not have API's.
+
+Unknown Speaker  15:40
+Ah, they do. But I think the biggest thing with SAP is you can create all these custom views, just like with Oracle, and at some point you're better off just automating the application.
+
+Markie Maraya Robertson-Wagner  15:53
+Interesting. Why is that, like just structurally like there isn't. There isn't great interfaces for engaging with the custom views or like great API's for. Yeah, exactly. We run into the same problem with Salesforce too interesting for. So Salesforce any other applications.
+
+Unknown Speaker  16:23
+No, there's a few big ones are we like can't rely on the API. Okay, interesting.
+
+Markie Maraya Robertson-Wagner  16:29
+Cool. And then, what, Are there any other examples, the basic data entry one, you have the, the, like, dealing with dealing with emails to make customer support tickets, any other common ones.
+
+Unknown Speaker  16:42
+A lot of network operations. So, we had a bot that would use the. I always get this epidemics of SNMP trap monitoring tool. Are you familiar with that. Okay, so, oh no, so essentially you can deploy this on network, and it basically creates a client server architecture where a node will go and ping all the other systems on the network to figure out various status that you'd like. Whether or not online, health drives, how much CPU or RAM is being used, if it's a problem it's being used too much, use it to identify early risks. So we'd have the bot go through the that and populate tickets based on known issues. It would also look at those ticket queues and recheck those VMs, clear alerts if it could. Anything that couldn't be resolved would send back to the network operations team. We've done that for three or four different people. Interesting.
+
+Markie Maraya Robertson-Wagner  17:51
+Cool. Any other ones that are common.
+
+Unknown Speaker  17:54
+Um, chatbots. Probably one of the ones I hate the most, principal was, it was monitoring call times for call center. And if an agent was spending too long on a call, it would notify their direct report via, I am
+
+Markie Maraya Robertson-Wagner  18:14
+a direct report or the Ross report. Oh, interesting.
+
+Unknown Speaker  18:21
+So, like I see why it's useful but on the other hand, it's like, that gets kind of annoying and intrusive.
+
+Markie Maraya Robertson-Wagner  18:27
+Yeah, so it'll tell them like hey you're spending too much time on the call. Yeah, pretty much. Wow. Interesting, multiple clients working flat through Fujitsu. Oh, interesting. What are you there for is, like, can you like what's running through Fujitsu,
+
+Unknown Speaker  18:48
+like as I dealt with both internal and external clients they had a bunch of contracts with external entities,
+
+Markie Maraya Robertson-Wagner  18:55
+like, like contracting or book. Oh wow, footlocker all over the place to retail entities, and why were they sub contracting just because they have the team and they that'd be the business. Pretty much, their own infrastructures, they just sound sorts of, Wow, interesting, so they're like, oh, we have a great intro let's just like sell some of the time. Exactly, yeah. Wow, that's fascinating. How many companies you think asked for this.
+
+Unknown Speaker  19:27
+But specifically, Yeah, that was online with at least four of them. Although to the same token we had bought for one of our other clients. Excuse me, we're in the contract. No automation was allowed to touch the ticket. So we got around it by having a bot monitor the SLA time some of the cues, and if a ticket was taking too long to be resolved, then we send it up the escalation chain, interesting,
+
+Markie Maraya Robertson-Wagner  19:57
+fascinating, any other really common workflows here.
+
+Unknown Speaker  20:07
+Those are the big ones. I mean it touches a bunch of different industries. Probably our most common industry is health care about it.
+
+Markie Maraya Robertson-Wagner  20:18
+Health care. What are you doing for health care.
+
+Unknown Speaker  20:21
+Well, I'm actually on a product well a couple projects right now, where we're tracking referral letter statuses for patients we're getting referred into the safety system. We're also validating people requesting to be a, oh gosh, he called up a resident,
+
+Markie Maraya Robertson-Wagner  20:47
+like a resident at a hospital resident as in like a doctor, yeah, yeah. What does validating look like here.
+
+Unknown Speaker  20:56
+So we go into two different license verification systems based on data that they supply themselves. And if we can validate, like God has licensed effective and it's what they say it is, then we put it into an Access database for humans.
+
+Markie Maraya Robertson-Wagner  21:11
+Well what database
+
+Unknown Speaker  21:14
+access database was that another Microsoft Office Suite tool predate sequel. The chip is fine.
+
+Unknown Speaker  21:30
+I'm
+
+Markie Maraya Robertson-Wagner  21:31
+very, very interesting any other common hospital workflows. I mean outside of the stuff I've already mentioned, no. Yeah, that makes sense. Um, what about you said one more. Are there any other like common HR ones.
+
+Unknown Speaker  21:52
+Oh god, yeah, Um, I wrote like five or six different bots to deal with onboarding and off boarding and Fujitsu and the process changed based on the vision that it was handling I also read a few bots for finance
+
+Markie Maraya Robertson-Wagner  22:14
+boards on the finance box.
+
+Unknown Speaker  22:20
+Tracking invoices that have been coming in from multiple clients matching them with bank statements, and then putting the resulting data in Oracle.
+
+Markie Maraya Robertson-Wagner  22:37
+Fascinating. Any other ones that are common planets
+
+Unknown Speaker  22:46
+error checking, really. We had a few cases where in the retail logistics division Fujitsu. One of the account managers just did not have, know how to track their money usage properly. And so, we had all these invoices, or sometimes temporary invoices that were never resolved to an actual invoice number, and so the bot would go in and figure out, like, which ones are duplicates, which were errors based on database data. Obviously
+
+Markie Maraya Robertson-Wagner  23:24
+different just to ever tell you like, for example, thinking about that, that like, let's see the call time for call center one like how much clients were paying for these kinds of bots. Do you have any sense of like how much they were saving how much they were paying. I have no idea I was not allowed access to that info. Interesting. This is so cool for, like, it's so interesting to see what crops up like a lot of people have struggled with the invoice stuff with the, I've never heard the call time ones before another one that's really common is the basic data interesting just over and over and over again, it's like grab data from the thing, manipulate an Excel report or report to, you know it's just like, it's like ETL kinda, you know, which is fascinating, um, about any other ones that come to mind. If not, no worries. Anything on like Biz Ops ops team.
+
+Unknown Speaker  24:11
+So, I mean we were monitoring fleet vehicles and grabbing the statistics on fuel usage and mileage and uploading that to a tool. We're also doing a heck of a lot of order tracking and creating waybills and order numbers for packages. We had gotten to a point where based on certain scenarios we could actually approve RMA is automatically,
+
+Markie Maraya Robertson-Wagner  24:43
+whatever is returned to the manufacturer address. Interesting. Why would you do that, or what is this.
+
+Unknown Speaker  24:53
+So if there's a, let's say you go out and buy a product, and it's faulty. You can use the manufacturer's warranty for attorneys and get it repaired or replaced.
+
+Markie Maraya Robertson-Wagner  25:06
+And so what would you be automating on the company side, it would just be like, Is this product faulty or.
+
+Unknown Speaker  25:13
+I was just in terms of our maze, we would have a set of conditions, where a human would go in and fill a form and if it met certain criteria that we'd say okay, here's your RMA number, along with the info for it.
+
+Markie Maraya Robertson-Wagner  25:30
+Okay, okay, that makes sense. Interesting, um, cool, these are so, this is so great. Um, well, are there any other ones that come to mind as like common by any workflow or any industry or any, any kind of function.
+
+Unknown Speaker  25:46
+We actually wrote about where you will know under a Twitter feed, and figure out the disposition rating for tweets, and this someone seemed below a certain happiness threshold, based on when we got back from Google's API, We would refer that person, we would prefer the Service Desk to that person in that tweet.
+
+Markie Maraya Robertson-Wagner  26:10
+Oh, whoa, whoa, you were there for a few different companies. Fujitsu in their clients. Oh cool, interesting, and how many people ended up using this one. I think we sold for three different clients. Are you building about one thing and selling it to a bunch of clients.
+
+Unknown Speaker  26:39
+That's how was it figure two. I mean that is the sweet spot of RPA if you can find a bot that is actually plugin playing you can put it somewhere. Yeah, you can make a heck of a lot of money off, essentially, the problem is, again, no two business entities on the same way.
+
+Markie Maraya Robertson-Wagner  26:58
+What are the main differences when you get to a template like that
+
+Unknown Speaker  27:04
+submits different versions of tools, like we could say, no, here's a thing to automate data entry into Oracle. But once again into a different version of Oracle than the entire code rights. Some of it has to do with needing to allow the end users to configure a different API key or different API URL. And the main problem with that is a debate of how close source you want your package to be blue prism introduced the thing called skills, which is really just a fancy way of obfuscating API packages. It's no, it's over complicated blue prism enterprise is a way of compiling something into a dot scale file, but it's just another type of release. The only difference is once it's important, you're not supposed to be able to edit it, which is problematic. For example, if we're working with like ServiceNow we're each entity that perceives that needs to be able to configure it to work with their own system. Oh,
+
+Markie Maraya Robertson-Wagner  28:22
+I see. And so yeah, okay, okay, that makes sense and so yeah you have to re import for everybody or something fascinating, um, how much time when you get a bot like, what are some of the bots where you're like okay I have the template I can just like plug and play it and this is amazing kind of thing. Like what are the most plug in playable bots.
+
+Unknown Speaker  28:46
+Probably anything where it's just a direct API reference, like order number tracking. For example like FedEx and UPS and some other major ones. Occasionally you can get away with, like, oh no, oh the. Those are the only real public facing API ones that I've found that were just had to like figure
+
+Markie Maraya Robertson-Wagner  29:16
+out what are some of the ones that you had to configure but just like a little bit.
+
+Unknown Speaker  29:22
+ServiceNow Salesforce ish sales versus mess,
+
+Markie Maraya Robertson-Wagner  29:33
+but which ones do you have you can think a lot versus more like a little on the spectrum here.
+
+Unknown Speaker  29:39
+So, some of the chat bots, Like if we were interfacing with like business service teams. You've got to be able to configure it for, not just specific users but knowing like which user groups you want to message for example, that makes sense. And then you've also got to configuring the rules for when it should be contacting and look what
+
+Markie Maraya Robertson-Wagner  30:01
+got it. Interesting. Um, I realized, I think I put on time I have to run to a woman, or like a doctor's appointment, actually. But, um, this has been just like so unbelievably helpful I really really really appreciate it because something that I'm thinking a lot about is like wearing, like what basically what are the abstractions beyond, you know, blue prism in UI path. We know how can you instead of using the drag and drop to maybe like get to like automate like 60% of the work, like actually end up just 95 fiving and like 95% of it's just pretty plug and play. I can imagine, or maybe imagine something along the lines like you'd have to do a little bit of configuration, but like, mostly you can kind of just like, run a couple screen recordings and like get the gist of what the actions and decision points are of a process. And so I'm thinking about that because I did a lot of that at Waymo and for self driving car stuff. And so thinking about like, what are the things that are really more plug and play, what are the very very custom things, and like, you know, starting with those very common things and figuring out what to do. I think could actually just like cut development time from like two weeks until like two days. If you do it right. So, for sure, I'm thinking about that a lot. I actually love to continue the conversation I don't know if you're free later this week or next week but like, just to talk more about these, because I think you're actually one of the few people who really has this idea of like templates are good and make sense versus some people just throw their hands up in the air like everything's crazy and different like there's no sense to me here, like, there's definitely sense to be made here. And so, I'd love to chat more, and yet super sharp so I really enjoyed the conversation. Sure, yeah, I will reach out to you. Yes. Are we touching on LinkedIn and we can coordinate another call but I appreciate it and have a great rest of your day. Thank you for hopping on. Okay. Take care, Bye.

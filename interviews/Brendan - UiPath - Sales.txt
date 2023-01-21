@@ -1,0 +1,176 @@
+Markie Maraya Robertson-Wagner  00:17
+Hello, can you hear me. Hi, how's it going, nice to meet you Brendan. I use well Markie. Thanks for taking the time to hop on the call, you know, I'm happy to do a quick intro would love to hear quick intro on your end. And then I'd love to ask a couple questions.
+
+Unknown Speaker  00:38
+Sure. So, let's see, background from my side. I joined UI path a little over a little under three years ago and have been in the go to market operations team. And I am responsible for a lot of like global end to end, initiatives and project managing them, and just driving the strategy and the planning of what we're working on as a company,
+
+Markie Maraya Robertson-Wagner  01:12
+dies from that perspective, that's awesome. I'm very cool, and then I'll do a quick intro on my end, so I'm a recent new grad of Stanford University where I studied computer science during undergrad, they're also dropped out of the master's program, and so while at Stanford, I spent a lot of time on AI research both on campus as well as in industry so worked at Google and Waymo and work really closely with Google Brain and DeepMind a bunch of other research organizations like that on a lot of core self driving infrastructure, research, research and, you know, self driving is, you can kind of think about like automating driving right. There are some interesting similarities there, but also I spent a lot of time running my own consulting firm during college and beyond. And so, I have a consulting firm, a couple employees that will work with companies ranging from Day Zero startups, all the way up to working closely with founders were getting ready to take the company public, all the way to working with the fortune 1000 to help set up some, some of the first AI in their organizations usually. And so, help them stand up their AI org make core Belvin five decisions, you know, unblock the researchers but really it's more of like a, you know, give the man a fish that teach the man to fish, rather than a continued maintained thing, so that's something that I've done and I've really enjoyed that and of course while doing that I worked alongside RPA and so I found that super interesting. And so I'm just digging in and learning more about it because I think it's a cousin. I mean, automation is like broadly what computers try to do but you know it's a cognitive AI and automation that I haven't necessarily diving really deep into, and so that is why I want to hop on the call.
+
+Unknown Speaker  02:53
+Yeah no I appreciate it. Yeah, it's all definitely interwoven in my view, and the AI side is like what I'm trying to learn, because I've been like Rpa focused and now we have, like, I think the right way to think about it, like, at least in terms of how UiPath platforms are like, it's the network and stuff it's the blanket, the AI fabric we call it to plug in the AI, plug in the RPA you plug in the process mining you plug in the task mining, and all of those are kind of nodes of the solution that is your own back end, like business. So, I think they work really well together, in the sense of, you have some process that you need to do, like, taking in an invoice or a PO, and you need to have a vision capability to read that document, which may not be the same format and then rpa, and go in and say okay well click on this, then open SAP and enter this line item in SAP, but then in the machine learning to say, Okay, well, a what exactly does this read because it's in handwriting, so I need some vision capabilities. And then, to maybe if we think outside the box and this is where I'm failing at so maybe you can help fill in the gaps, it's like, okay, when we're presenting the proposal to the customer. What's the right pricing package. What results in the highest close rate, and the most, you know, growth. Once that price point. So, that's kind of how they, they played together.
+
+Markie Maraya Robertson-Wagner  04:43
+Yeah, fascinating, um, very interesting and then I mean I've done it I'm sure how to make sure I'm happy to answer questions about AI world as well. But thinking about like sales, sales ops, things like this, and your experience that UI path would be engineering kind of like broadly how you think about talking through, I mean you focus on enterprise not really like mid market as much but like when talking to these firms, I guess a couple main questions coming to mind and so the first thing is like, what are broadly like some of your core learnings because I like I'm a fundraiser. People often come to me about like, you know, we want to automate this like, Should we just use you and your AI like, it is like stuff before the AI and after the eyes like let's talk about this, I'd love to hear broadly about like what you've learned through just like getting in so many reps in selling UiPath in terms of like what hits what doesn't like you know I obviously like don't work for you I've had but like if I were to come and say like, okay, how can I become a top, I'm a great salesperson haven't become a top two yourself out of UiPath like, What are those learnings you dump on me.
+
+Unknown Speaker  05:44
+Yeah, that's a really good question. The, the number one thing I think is treating automation as a holistic viewpoint. So, proceeding with the viewpoint versus just rpa, or just AI, because typically someone will read an article, and the article will be about AI or they'll be about RPI or to live out process mining is about that first thing that they read in the context of automating the back end of business is the hammer, striking, all the nails regardless of if that's the right type but really the right way to think about it is, okay, let's map out and just list all the repetitive things that we're doing on a day to day basis, across all the different business units. And not only repetitive but also maybe just mindless and or could use more intelligence associated with it.
+
+Markie Maraya Robertson-Wagner  06:52
+How do you define like could you.
+
+Unknown Speaker  06:55
+Yeah, we have a low level of confidence, and the current process, I think, and that can be pretty generic. So I'll give you an example. Okay, We've got an opportunity. And this opportunity represents renewing business at an existing account, what are the attributes of that opportunity. That will classify as a high risk on that we need to be extra attentive to could machine learning inform that so that of 10,000 opportunities. We can float the 100 up to the top, that we need to have the closest look at. So that's something that I would say we need more intelligence behind.
+
+Markie Maraya Robertson-Wagner  07:47
+Got it. Do you mean, do you mean like within UiPath or with customers you're serving or both.
+
+Unknown Speaker  07:54
+Yeah, I mean, within it would ml would be applied to internal UiPath processes so that we could serve our customers. So that's really both.
+
+Markie Maraya Robertson-Wagner  08:06
+Yeah, that's funny. I mean, yeah, I mean, this was much less about me, I guess I guess it was about me trying to understand like how you think about sales but, yeah, I've done a ton of like lead qualification stuff and in enterprise SAS and I guess I mean SAS or on pram whatever it is, maybe lead qualification is like one of the biggest lift things I've actually ended up setting up for people which has been really interesting like, I don't know if you know ramp. They're in corporate credit card that just like raised a couple bill or something like this, and they are like they're there's only like 100,000 like types of companies that actually want to sell to right so it's like how do you go triage them and send off these opportunities to people. It's pretty common, IBM does it, everybody a lot of people do it. But yeah, that's very interesting. But yeah, that's, that's kind of just like random stuff that I do, um, but what about within. Oh yeah, sorry. I was gonna say like, what about within. So, what they want you to do, like, thinking again about like the sales thing, so you probably have some internal sales book handbooks, somewhere, if I'm, you know, if I'm thinking about automation with like my clients or you know whatever that may be, and you've spent years on UiPath like what are the core learnings there about how to pitch position and talk through UI paths with customers.
+
+Unknown Speaker  09:24
+Okay, good question. So I would say in terms of, let's assume they don't understand just what you can accomplish because I think that's the first and foremost, so I would say, starting them off by walking them through an example, end to end process
+
+Markie Maraya Robertson-Wagner  09:47
+as we usually start with what's that that's what you usually start with.
+
+Unknown Speaker  09:53
+I would say I would start with making sure that they understand, you know what, what exactly what path is. And, like so. The way that I would scope it as a single sentence, I would say, Hey, What is your path, why are you talking. We are an AI company that can help you automate any process that a human does. And a higher quality higher efficacy and reduce costs way, so that it's like okay, the usual question you get that it's like, well, can you do, like, like what what exactly you're talking about. And I said, Well, what, What's the process that you find yourself struggling with the most right now. And then you would go into their business case and I feel like making it about them is as important.
+
+Markie Maraya Robertson-Wagner  10:59
+Firstly usually know that like just by chatting, or usually chatting with like these partners the person often know,
+
+Unknown Speaker  11:06
+the CFO is going to be a key person, and or the CEO, like the C suite is is important to get engaged. Because you're saying okay, look for the hiring markets as as very competitive. You probably can't hire fast enough right now if you're trying to grow. So, yet you have all these work streams that need to get done. And or that your people are already tied up. What if we could look at shifting 20 or 30% of those to a robot, instead of having human labor, and then you can refocus those people on growth and or a more customer facing type of experience versus these back end things that a robot can do repetitively, without much effort.
+
+Markie Maraya Robertson-Wagner  12:05
+So that's kind of core pitch, and I guess even, so an enterprise, you're often talking to CFO and CEO and these folks too. So that last question. I said, even an enterprise like a BMW or a 14,000 You're still usually talking to CFO, CEO. Yeah, absolutely, yeah. And they're usually the people who are like the, you know, the advocator evangelizer and, you know, the buyer.
+
+Unknown Speaker  12:31
+Yeah. And don't get me wrong, we certainly start lower in the organization sometimes. Yeah, but typically it's not an individual contributor, typically it's, you know, the head of a p&l, legal, and then we'll, we'll talk strictly in the scope of legal automation, HR,
+
+Markie Maraya Robertson-Wagner  12:52
+so you'll start lower, and then sometimes it'll be bottoms up but more from like the org like standpoint and then the whole company buys licenses.
+
+Unknown Speaker  13:01
+Yeah, that's another path, you know we've done both. You can start with multimillion dollar deals in the C suite, or start smaller and scale, but,
+
+Markie Maraya Robertson-Wagner  13:09
+um, which one, what Are there any other paths that come to mind. You're not really like a bottoms up growth person like growth guy, or gang. But,
+
+Unknown Speaker  13:22
+yeah, yeah, no, so I think there's the, let's call it the pollination approach. And that's where you do have an individual contributor, and they're just buying kind of a project license that it's like very short term it's only one or two bots, and it just starts off without any sales engagement and it's very organic. Yeah, and then all of a sudden we notice Okay, look, you've got so many enterprise trials spread across the company. You've got a couple random installations, and then we'll bring this message to a business leader and say hey, you all are already working on this in a kind of a decentralized way, why don't we think about this more strategically and kind of bring these all together.
+
+Markie Maraya Robertson-Wagner  14:12
+Yeah, what percent of, like, sales, do you think that is, or like customers probably just like not that many right. It's pretty low. Yeah, yeah, I'm probably like in the fight, like, Probably, like one, like, like 10% Good I believe it's just like so not tell sir but might be wrong.
+
+Unknown Speaker  14:30
+No yeah it's. Well, we have a ton of trials, so, like, those are all self serve, but the question is like what percent of those convert yeah and yeah so I mean it's got to be. I honestly do not know the exact percentage but it's a vast majority of good wide scale solutions are sales driven. Yeah, at the C suite.
+
+Markie Maraya Robertson-Wagner  14:59
+Yeah, Sorry, I assume. So, what, what's the ratio of like C suite to like, like all legal and HR using it like, do you just usually just like go straight for the jugular with the C suite. I always try it but you get ignored a lot of the time. If I have to guess, maybe 40% C suite, yeah. Oh, so you are doing a lot of like going into smaller parts of the org and talking to people.
+
+Unknown Speaker  15:29
+Yeah, yeah, we do a lot of that. But that, you know, you take the Pareto analysis, that 40% is really like 80% of revenue.
+
+Markie Maraya Robertson-Wagner  15:39
+Yeah, exactly. I have some friends who work at a company called retool, because I also do a lot of AI startup advising in all investing, you know, things like this and so one company called mutual. It's funny because they didn't realize that they used to do on prem for a while and there's a, there's like disappointed back like low code. They're not automation, they're more like building internal tools, but yeah it's like 80% of their people are not on prem, but that 20% makes up 80% of their revenue, you know, so it always kind of goes like that. I'm very interesting and are most of these, like, I know you guys are only on Windows, or most of these companies just like all on Windows anyways.
+
+Unknown Speaker  16:16
+Um, so yeah but there's a way to do Mac automation as well. In terms of, like, so you can you can initiate an automation via filling out a Microsoft form or a Google form or anything so there's ways to trigger automations to benefit the Mac user, yeah. So, you know, there's still definitely a value prop for that. And a lot of the back end. Like on attended automations was like Do you understand that distinction
+
+Markie Maraya Robertson-Wagner  16:51
+is where the Bob got full is unattended automation being running virtual containers, or is it just like not human loop so like there's no, you know, checking in, basically.
+
+Unknown Speaker  17:02
+Typically it's yeah it's the non human the loop, regardless of what platform to turn on, but it would usually be like on a server side to where, like, you know, kind of, like, you wouldn't be interfacing with the salesforce.com UI, you would be accessing the database from the back end, it would be running once a week, Monday at 8am.
+
+Markie Maraya Robertson-Wagner  17:28
+Yeah, that's more like a cron job in Python, but people are using UI path to make these kinds of cron jobs because they want to like keep their engineers on regular stuff.
+
+Unknown Speaker  17:38
+It's way quicker, yeah, yeah and development time is much faster than Python, and it's iterative, and it's customer facing. So these, these flow charts are like, I don't, I can't code, I can look at these and understand what's happening.
+
+Markie Maraya Robertson-Wagner  17:52
+Yeah, that's a huge value prop, ah, fascinating. Yeah, can you talk more about that. So thinking about like, it seems to me that there's this, imagine a kind of a graph we're on this side it's like Bob from HR totally non technical and then your tax engineer, and, and then this is like ROI, it seemed that it looks like this, where like you don't want your tax engineer on it but you also don't have a BA from HR because he doesn't know how to do stuff, so you almost go for like this semi technical people. But, is this correct.
+
+Unknown Speaker  18:22
+Yeah, no, so it's an, and it's not an award. Yeah, so the, the end is so the semi technical people, we call them citizen developers, yes, we have a product called Studio x and that is a lightweight version where I could probably do it if I spent enough time learning it, where I don't need to know how to code extensively, it's gonna be permitting me to do more like Microsoft Office Suite automation. And then you go to the flip side, and it's like, okay, we recommend a CSV approach, so you have a CSV, that has a few developers, where the business is submitting ideas to them. As a business analyst that serves to connect the dots between that developer, and the business case. Yeah, and, and scale that way. And the final thing I'll say, and this is what I'm most excited about is, you know, I've used this word platform a number of times. But what I mean by that really is like okay, even if you go around asking people, What are they working on. And, and what processes are repetitive, and you pick one of those processes. A, they won't know all the processes that couldn't be good for automation, because they just won't they're not, not everyone is a systems engineer. Yeah, so they won't know. And then if they even have one of mine will describe a process to you. That's not the actual process. That'll be close. They won't be able to get the actual process because in reality, there's 10 different ways to do that process. So what we have is called Task mining, which sits on the
+
+Markie Maraya Robertson-Wagner  20:04
+task and process mining, and so I know that I, yeah I've like looked into slowness like all the stuff like I'm pretty gone have gone into it, and I know like there's kind of the barriers of tasks and process mining, and thinking about all those different things, I guess, do you have some of that stuff. I'll tell it right. You have some of that stuff that you can upsell right.
+
+Unknown Speaker  20:26
+We do and we try to go in day one with that because it works so well together so you, we say okay, you have this lead capture process, why don't you run, process mining on that. And then that'll map out the ideas and automation how, and then we can fill in the gaps in task planning, and then the CEO, we can package that all together into 10 automations that will go live.
+
+Markie Maraya Robertson-Wagner  20:49
+Are you often mapping from like videos automatically to to action click I don't do people really use the recording functionality for, you know, really kicking off the bulk of the meat of building processes or building automations.
+
+Unknown Speaker  21:03
+Yeah, we do a little bit of that. It really is dependent on the process. So, it's like what's the right tool, is it the video, or is it is it should process mining be the reporter, or should. Is this a new process, that doesn't exist yet and we just need to talk through it and maybe sketch it out in Visio.
+
+Markie Maraya Robertson-Wagner  21:28
+Interesting.
+
+Unknown Speaker  21:30
+Because a lot of a lot of, like, it's important to redesign the process first before automating. If you can't,
+
+Markie Maraya Robertson-Wagner  21:39
+and you're saying, I'm fascinating, and then so yeah that people want to make you automate those processes, lean because they're often like very different. Okay, yeah, and there's that part, I guess the other question is like what are the hardest challenges of selling this kind of product, usually.
+
+Unknown Speaker  21:56
+Usually, everyone's got their own like everyone's got a full plate. And this is a strategic thing. It's not something taken lightly. If you do it right. So, if you don't have that leadership buy in, it can be very challenging. If just a team is trying to do this on their own time, you're not going to see that organizational shift cuz really are looking for like an automation first mindset that the company is taking, and a digitalization, like strategy. So until those are in place, it can be hard to get your get your feet in the door. Otherwise it's just like, hey look this seems cool, I've got a ton of priorities that I just can't work on this right now. Yeah and I'm constantly spending that faith.
+
+Markie Maraya Robertson-Wagner  22:49
+And so do you do a lot of like, kind of customer qualification to be like okay, if they're not on board this thing like set spend some resources but like really just keep hunting for like the whales that actually do want to do this.
+
+Unknown Speaker  23:02
+I think that their reps, spend their time that way. Because, look, the, the, the gig is out, everyone RPI is down so there's companies out there that are adopting it and want to have that conversation and others that are so spend the time with the ones who do. Actually,
+
+Markie Maraya Robertson-Wagner  23:21
+what about mid market do you guys spend much time within market. Oh yeah, that's, yeah. Yeah, interesting. And have you worked with, like, what are your thoughts on how big market difference differs from enterprise.
+
+Unknown Speaker  23:37
+Um, That's good question. The, so like, I don't think it's like that fundamentally different, because they are going to be a little smaller but mid market is still such a big chunk to automate, like, you know, no one at an enterprise level. Think of this first right, let's say you're talking to BMW is BMW even able to think about how to automate BMW. Now, they're able to look at legal and finance, and we can get them to talk together. But if you just take the legal team of BMW or the finance team of BMW, that's like roughly the size of a full mid market. So maybe at the mid market companies you can talk at a more end to end scale, more comfortably, even easier. So I think we tackle those pretty well, I don't think you need to be a GE to benefit from,
+
+Markie Maraya Robertson-Wagner  24:40
+from this fascinating, and when you want a new market I guess learning and expanding is just like a little bit harder because there's only so much to do right.
+
+Unknown Speaker  24:49
+Yeah, yeah. So yeah, I think it's, to your point, the, the triage thing is important, am I spending my time with this customer in a, in a way that's meaningful, or are they only ever going to have three bots, and there's no growth there.
+
+Markie Maraya Robertson-Wagner  25:07
+I get what I get. Yeah, one big question on my mind is like, okay so workflows, Think about thinking about like work that people do. I think it's kind of on a power law where like there are things that everyone does and actually SAS has done a decent job of stepping in here and like doing this like Workday and like SAP like these are so common that you have giant behemoth software providers stepping in, that makes sense, But then you get further down and especially in the realm where things have to talk to each other, and you can't necessarily do that kinematically, that's when our pig is really interesting, right, because that is where That's where software can step in and so I think that even that zooming in is like its own mini power law, you know, and so there are some processes that are just seeing over and over and over and over again. Some are industry agnostic, some are industry specific, is this your experience.
+
+Unknown Speaker  25:56
+Absolutely, and especially when it's not economically viable, or technically viable to generate or to create an API. It's like, oh no I want, I want work day. I want a PowerPoint created once a week but like that, you know, recent changes in Workday that were made and I also want to report that's like okay, well, yeah, good luck, linking API and or linking workday with PowerPoint. Yeah, I can do that after a few hours of programming, no problem.
+
+Markie Maraya Robertson-Wagner  26:30
+Yeah. And so thinking about that like are these often like on prem installations like why is it so hard to get read write access in a programmatic way here, return at an API level. I mean like you don't even need an API to set that you should just be able to use like to connect to the SQL Server and stuff.
+
+Unknown Speaker  26:54
+Oh, sure. Yeah, well, you know, it comes down to, like, if you're even talking in SQL Server and you're talking in that using those words then you're already involving it and a highly technical person, neither of which you have the new one use RPI, yeah you just use automation, and it's just much simpler. It's just so much quicker.
+
+Markie Maraya Robertson-Wagner  27:16
+Yeah, do you just get in there do super fast. Okay. Um, and then what so okay talking about that power law there, what are the what are like imagine like these are processes sorted by frequency, it's like, accounts payable, but, you know, just like general procurement is, you know that's something that like SAP notes right, or like, you know, manipulating tabular data, That's what Excel does like these are all things, but then you get into like the process of moving something from workday to PowerPoint, like, as a workflow right like, what are the most common, first of all like workflows and then talking and then separately like talking about like, quote unquote like integrations like things you have to integrate with over and over again. So, let's talk about workflows first like an example would be like, accounts payable budget reconciliation, things like that. What are some of those that you've seen over and over again.
+
+Unknown Speaker  28:03
+Yeah, that's a great question. And unfortunately, I only have time for the first one because I've got a hard stop in 30 seconds. No, no, I got another minute. So, thank you, thank you again, but the, I'd say, finance, is our biggest use case where you have, okay, accounts payable, you've got invoice processing order and tape. In general, it's linking together these archaic systems like SAP and like NetSuite, and just being able to read the PL and the first, like you have whole procurement teams, managing this, and you can, you can totally offload most of that
+
+Markie Maraya Robertson-Wagner  28:43
+thing, and many other orders that like any other ones come to mind by vertical or just like agnostic.
+
+Unknown Speaker  28:51
+There's, there's just so many I mean the sky's the limit. After that, we do. We do things like split automation in terms of like reviewing an opportunity or the right sales reps on it, are they getting paid according to the rules, the right way. Over 1000s of opportunities, it's like no one has to manually manage that anymore so
+
+Markie Maraya Robertson-Wagner  29:13
+interesting. Yeah, I know you have to jump but I really appreciate your time, and I'd love to like keep in contact as I'm exploring this stuff more and more like I probably have like 15 minutes with more questions if you have some time later this week. We'd love to just kind of like, I think we like had foundation for I'd love to ask a couple last questions to you and we'd love to kind of read about like AI in the future there. And also, yeah it's an AI so happy to help. Or like refer people because I'm, I'm excited for him but I'm just like pretty much full but I can also help, but I'm very tuned in just like broadly this stuff so
+
+Unknown Speaker  29:45
+awesome. Love to connect again, why don't we shoot something on on Wednesday or Thursday. And anytime the afternoon.
+
+Markie Maraya Robertson-Wagner  29:55
+Alright thank you have a great day bye. Yeah, take care.

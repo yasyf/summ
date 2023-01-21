@@ -1,0 +1,158 @@
+Unknown Speaker  00:03
+But But there are a couple of them. Couple of them were totally Excel manipulation. One of them was basically comparing data between two reports, the same data the purchase data. So since the be using the Citibank card, a Citibank statement is generated for each purchase,
+
+Markie Maraya Robertson-Wagner  00:29
+what's the What is it? What is this process?
+
+Unknown Speaker  00:32
+It's not a sampling process, it is just basically comparing the purchase transactions between two report. So as I say, like the for the purchases, whatever the purchase is, the card holders makes for them for the subordinates for their whole team or for their whole center. It is it is paid through Citibank card, right? Yeah, so they have this, they have access to this Citibank portal called city manager, where, from the Citibank side, a report is created and generated and downloaded by the cardholder. It's called the Citibank report, city manager report, which consists of all the transaction details, like when the date of the purchase the date of the approval, transaction amount, the cardholder name cardholder,
+
+Markie Maraya Robertson-Wagner  01:30
+and this is a web app, and this is a web app.
+
+Unknown Speaker  01:34
+Yes, CD manager is a web app downloaded manually, then, another report to download which is from the in house system, CBS which my company had developed, it's still maintaining like it still the updates are still going on. So they manually line by line, they compare the purchase transaction data between these two reports. Say for example, this is one purchase report the cardholder name is a the cardholder last name is B.
+
+Markie Maraya Robertson-Wagner  02:04
+It made sure that the approvals match up with the ex executive with the Citibank report from the in house data. So, they created an automation with basically which compares the line level details between each report. So that is the one Excel manipulation, then there was there was another Excel manipulation, this is also This is also why done a similar approach, but a bit different basically, here also we compare the data between two report these are both in house report from the CDM system one is on transaction report, and another is called the validation criteria report. So, all transaction report contains a very detailed report it has all the transaction relate all the purchase related details, like as I earlier mentioned, last cardholder first name, last name, Transaction Date, then the purchase requested purchase approved by the officer date, then final purchase date, transaction amount, then like budget amount requested and final amount approved those kind of details when the name vendor code then there are several other vendor related information and the other report has the validation criteria for the vendors and the purchase related amount related. So, for example, for particular transaction mender name is Amazon then in the in the validation criteria, there has to be the similar vendor code which needs to match with the all transaction report if if it is match, then basically board will create a spit out another output report which basically records all the transactions which are validated. And another report which has all their transaction which are not validated if the validation is not basically validation is failed, but marks it and put that transaction into the report which has all the transaction with validation failed. This is great. This is awesome. Yeah, continue continue. Yeah, and then the last one was reporting process reporting process basically for the CBRE In which what sub this reporting site called a webs report. And basically, it poses a report window puts the card, the credit areas for downloading the report, which includes cardholder name, fiscal year, fiscal month downloads. These are all for government. Right? These are all gone. So they're under report. Continue. Oh, yeah, continue. there on the
+
+Unknown Speaker  05:39
+report, download, say the names eight, saves into the local machine, and then sent via Outlook email to each cardholder.
+
+Markie Maraya Robertson-Wagner  05:52
+Okay, interesting. And then, can you can you talk a bit more about? So are you saying that you send an email to each card holder that exact as well or no? Sorry? And then do you send it to executives as well? No, no. Okay. Interesting. And how often is is bought run? That's monthly. interest. Interesting. And what was the error rate for this bot? Like? Did it did any? Did anything fail after that? In the first couple of months? Did you get any failures?
+
+Unknown Speaker  06:24
+See, I, as of now, after development, we didn't have any failure.
+
+Markie Maraya Robertson-Wagner  06:31
+Interesting. Well, that's good. And then were there any other bots that you worked on?
+
+Unknown Speaker  06:37
+Yeah, there are several others on different other sectors like cedar Center, which have created about 1112 bots.
+
+Markie Maraya Robertson-Wagner  06:48
+Yeah, good. I would, I would love to hear if there's a common workflow or you know, like a particularly high ROI bought, I'd love to hear about any of those two,
+
+Unknown Speaker  06:59
+the one that I mentioned, the first one for the CBRE as of now that's the high ROI bought, I don't know the numbers might be has the numbers. Because my job is to develop, test and deploy and help with the first run because client side people who runs basically the port, they are not from the tech side. Yeah, I mean, the initial run, we just handheld them and get them to run.
+
+Markie Maraya Robertson-Wagner  07:33
+Okay, got interesting. And then that first one, can you Sorry, I wanted to check out them. Right, that first one was about reconciliation. It sounds like the other two were also about reconciliation. Can you tell me at a high level like what the first one was? I know, we went deep. And then what the other ones were as well, like, at the higher level. A lot of it's like similar stuff in the sense of like, comparing comparing approval versus non approvals.
+
+Unknown Speaker  07:58
+Yeah, basically, the two XL manipulation bots, I said they are reconciliation. The first one is sold data and report like, totally data entry, and report generation is just report generation and emailing the emailing to a person in whose name the report is generated for.
+
+Markie Maraya Robertson-Wagner  08:21
+Okay, interesting. Oh, and how many bots Have you worked on in total?
+
+Unknown Speaker  08:29
+For for them, one for the way GSM currently, and they will have being one again, for the C word. That's the same board, you have MS board. But since now, the ufm team has get rid of the old desktop base, you FMS forms, they have created a web based form. So I'm creating whole new board for the theme usms one testing right now. And another centers that current center cedar for them, I have automated around 1112 processes.
+
+Markie Maraya Robertson-Wagner  09:10
+And then what percent of those was the format something like the following where you go into some kind of legacy application without an API, you pull data, you download that data, you put it into Excel and manipulate it and then you send out reports
+
+Unknown Speaker  09:26
+to the only legacy application I would say was the usms old desktop style Oracle Application, the first one which I developed for the Siebel center now even that they are getting rid of it, so I don't need to worry about legacy applications.
+
+Markie Maraya Robertson-Wagner  09:48
+And so when you say legacy, like are you I mean things where there's no API's which is not exactly the definition of legacy, but for actually forget the whole legacy thing, what percent of what percent of applications Are you downloading data, whether it's from sequel or, you know, an internal tool, manipulating it in Excel, and then running reports on it, or like creating reports based on it?
+
+Unknown Speaker  10:14
+Like very few, the only couple of them I mentioned, basically all in all my processes. I basically, I worked on all the processes, which doesn't include anything, like a data download, basically, I just whatever data I feed the board, I get it from either team who will be running that board, ultimately, or manually provided by the VA, basically, by the, by the VA. Me business analysis.
+
+Markie Maraya Robertson-Wagner  10:56
+Oh, so are they often uploading an Excel sheet?
+
+Unknown Speaker  11:01
+Yeah, in 99% of the processes, basically, we, the end user will be feeding the data manually to the board.
+
+Markie Maraya Robertson-Wagner  11:11
+And so what percent of your what percent of your proxies are, you know, end user feeds feeds data into the bot Excel manipulation report generation? Almost all Wow, that is fascinating, huh? Interesting. And what percent of your automations have to deal with the UI actually.
+
+Unknown Speaker  11:34
+Okay, so about if I say, let's say I forgot, if I consider a total of 16 boards. Out of 16, I would say only four deals with excels as of the our UI based automation. So all of them needs to interact with the UI.
+
+Markie Maraya Robertson-Wagner  11:57
+Oh, so only four or so only four only deals with Excel. But the rest of them usually touch excel at some point.
+
+Unknown Speaker  12:04
+did see the rest of the year using Excel only for the data feeding to the board basically bought, what they are either data entry processes or the cogeneration processes. So for doing for doing data entry, or for generating report, they have to put some data into the system, which is UI ways, right? So for that only, we use Excel to feed the data.
+
+Markie Maraya Robertson-Wagner  12:33
+Can you give an example of that kind of process?
+
+Unknown Speaker  12:36
+Yeah, the first process, I told you, the you FMS process. As I said, it's a data entry process. So basically, a port enters the data to create the purchase order in the Oracle system, right? So what requires the data to put data into that system? So we have the Excel input file created, which consists all the data, yeah, reach basically the end user who is managing that process right now that automation feeds data in the Excel format to the port, so that were bought can and just the data when the automation is started? Got it? Okay. So, like, so like other processes, which are not actual manipulation in that as well. Yeah, we use Excel to feed the data to the
+
+Markie Maraya Robertson-Wagner  13:30
+Yeah, so you're not actually like doing business logic in Excel. You're just feeding it, you're just using it as like a format. Yeah. Okay, exactly. So what percent? Are you doing business logic and excel?
+
+Unknown Speaker  13:47
+I don't know if you call the reconciliation process.
+
+Markie Maraya Robertson-Wagner  13:50
+Logic, I'd say it's a little bit of logic.
+
+Unknown Speaker  13:53
+Yeah. So then it's like, out of all my processes only, I would say 25 30% is Excel manipulation or business logic process? The rest of the processes are basically seen for simple monitoring of linear processes.
+
+Markie Maraya Robertson-Wagner  14:15
+Can you talk a bit more about that?
+
+Unknown Speaker  14:19
+So all the mentioned all the Siebel ones, I'll just mention one because for cedars, there are so many processes, like as I said, 11. Well, I cannot mention all of them in a few minutes, because and not all of them are deployed. Only couple of them are deployed. The rest of the matter will be deployed all the time. So let me mention because that's interesting process. The one I did for all ages includes the PDF, manipulation and the SharePoint so This department basically deals with all the centers of the FDA and they have the they get documents regarding the purchases made by all the centers. And all the card holders who make purchases, basically, their upload, purchase related documents on the SharePoint form. So, under each, so they go to SharePoint, they'll open the sample form, first of all, they put their name. And they upload their purchase related documents. So same way all the shareholders from the different centers, upload once all the upload is done, this team rolls this board, the board goes to each cardholder one by one, download all the documents from that cardholder. So for example, john doe is the first card holder downloads that document then pull up the Adobe COVID and combine all the documents into one PDF document. And documents uploaded by the card holder will worry the number of documents will worry and the format of the document worry like what what could be Word document, one could be PDF, one could be Excel. So it's multitude of documents type of documents, and it could be two documents, it could be 10 documents. So what understand the logic and then basically bought what, what once bought pull up that john doe's form. So it counts the number of documents uploaded by the john doe and, and basically extract the name of each document. So based on that, it opens the document into a new tab, and downloads. It then combines all the documents and renames it based on the john doe and his center. So john doe's equals enter the date of process process, so if it is processed to date, we'll put the today's timestamp and date stamp, and then saved into the local machine in a designated folder. Same way it will, then sorry, once that is done, then what will go to the SharePoint site into a designated data mining folder and uploads that john doe's document based on his center, if he's from Siebel center, it will pull up the senior centers data mining, and upload the document there, if it is from this another center, it will go to Tech Center and upload the document there same way it will do it for all the card holders available in the SharePoint form. And then once that is done, basically, based on each card, sorry, not based on each card holder, once that is done. What we send an email to the team who is managing this documents, mentioning that the cardholders purchase related documents are uploaded and saved into the designated folder for your review. process.
+
+Markie Maraya Robertson-Wagner  18:33
+Ah, interesting. Okay, that that that is a great example. Thank you so much. Let me think are there any other examples in that? You? I mean, you've been so great talking through the, you know, the details of these kinds of properties. Are there any other processes like that, that come to mind too, I'm just trying to canvass to understand everything, but I appreciate you taking the time.
+
+Unknown Speaker  18:57
+Not the similar kind of one I'm working is, which also involves SharePoint, which is, which is developing right now for the senior center. It's not exactly similar, but it was the SharePoint, what is the seeder? center? Again? There are several centers within FDA, basically, I don't know much about that, because that's not why a job profile. I'm on the tech side. So lead developer. So, you know, Food and Drug Administration is the department and human Department of Human and health. Right. So they do their research and every so based on their field, they have each center. I don't know what the each center does. So that's not I'm not able to answer that.
+
+Markie Maraya Robertson-Wagner  19:49
+I see. I'm interesting. So that's super helpful. Are there any other bots that are that are in this in like a category of bots in your mind that we have It disgust. goodie outbreak. Yeah, so like, you know, we talked about, or person uploads data and then it's and then it's manipulated into report we talked about, like, you know, where are you doing the Excel logic Are there any other kind of typical types of bots that and then maybe categories of bots that we haven't gotten the chance to talk about?
+
+Unknown Speaker  20:27
+Meeting through, because force either there are so many, so even I don't remember.
+
+Unknown Speaker  20:42
+Okay, I've got I can, I can, I can tell you about the current one time the developing which involves SharePoint. So, in this process, the business process is like this. That is the SharePoint folder, which contains a phi, which has, it's an Excel file, which has links to several reports from the remote site, which basic so if you will love that link into the browser, it will go, it will take you to the report site, which has the remote report generated from there, you can look the report, download the report, save the report, whatever, you can do that. So it has links for sale the report, the report name, and, and the output report them basically after, after saving, after downloading the report, you have to rename it. So that name it has then let the folder in which the board needs to upload the renamed and downloaded report. So what the bot will do, what will pull up the SharePoint, then down, downloads that Excel file, which contains all the links, read, and turns it into a data table, then pull up that Excel file into the web browser, and basically clicks the link one by one. So for let's say eight, click first report, download it into the Excel then sales into a designated field folder with the designated name from the name contains within the Excel file on the SharePoint. And CMV does it for all the links there will be right now. It's in development state. So I only have 510 links, but it could be 100 links and reports to be run and downloaded and fy name. And then again, once one report is run and renamed, it needs to upload into a designated folder within the SharePoint. So it's kind of similar the one I told you about.
+
+Markie Maraya Robertson-Wagner  23:20
+God. Okay, that makes sense. Um, then, okay, this has been great. I mean, I really, really appreciate you taking the time taking the time to talk to me about these things, I think, giving more context to mind. Right now, what I'm thinking about is like, what does the future of automation abstraction look like in the sense that like, UiPath is one take on automation abstraction, which is, you know, drag and drop based, activity based, there's lots of integrations. But I'm very UI based. I come from both the automation background in terms of writing code, I've done some low code, no code stuff, I've also done a lot of AI. And I think the future of these things is quite married, and hearing about the kinds of workflows that people are building within UiPath. And what you're building. I mean, this is very interesting to me, because I'm trying to figure out in an ideal world, I think, you know, probably RPA is in its teen years, right now, it's going to develop, you know, things don't really stay the same that long. And so, thinking about what the future of being able to create automations looks like.
+
+Unknown Speaker  24:24
+Yeah, that is one more but I forgot to mention this, not for the government that is for my in house. Department on my employer side, which is guide house, I wouldn't mention that what that is also interesting board includes three separate parts, and all three separate part makes whole full business process. So as I said, my company deals with government with state, local, and federal. So there is a separate site on which government puts data related to the contracts for basically the contractors in white for doing work within the government departments. So that particular team boots, basically setting keywords to get the government contracts related data downloads into an Excel then one of the team member from my team has created an Excel tool. It's an Excel manipulation tool. So basically, once you put that data into that tool, you just need to run some macros, run some things. And it will spit out some other numbers for the team, then that macro run data needs to be put into the SharePoint. So what winds up the dead Gorman site, puts the keywords, there are several keywords, multiple keywords, based on that, run the report, then it will get so many search results, selects all the search results based on the keywords on the report from that site, then sales into the local folder and pull up the tool tracker, the macro tracker tool, then copy the data from the report when from the corpsman side, and pull that paste the data into the tracker, run the macros then saves the newly on macro data into a separate file. And then we'll have the SharePoint site goes to the designated folder for that the uploads the newly run macro, which is saved into a separate file in a designated folder in local machine uploads there, and close all the Excel file and all the sites. That's the process.
+
+Markie Maraya Robertson-Wagner  27:36
+Fascinating. Okay, who's running it?
+
+Unknown Speaker  27:41
+Nobody's running, it is running on slide one. So all the boards I have developed for the FDA. So there are two ways to run the board within UI far. But then what on attended board attended board firms on the local machine and it required the human interference to start the board. But if it is unattended, it runs on the UI path server. So basically, FDA adopts a license for an attendee expensive. That's why FDA are called gate version and my company has a license for the Nintendo Switch. Since it's a it's a board for the internal team. I have it scheduled for first of each month to run it automatically. Interesting. So it doesn't require a single minute of human interference single second of human interference designated team just go to they are basically the law are based on the requirement for the first of the month at 70 am in the morning and after 70 and he died. Basically they just go to the checkpoint. And look the reporter
+
+Markie Maraya Robertson-Wagner  28:59
+Huh, interesting. Fascinating. Okay, this is super helpful. I will appreciate you taking the time to talk through this stuff. I might have more questions you know, I'm thinking about this kind of from a startup perspective of starting a company in the space and digging through this stuff and so even helpful super helpful in terms of just like further a lot of people I talked to you are very high level or like not that precise about talking about their stuff. I mean, not even because they don't want to but because like they're like oh I forgot that the BA or like oh I do this then this and this, but like you are a very like tactically minded concrete thinking person which I very much appreciate that was probably why you got promoted. So actually
+
+Unknown Speaker  29:41
+in the beginning, you and I was scared of to share the information since the all the ports have developed for the government. So it is like I was a little bit scared because we are not allowed to share any information later through the government work.
+
+Markie Maraya Robertson-Wagner  29:58
+No worries, I will not Let me share anything
+
+Unknown Speaker  30:02
+we get into this kind of rule after thorough security and background check. is not easy.
+
+Markie Maraya Robertson-Wagner  30:11
+Yeah, I've actually got a lot of people have told me about government bots, which is funny. Like, I know someone. Yeah. Like, I know a bunch of people who did different bots, like in a bunch of different orgs over the government, but like, more, more so like, they they're trying to tell me, but like, they they're not that like, they're they don't often they're like managers who don't actually know what's going on with the bot. The developers always know. But you know. So do you mind if
+
+Unknown Speaker  30:36
+I ask? What basically will you do with this data? You get it from me? Yeah.
+
+Markie Maraya Robertson-Wagner  30:43
+Yeah. I mean, not sharing it with anyone like, you know, I'm just, I'm just trying to understand what kinds of things, what types of things people are trying to what types of things people are trying to build. And then think about, like, what the future of automation would look like, I'm mainly just trying to understand the space. And so I won't be like telling anyone anything. It's just me. So. So you, you said you, you run any AI company? Yeah, I run an ad consulting firm. And so I've done lots of engagements and stuff in the past as well. So I get it. What kind of a work basically, do you do for the clients?
+
+Unknown Speaker  31:19
+Yeah, yeah. So I am learning, data, mining, or what?
+
+Markie Maraya Robertson-Wagner  31:25
+Yeah, it tends to be more machine learning, helping them set up their first AI teams and such. So do you also, do you also create a teams for them? Yep. I've created ml infrastructure. I've created ad platforms. I've, you know, I've helped do a lot of research. I've helped them hire, I've helped them to go to market, I've helped them set up the AI teams in house. And often I'm working with, you know, founders who are about to take your company public or like unicorn founders, which is fun. So you are the only one or do you have to develop AI developers, so I have developers to do work with commercial fliers or candles. I so I don't work with government. But a lot of my very close friends work with government. And so, you know, one of my friends runs one of the main incubators for government plus tech. And so it's always been interested in me and I don't know if you know and girl but a lot of my friends help run enduro, which is cool. Are you based out of Los Angeles? California? Okay. Yeah. Interesting. Yeah. So I tend to be more working with West Coast startups. So I don't work with banks too much. I don't work with I work mainly with West Coast startups. Okay. Yeah. Okay, well, I appreciate you so much taking the time and, you know, feel free to rest safe, like, I'm not going to be sharing anything with anyone, I'm just trying to understand better about some of the bot stuff. And, you know, I'd love to kind of like keep in contact as I move through the idea maze. And really, I'm not I'm really what I'm thinking about is like, pretty broad categories of like types of work that needs to get done, because I think, you know, automations extremely, extremely important. And a big part of being able to enable company I mean, companies like or organizations such as the government and like fortune 1000s that are in retail, etc. to enter a productive New Age of the economy is allowing them to automate the things that you know, the software companies have automated A long time ago, so. Okay, yeah. Cool. Well, I appreciate you taking the time and I'll let you know if I have any other questions or anything like that, but it was really wonderful to meet you. Definitely, same year, same. Okay, wonderful biker says hey, bye. Hey, what's up so I have the call with a lad in approximately 15 minutes so I just wanted to kind of get this group has done it yet you're always ready I will jump window

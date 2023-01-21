@@ -2,16 +2,18 @@ from pathlib import Path
 
 import pytest
 
+from user_interview_summary.classify.classes import Classes
 from user_interview_summary.classify.classifier import (
     BaseClassifier,
-    TitleClassifier,
     CompanyCategoryClassifier,
     DepartmentClassifier,
-    IndustryClassifier
+    IndustryClassifier,
+    TitleClassifier,
 )
 from user_interview_summary.factify.factifier import Factifier
+from user_interview_summary.pipeline import Pipeline
 from user_interview_summary.splitter.splitter import Splitter
-from user_interview_summary.classify.classes import Classes
+
 
 class TestInterviews:
     @pytest.fixture
@@ -29,6 +31,10 @@ class TestInterviews:
     @pytest.fixture
     def factifier(self):
         return Factifier()
+
+    @pytest.fixture
+    def pipeline(self):
+        return Pipeline()
 
     @pytest.fixture
     def title_classifier(self):
@@ -94,16 +100,8 @@ class TestInterviews:
         print(classes)
         assert Classes.INDUSTRY_RPA_SOFTWARE is classes[0]
 
-    # def test_one_interview(
-    #     self,
-    #     interview: Path,
-    #     splitter: Splitter,
-    #     factifier: Factifier,
-    #     classifier: BaseClassifier,
-    # ):
-    #     text = interview.read_text()
-    #     docs = splitter.split(interview.stem, text)
-    #     facts = factifier.factify(docs[1])
-    #     classes = classifier.classify(docs[1])
-    #     print(facts, classes)
-    #     assert True
+    def test_pipeline(self, interviews: list[Path], pipeline: Pipeline):
+        pipe = pipeline.run([f.open(mode="r") for f in interviews])
+        doc = next(pipe)
+        print(doc)
+        assert doc.metadata["facts"] is not None

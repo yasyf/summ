@@ -1,6 +1,6 @@
 from itertools import chain
 from pathlib import Path
-from typing import Iterable, TextIO
+from typing import Generator, Iterable, TextIO
 
 from langchain.docstore.document import Document
 
@@ -35,5 +35,5 @@ class Pipeline(Chain):
     def _process_blobs(self, blobs: list[TextIO]) -> Iterable[Document]:
         return chain.from_iterable(map(self._process_blob, blobs))
 
-    def run(self, blobs: list[TextIO]) -> Iterable[Document]:
+    def run(self, blobs: list[TextIO]) -> Generator[Document, None, None]:
         yield from self._process_blobs(blobs)

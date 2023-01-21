@@ -1,3 +1,4 @@
+import itertools
 import os
 from dataclasses import dataclass
 
@@ -33,19 +34,24 @@ class Embedder(Chain):
 
     def persist(self, doc: Document) -> list[Embedding]:
         embeddings = self.embed(doc)
-        self.index.upsert(
-            [
-                (
-                    metrohash.hash64_int(e.fact, seed=0),
-                    e.embedding,
-                    {
-                        "title": e.document.metadata["title"],
-                        "fact": e.fact,
-                        "classes": e.document.metadata["classes"],
-                        "document": e.document.page_content,
-                    },
-                )
-                for e in embeddings
-            ]
-        )
+        vectors = [
+            (
+                metrohash.hash64(e.fact, seed=0).hex(),
+                e.embedding,
+                {
+                    "file": e.document.metadata["file"],
+                    "fact": e.fact,
+                    "classes": list(
+                        itertools.chain.from_iterable(
+                            e.document.metadata["classes"].values()
+                        )
+                    ),
+                    "summary": e.document.metadata["summary"],
+                    "document": e.document.page_content,
+                },
+            )
+            for e in embeddings
+        ]
+        if vectors:
+            self.index.upsert(vectors)
         return embeddings

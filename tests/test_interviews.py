@@ -108,7 +108,5 @@ class TestInterviews:
 
     def test_pipeline(self, interviews: list[Path], pipeline: Pipeline):
         pipe = pipeline.run([f.open(mode="r") for f in interviews])
-        next(pipe)
         doc = next(pipe)
-        print(doc)
         assert doc.metadata["facts"] is not None

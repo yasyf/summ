@@ -27,10 +27,10 @@ class Classifier(Chain):
 
         # Next, we specify the template to format the examples we have provided.
         # We use the `PromptTemplate` class for this.
-        example_formatter_template = """
+        example_formatter_template =dedent("""
         User Interview Title: {title}
         Department Classification: {department}\n
-        """
+        """)
         example_prompt = PromptTemplate(
             input_variables=["title", "department"],
             template=example_formatter_template,
@@ -67,12 +67,15 @@ class Classifier(Chain):
             ),
             # The suffix is some text that goes after the examples in the prompt.
             # Usually, this is where the user input will go
-            suffix="User Interview Title: {input}\nDepartment:",
+            suffix="User Interview Title: {input}\nDepartment Classification:",
             # The input variables are the variables that the overall prompt expects.
             input_variables=["input"],
             # The example_separator is the string we will use to join the prefix, examples, and suffix together with.
             example_separator="\n",
         )
+
+        prompt_template = self.PROMPT_TEMPLATE.format(input=title)
+        print(prompt_template)
 
         chain = LLMChain(llm=self.llm, prompt=self.PROMPT_TEMPLATE)
         results = chain.run(title)

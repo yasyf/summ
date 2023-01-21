@@ -27,6 +27,7 @@ dependencies = [
   "tiktoken",
   "pinecone-client",
   "metrohash",
+  "tqdm",
 ]
 dynamic = ["version"]
 

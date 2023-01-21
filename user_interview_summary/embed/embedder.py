@@ -1,16 +1,10 @@
 import itertools
-import os
 from dataclasses import dataclass
 
 import metrohash
 import pinecone
 from langchain.docstore.document import Document
 from langchain.embeddings import OpenAIEmbeddings
-
-from user_interview_summary.shared.chain import Chain
-
-if pinecone_api_key := os.environ.get("PINECONE_API_KEY"):
-    pinecone.init(api_key=pinecone_api_key)
 
 
 @dataclass
@@ -20,8 +14,17 @@ class Embedding:
     embedding: list[float]
 
 
-class Embedder(Chain):
+class Embedder:
     INDEX = "rpa-user-interviews"
+    DIMS = 1536
+
+    @classmethod
+    def create_index(cls):
+        pinecone.create_index(
+            cls.INDEX,
+            dimension=cls.DIMS,
+            metadata_config={"indexed": ["classes"]},
+        )
 
     def __init__(self):
         super().__init__()

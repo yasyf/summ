@@ -1,14 +1,14 @@
 import itertools
-from dataclasses import dataclass
 
 import metrohash
 import pinecone
 from langchain.docstore.document import Document
 from langchain.embeddings import OpenAIEmbeddings
 
+from user_interview_summary.cache.cacher import CacheItem
 
-@dataclass
-class Embedding:
+
+class Embedding(CacheItem):
     document: Document
     fact: str
     embedding: list[float]
@@ -35,7 +35,10 @@ class Embedder:
         if not doc.metadata.get("facts"):
             return []
         embeddings = self.embeddings.embed_documents(doc.metadata["facts"])
-        return [Embedding(doc, f, e) for f, e in zip(doc.metadata["facts"], embeddings)]
+        return [
+            Embedding.passthrough(document=doc, facts=f, embeddings=e)
+            for f, e in zip(doc.metadata["facts"], embeddings)
+        ]
 
     def persist(self, doc: Document) -> list[Embedding]:
         embeddings = self.embed(doc)
@@ -44,15 +47,12 @@ class Embedder:
                 metrohash.hash64(e.fact, seed=0).hex(),
                 e.embedding,
                 {
-                    "file": e.document.metadata["file"],
-                    "fact": e.fact,
                     "classes": list(
                         itertools.chain.from_iterable(
                             e.document.metadata["classes"].values()
                         )
                     ),
-                    "summary": e.document.metadata["summary"],
-                    "document": e.document.page_content,
+                    "pk": e.pk,
                 },
             )
             for e in embeddings

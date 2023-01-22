@@ -28,6 +28,8 @@ dependencies = [
   "pinecone-client",
   "metrohash",
   "tqdm",
+  "redis[hiredis]",
+  "redis-om",
 ]
 dynamic = ["version"]
 

@@ -1,9 +1,9 @@
 from typing import Self, cast
 
-from redis_om import HashModel, NotFoundError
+from redis_om import JsonModel, NotFoundError
 
 
-class CacheItem(HashModel):
+class CacheItem(JsonModel):
     @classmethod
     def passthrough(cls, *args, **kwargs) -> Self:
         instance = cls(*args, **kwargs)

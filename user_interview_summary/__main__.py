@@ -11,7 +11,7 @@ from user_interview_summary.query.querier import Querier
 def populate():
     try:
         Embedder.create_index()
-    except:
+    except Exception:
         pass
 
     interviews = (Path(__file__).parent.parent / "interviews").glob("*.txt")

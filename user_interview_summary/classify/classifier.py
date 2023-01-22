@@ -66,14 +66,20 @@ class BaseClassifier(ABC, Chain):
     def _parse(self, results: str) -> list[Classes]:
         return [c for result in results.split(",") for c in [Classes.get(result)] if c]
 
-    def _classify(self, **kwargs: dict[str, str]) -> list[Classes]:
+    def _classify(self, doc: Document) -> list[Classes]:
         chain = LLMChain(llm=self.llm, prompt=self.prompt_template())
-        results = chain.run(**kwargs)
+        results = self.cached(
+            "_classify",
+            chain,
+            doc,
+            lambda doc: {"title": doc.metadata["file"]},
+        )
         return self._parse(results)
 
     @abstractmethod
     def classify(self, doc: Document) -> list[Classes]:
         raise NotImplementedError
+
 
 class TitleClassifier(BaseClassifier):
     CATEGORY = "JOB_TITLE"
@@ -82,25 +88,32 @@ class TitleClassifier(BaseClassifier):
         "job_title": "Title Classification",
     }
     EXAMPLES = [
-        {"title": "Brendan - UiPath - Sales", "job_title": Classes.JOB_TITLE_INDIVIDUAL_CONTRIBUTOR},
+        {
+            "title": "Brendan - UiPath - Sales",
+            "job_title": Classes.JOB_TITLE_INDIVIDUAL_CONTRIBUTOR,
+        },
         {
             "title": "Amy - American Express - HR Manager",
             "job_title": Classes.JOB_TITLE_MANAGER,
         },
-        {"title": "Mia - Captial One - Head of IT", "job_title": Classes.JOB_TITLE_EXECUTIVE},
+        {
+            "title": "Mia - Captial One - Head of IT",
+            "job_title": Classes.JOB_TITLE_EXECUTIVE,
+        },
     ]
     PREFIX = "The user interviewed falls into one of the following categories:"
     SUFFIX = " ".join(
         [
             f"{Classes.JOB_TITLE_INDIVIDUAL_CONTRIBUTOR} represents an employee who contributes to a team or organization but do not manage others.",
             f"{Classes.JOB_TITLE_MANAGER} represents an employee who takes a leadership role in an organization and manages a team of employees.",
-            f"{Classes.JOB_TITLE_EXECUTIVE} represents an an employee who has a leadership role in the organization. C-suite members, as well as heads, directors, and VPs of departments count as executives.",         
+            f"{Classes.JOB_TITLE_EXECUTIVE} represents an an employee who has a leadership role in the organization. C-suite members, as well as heads, directors, and VPs of departments count as executives.",
             "Return only a list of industry variables, no explanation. The form of the title is 'Name - Name of Company - Role'. You will have to infer the role from the company name.",
         ]
     )
 
     def classify(self, doc: Document) -> list[Classes]:
-        return self._classify(title=doc.metadata["file"])
+        return self._classify(doc)
+
 
 class CompanyCategoryClassifier(BaseClassifier):
     CATEGORY = "COMPANY_CATEGORY"
@@ -109,19 +122,25 @@ class CompanyCategoryClassifier(BaseClassifier):
         "company_category": "Company Category Classification",
     }
     EXAMPLES = [
-        {"title": "Brendan - UiPath - Sales", "company_category": Classes.COMPANY_CATEGORY_RPA},
+        {
+            "title": "Brendan - UiPath - Sales",
+            "company_category": Classes.COMPANY_CATEGORY_RPA,
+        },
         {
             "title": "Amy - Accenture - Lead Automation Developer.",
             "company_category": Classes.COMPANY_CATEGORY_CONSULTANCY,
         },
-        {"title": "Mia - Captial One - HR Manager", "company_category": Classes.COMPANY_CATEGORY_CUSTOMER},
+        {
+            "title": "Mia - Captial One - HR Manager",
+            "company_category": Classes.COMPANY_CATEGORY_CUSTOMER,
+        },
     ]
     PREFIX = "The user interviewed falls into one of the following categories:"
     SUFFIX = " ".join(
         [
             f"{Classes.COMPANY_CATEGORY_RPA} represents companies that build RPA software. This includes companies like UiPath and Automation Anywhere.",
             f"{Classes.COMPANY_CATEGORY_CUSTOMER} represents a company that would be a buyer of RPA software. They have some course of business that has nothing to do with selling RPA software or services.",
-            f"{Classes.COMPANY_CATEGORY_CONSULTANCY} represents a company that sells RPA services. There are developers and consultants that help COMPANY_CUSTOMER type companies get RPA up and running.",         
+            f"{Classes.COMPANY_CATEGORY_CONSULTANCY} represents a company that sells RPA services. There are developers and consultants that help COMPANY_CUSTOMER type companies get RPA up and running.",
             "Return only a list of department variables, no explanation.",
             "The form of the title is 'Name - Name of Company - Role'.",
             "You will have to infer the industry from the company name. Note if a user works at a company has an internal RPA team, they do not neccessarily work at a company that sells RPA software.",
@@ -130,7 +149,7 @@ class CompanyCategoryClassifier(BaseClassifier):
     )
 
     def classify(self, doc: Document) -> list[Classes]:
-        return self._classify(title=doc.metadata["file"])
+        return self._classify(doc)
 
 
 class DepartmentClassifier(BaseClassifier):
@@ -157,7 +176,8 @@ class DepartmentClassifier(BaseClassifier):
     )
 
     def classify(self, doc: Document) -> list[Classes]:
-        return self._classify(title=doc.metadata["file"])
+        return self._classify(doc)
+
 
 class IndustryClassifier(BaseClassifier):
     CATEGORY = "INDUSTRY"
@@ -166,7 +186,10 @@ class IndustryClassifier(BaseClassifier):
         "industry": "Industry Classification",
     }
     EXAMPLES = [
-        {"title": "Brendan - UiPath - Sales", "industry": Classes.INDUSTRY_RPA_SOFTWARE},
+        {
+            "title": "Brendan - UiPath - Sales",
+            "industry": Classes.INDUSTRY_RPA_SOFTWARE,
+        },
         {
             "title": "Amy - Accenture - Lead Automation Developer.",
             "industry": Classes.INDUSTRY_CONSULTING,
@@ -184,4 +207,4 @@ class IndustryClassifier(BaseClassifier):
     )
 
     def classify(self, doc: Document) -> list[Classes]:
-        return self._classify(title=doc.metadata["file"])
+        return self._classify(doc)

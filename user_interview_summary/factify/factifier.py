@@ -5,7 +5,6 @@ from textwrap import dedent
 from langchain import PromptTemplate
 from langchain.chains import LLMChain
 from langchain.docstore.document import Document
-from langchain.llms import OpenAI
 
 from user_interview_summary.classify.classes import Classes
 from user_interview_summary.shared.chain import Chain
@@ -51,5 +50,5 @@ class Factifier(Chain):
 
     def factify(self, doc: Document) -> list[str]:
         chain = LLMChain(llm=self.llm, prompt=self.PROMPT_TEMPLATE)
-        results = chain.run(doc.page_content)
+        results = self.cached("factify", chain, doc)
         return self._parse(results.splitlines())

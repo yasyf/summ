@@ -1,7 +1,14 @@
-from typing import Callable, get_type_hints
+from operator import attrgetter
+from typing import Callable, Union, cast, get_type_hints
 
 from langchain.chains import TransformChain
+from langchain.chains.base import Chain as LChain
+from langchain.docstore.document import Document
 from langchain.llms import OpenAI
+
+from user_interview_summary.cache.cacher import ChainCacheItem
+
+TExtract = Callable[[Document], Union[str, dict[str, str]]]
 
 
 class Chain:
@@ -21,3 +28,25 @@ class Chain:
             output_variables=["output"],
             transform=transform_func,
         )
+
+    def cached(
+        self,
+        name: str,
+        chain: LChain,
+        doc: Document,
+        extract: TExtract = attrgetter("page_content"),
+    ):
+        item = ChainCacheItem(
+            klass=self.__class__.__name__,
+            name=name,
+            document=doc,
+        )
+        if cached := cast(ChainCacheItem, ChainCacheItem.get(item.pk)):
+            return cached.result
+        else:
+            if isinstance((args := extract(doc)), str):
+                item.result = chain.run(args)
+            else:
+                item.result = chain.run(**args)
+            item.save()
+            return item.result

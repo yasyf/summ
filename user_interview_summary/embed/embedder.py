@@ -1,27 +1,22 @@
 import itertools
-from typing import Self
+from typing import Generator, Self
 
 import metrohash
 import pinecone
-from langchain.docstore.document import Document as Document
+from langchain.docstore.document import Document
 from langchain.embeddings import OpenAIEmbeddings
-from redis_om import EmbeddedJsonModel
 
-from user_interview_summary.cache.cacher import CacheItem
-
-
-class EmbedDocument(EmbeddedJsonModel, Document):
-    pass
+from user_interview_summary.cache.cacher import CacheDocument, CacheItem
 
 
 class Embedding(CacheItem):
-    document: EmbedDocument
+    document: CacheDocument
     fact: str
     embedding: list[float]
 
     @classmethod
     def make_pk(cls, instance: Self) -> str:
-        return metrohash.hash64(instance.fact, seed=0).hex()
+        return cls._hash(instance.fact)
 
 
 class Embedder:
@@ -41,21 +36,17 @@ class Embedder:
         self.embeddings = OpenAIEmbeddings()
         self.index = pinecone.Index(self.INDEX)
 
-    def embed(self, doc: Document) -> list[Embedding]:
-        if not doc.metadata.get("facts"):
-            return []
-        embeddings = self.embeddings.embed_documents(doc.metadata["facts"])
-        return [
-            Embedding.passthrough(
-                document=EmbedDocument(**doc.dict()),
-                facts=f,
-                embeddings=e,
-            )
-            for f, e in zip(doc.metadata["facts"], embeddings)
-        ]
+    def embed(self, doc: Document) -> Generator[Embedding, None, None]:
+        for fact in doc.metadata["facts"]:
+            embedding = Embedding.passthrough(fact=fact)
+            if not embedding.embedding:
+                embedding.document = CacheDocument(**doc.dict())
+                embedding.embeddings = self.embeddings.embed_documents([fact])[0]
+                embedding.save()
+            yield embedding
 
     def persist(self, doc: Document) -> list[Embedding]:
-        embeddings = self.embed(doc)
+        embeddings = list(self.embed(doc))
         vectors = [
             (
                 e.pk,

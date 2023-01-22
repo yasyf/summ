@@ -41,7 +41,6 @@ class Querier(Chain):
             "attributes": [
                 Classes.JOB_TITLE_EXECUTIVE,
                 Classes.COMPANY_CATEGORY_CONSULTANCY,
-                Classes.DEPARTMENT_CONSULTING,
                 Classes.INDUSTRY_CONSULTING,
             ],
         },

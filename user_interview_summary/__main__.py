@@ -21,8 +21,8 @@ def populate():
 
 def query():
     querier = Querier()
-    res = querier.query("What are the hardest process?", n=10, classes=[])
+    res = querier.query("What are the hardest processes?", n=10, classes=[])
     print(res)
 
 
-query()
+populate()

@@ -1,4 +1,5 @@
 import itertools
+from typing import Self
 
 import metrohash
 import pinecone
@@ -12,6 +13,10 @@ class Embedding(CacheItem):
     document: Document
     fact: str
     embedding: list[float]
+
+    @classmethod
+    def make_pk(cls, instance: Self) -> str:
+        return metrohash.hash64(instance.fact, seed=0).hex()
 
 
 class Embedder:
@@ -44,7 +49,7 @@ class Embedder:
         embeddings = self.embed(doc)
         vectors = [
             (
-                metrohash.hash64(e.fact, seed=0).hex(),
+                e.pk,
                 e.embedding,
                 {
                     "classes": list(
@@ -52,7 +57,6 @@ class Embedder:
                             e.document.metadata["classes"].values()
                         )
                     ),
-                    "pk": e.pk,
                 },
             )
             for e in embeddings

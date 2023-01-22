@@ -62,7 +62,7 @@ class Querier(Chain):
                 "attributes": e.document.metadata["classes"].values(),
             }
             for r in results
-            for e in [cast(Embedding, Embedding.get(r["metadata"]["pk"]))]
+            for e in [cast(Embedding, Embedding.get(r["id"]))]
         ]
 
         chain = LLMChain(llm=self.llm, prompt=self.prompt_template(examples))

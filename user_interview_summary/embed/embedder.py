@@ -3,14 +3,19 @@ from typing import Self
 
 import metrohash
 import pinecone
-from langchain.docstore.document import Document
+from langchain.docstore.document import Document as Document
 from langchain.embeddings import OpenAIEmbeddings
+from redis_om import EmbeddedJsonModel
 
 from user_interview_summary.cache.cacher import CacheItem
 
 
+class EmbedDocument(EmbeddedJsonModel, Document):
+    pass
+
+
 class Embedding(CacheItem):
-    document: Document
+    document: EmbedDocument
     fact: str
     embedding: list[float]
 
@@ -41,7 +46,11 @@ class Embedder:
             return []
         embeddings = self.embeddings.embed_documents(doc.metadata["facts"])
         return [
-            Embedding.passthrough(document=doc, facts=f, embeddings=e)
+            Embedding.passthrough(
+                document=EmbedDocument(**doc.dict()),
+                facts=f,
+                embeddings=e,
+            )
             for f, e in zip(doc.metadata["facts"], embeddings)
         ]
 

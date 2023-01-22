@@ -9,7 +9,10 @@ from user_interview_summary.query.querier import Querier
 
 
 def populate():
-    Embedder.create_index()
+    try:
+        Embedder.create_index()
+    except:
+        pass
 
     interviews = (Path(__file__).parent.parent / "interviews").glob("*.txt")
     pipeline = Pipeline(persist=True)

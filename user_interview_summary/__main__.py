@@ -28,4 +28,4 @@ def query():
     print(res)
 
 
-populate()
+query()

@@ -16,18 +16,23 @@ class Querier(Chain):
     INDEX = "rpa-user-interviews"
     EXAMPLES = [
         {
-            "fact": "I like to play video games",
-            "attributes": ["gamer"],
-            "context": "I like to play video games",
+            "fact": "The hardest process is accounts payable, it costs us 200 man-hours.",
+            "context": "We do lots of proccesses, and try to stack rack them by the amount of man hours. I've done 11 bots while I've been here. Accounts payable has been hard, but others too. I've done a lot of bespoke bots for the FDA too. It's hard because these bots break all the time, but they save us a lot of money.",
+            "attributes": "JOB_TITLE_INDIVIDUAL_CONTRIBUTOR, DEPARTMENT_ENGINEERING, COMPANY_CATEGORY_CUSTOMER, DEPARTMENT_FINANCE, INDUSTRY_CONSTRUCTION",
+        },
+        {
+            "fact": "Ugh, all the invoice stuff really sucks, and it's been expensive for the org",
+            "context": "OCR is the future since invoice processing is so hard. It's hard because even Google's OCR isn't good at capturing all the handwritten letters, maybe 70% hit rate. Invoice has been really expensive for us, but we spend 3m+ annually on our automation doing invoice processing.",
+            "attributes": "JOB_TITLE_MANAGER, DEPARTMENT_FINANCE, COMPANY_CATEGORY_CUSTOMER, INDUSTRY_ENERGY_UTILITIES_WASTE",
         },
     ]
     EXAMPLE_PROMPT = PromptTemplate(
         input_variables=["fact", "context", "attributes"],
         template=dedent(
             """
-                Fact: {fact}
-                Context: {context}
-                Attributes: {attributes}
+                FACT: {fact}
+                CONTEXT: {context}
+                ATTTRIBUTES: {attributes}
                 """
         ),
     )
@@ -53,17 +58,26 @@ class Querier(Chain):
             example_prompt=self.EXAMPLE_PROMPT,
             prefix=dedent(
                 f"""
-                The following is a list of facts, and attributes about the user who said them. Each fact comes with context and attributes that describe the user. Each set of fact, context, attributes is said by a different user, talking about their experience.
+                You are an agent summarizing insights from a set of user interviews. You are given:
+	            (1) a query that you are trying to answer
+	            (2) a set of facts as well as their context and attributes about the user
 
-                Here are some examples:
+                Based on the given query, your job is to read through the facts and related context and give an answer to the query.
+
+                Here is an example:
+                EXAMPLE:
+                ==================================================
                 {self.examples()}
+                ==================================================
+
+                The current query, and facts with their user attributes and context will follow. Reply with your response to the query.
 
                 """
             ),
             suffix=dedent(
                 """
-            Can you write a long, multi-paragraph summary the facts here and pull in context when neccessary to answer the query: {query}
-            """
+                QUERY: {query}
+                RESPONSE:"""
             ),
             input_variables=["query"],
             example_separator="\n",
@@ -73,7 +87,7 @@ class Querier(Chain):
         embedding = self.embeddings.embed_query(query)
         filter = {"$or": [{"classes": c.value} for c in classes]} if classes else None
         results = self.index.query(
-            embedding, top_k=n, filter=filter, include_metadata=True  # type: ignore
+            embedding, top_k=n, include_metadata=True  # type: ignore
         )["matches"]
 
         examples = [
@@ -85,6 +99,9 @@ class Querier(Chain):
             for r in results
             for e in [cast(Embedding, Embedding.get(r["id"]))]
         ]
+
+        # Print the prompt
+        # print(self.prompt_template(examples).format(query="What are the hardest processes?"))
 
         chain = LLMChain(llm=self.llm, prompt=self.prompt_template(examples))
         return chain.run(query=query)

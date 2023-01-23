@@ -1,3 +1,4 @@
+import json
 import types
 from abc import abstractmethod
 from typing import Optional, Self, Union, cast
@@ -64,6 +65,7 @@ class ChainCacheItem(CacheItem):
     name: str
     document: Union[CacheDocument, list[CacheDocument]]
     result: str
+    meta: dict = Field(default_factory=dict)
 
     def page_contents(self) -> list[str]:
         if isinstance(self.document, list):
@@ -73,5 +75,12 @@ class ChainCacheItem(CacheItem):
     @classmethod
     def make_pk(cls, instance: Self) -> str:
         return cls._hash(
-            ":".join([instance.klass, instance.name, *instance.page_contents()])
+            ":".join(
+                [
+                    instance.klass,
+                    instance.name,
+                    *instance.page_contents(),
+                    json.dumps(instance.meta, sort_keys=True),
+                ]
+            )
         )

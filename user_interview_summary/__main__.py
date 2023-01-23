@@ -22,15 +22,8 @@ def populate():
 
 
 def query():
-    querier = Querier()
-    res = querier.query(
-        "What is the best product for RPA?",
-        n=10,
-        classes=[],
-        with_static=False,
-        debug=True,
-    )
-    print(res)
+    querier = Querier(debug=True)
+    querier.query("What is the best product for RPA?", n=3, classes=[])
 
 
 query()

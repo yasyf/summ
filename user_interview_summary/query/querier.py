@@ -1,129 +1,205 @@
 import itertools
-from typing import TypedDict
+from typing import TypedDict, cast, overload
 
-import metrohash
 import pinecone
-from langchain import FewShotPromptTemplate, LLMChain, PromptTemplate
+from langchain import (
+    BasePromptTemplate,
+    FewShotPromptTemplate,
+    LLMChain,
+    PromptTemplate,
+)
+from langchain.docstore.document import Document
 from langchain.embeddings import OpenAIEmbeddings
 
 from user_interview_summary.classify.classes import Classes
 from user_interview_summary.embed.embedder import Embedding
 from user_interview_summary.shared.chain import Chain
 from user_interview_summary.shared.utils import dedent
+from user_interview_summary.summarize.summarizer import Summarizer
 
 
-class Example(TypedDict):
+class Fact(TypedDict):
     fact: str
     context: str
     attributes: str
 
 
+class Answer(TypedDict):
+    question: str
+    answer: str
+
+
+class Conclusion(TypedDict):
+    step: str
+    conclusion: str
+
+
 class Querier(Chain):
     INDEX = "rpa-user-interviews"
-    EXAMPLES: list[Example] = [
-        {
-            "fact": "The hardest process is accounts payable, it costs us 200 man-hours.",
-            "context": "We do lots of proccesses, and try to stack rack them by the amount of man hours. I've done 11 bots while I've been here. Accounts payable has been hard, but others too. I've done a lot of bespoke bots for the FDA too. It's hard because these bots break all the time, but they save us a lot of money.",
-            "attributes": ", ".join(
-                [
-                    Classes.JOB_TITLE_INDIVIDUAL_CONTRIBUTOR,
-                    Classes.DEPARTMENT_ENGINEERING,
-                    Classes.COMPANY_CATEGORY_CUSTOMER,
-                    Classes.DEPARTMENT_FINANCE,
-                    Classes.INDUSTRY_CONSTRUCTION,
-                ]
-            ),
-        },
-        {
-            "fact": "Ugh, all the invoice stuff really sucks, and it's been expensive for the org",
-            "context": "OCR is the future since invoice processing is so hard. It's hard because even Google's OCR isn't good at capturing all the handwritten letters, maybe 70% hit rate. Invoice has been really expensive for us, but we spend 3m+ annually on our automation doing invoice processing.",
-            "attributes": ", ".join(
-                [
-                    Classes.JOB_TITLE_MANAGER,
-                    Classes.DEPARTMENT_FINANCE,
-                    Classes.COMPANY_CATEGORY_CUSTOMER,
-                    Classes.INDUSTRY_ENERGY_UTILITIES_WASTE,
-                ]
-            ),
-        },
-    ]
-    EXAMPLE_PROMPT = PromptTemplate(
+    FACT_PROMPT = PromptTemplate(
         input_variables=["fact", "context", "attributes"],
         template=dedent(
             """
-                FACT: {fact}
-                CONTEXT: {context}
-                ATTTRIBUTES: {attributes}
+                The user was tagged as: {attributes}.
+                Their respoonse was: {fact}
+                A summary of the whole interview is: {context}
             """
         ),
     )
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, debug: bool = False):
+        super().__init__(debug=debug)
         self.embeddings = OpenAIEmbeddings()
+        self.summarizer = Summarizer()
         self.index = pinecone.Index(self.INDEX)
 
-    def examples(self):
-        return FewShotPromptTemplate(
-            examples=self.EXAMPLES,  # type: ignore
-            example_prompt=self.EXAMPLE_PROMPT,
-            prefix="",
-            suffix="",
-            input_variables=[],
-            example_separator="\n",
-        ).format()
+    # Questions
 
-    def prompt_template(self, examples, with_static: bool = True):
-        static_examples = dedent(
-            f"""
-             Here is an example:
-                EXAMPLE:
-                ==================================================
-                {self.examples()}
-                ==================================================
+    def steps_template(self):
+        return PromptTemplate(
+            template=dedent(
+                """
+                Your task is to determine a set of up to {n} steps which would answer a question.
+                You must not answer the question, merely determine the best way to answer it.
 
-                Do not use the content from the above example in your answer. It is only there to demonstrate the format.
-            """
+                For example, if the question was "What is the most popular house colors?":
+                1. Determine all the possible colors that houses can be.
+                2. Determine the number of houses that are each color.
+                3. Determine the most popular color.
+
+                The question is: {query}
+
+                1.
+                """
+            ),
+            input_variables=["query", "n"],
         )
+
+    def queries_template(self):
+        return PromptTemplate(
+            template=dedent(
+                """
+                Your task is to determine a set of queries which would answer a question.
+                The queries run against a database of facts compiled across several user interviews.
+
+                The overall question you are trying to answer is: {query}
+                You are on the following step: {step}
+
+                Generate a bulleted list of up to {n} natural-language queries to complete this step.
+
+                -
+                """
+            ),
+            input_variables=["query", "step", "n"],
+        )
+
+    # Answers
+
+    def facts_template(self, facts: list[Fact]):
         return FewShotPromptTemplate(
-            examples=examples,
-            example_prompt=self.EXAMPLE_PROMPT,
+            examples=cast(list[dict], facts),
+            example_prompt=self.FACT_PROMPT,
             prefix=dedent(
-                f"""
-                You are an agent summarizing insights from a set of user interviews. You are given:
-	            (1) a query that you are trying to answer
-	            (2) a set of facts as well as their context and attributes about the user
+                """
+                Your task is to answer a query against a corpus of user interviews.
+                To help answer the question, you are provided with a set of facts (along with the context and attributes of the author of the fact).
 
-                Based on the given query, your job is to read through the facts and related context and give an answer to the query.
-                {static_examples if with_static else ""}
-                The current query, and facts with their user attributes and context will follow. Reply with your response to the query.
+                The query is: {query}
 
+                The relevant facts are:
                 """
             ),
-            suffix=dedent(
-                """
-                QUERY: {query}
-                RESPONSE:"""
-            ),
+            suffix="Your response:\n",
             input_variables=["query"],
             example_separator="\n",
         )
 
-    def query(
-        self,
-        query: str,
-        n=10,
-        classes: list[Classes] = [],
-        with_static: bool = False,
-        debug: bool = False,
+    def answers_template(self, answers: list[Answer]):
+        return FewShotPromptTemplate(
+            examples=cast(list[dict], answers),
+            example_prompt=PromptTemplate(
+                template=dedent(
+                    """
+                    Query:
+                    {question}
+
+                    Answer:
+                    {answer}
+                """
+                ),
+                input_variables=["question", "answer"],
+            ),
+            prefix=dedent(
+                """
+                Your task is to take a set of queries and answers, and use them to complete a step towards answering an original question.
+
+                The original question you are trying to answer is: {query}
+                You are on the following step: {step}
+
+                Here are the queries and answers:
+                """
+            ),
+            suffix="Completed step:\n",
+            input_variables=["query", "step"],
+        )
+
+    def conclusions_template(self, conclusions: list[Conclusion]):
+        return FewShotPromptTemplate(
+            examples=cast(list[dict], conclusions),
+            example_prompt=PromptTemplate(
+                template=dedent(
+                    """
+                    Step:
+                    {step}
+
+                    Conclusion:
+                    {conclusion}
+                """
+                ),
+                input_variables=["step", "conclusion"],
+            ),
+            prefix=dedent(
+                """
+                Your task is to take a set of steps that were conducted to answer a question, and use them to answer that question.
+
+                The question you are trying to answer: {query}
+
+                The steps you went through to answer this question are:
+                """
+            ),
+            suffix="Final answer:\n",
+            input_variables=["query"],
+        )
+
+    @overload
+    def _query(self, prompt: BasePromptTemplate, **kwargs) -> str:
+        ...
+
+    @overload
+    def _query(
+        self, prompt: BasePromptTemplate, initial: str, prefix: str, **kwargs
+    ) -> list[str]:
+        ...
+
+    def _query(
+        self, prompt: BasePromptTemplate, initial: str = "", prefix: str = "", **kwargs
     ):
+        chain = LLMChain(llm=self.llm, prompt=prompt)
+        results = initial + chain.run(**kwargs)
+        self.dprint(results)
+        if initial and prefix:
+            return self._parse(results.splitlines(), prefix)
+        else:
+            return results
+
+    def _query_facts(self, query: str, n: int, classes: list[Classes]):
         embedding = self.embeddings.embed_query(query)
         filter = {"$or": [{"classes": c.value} for c in classes]} if classes else None
         results = self.index.query(
             embedding, top_k=n, include_metadata=True, filter=filter  # type: ignore
         )["matches"]
 
-        examples: list[Example] = [
+        facts: list[Fact] = [
             {
                 "fact": e.fact,
                 "context": e.document.metadata["summary"],
@@ -138,13 +214,35 @@ class Querier(Chain):
             if e
         ]
 
-        if not examples:
+        if not facts:
             raise RuntimeError("No vectors found!")
+        return facts
 
-        prompt = self.prompt_template(examples, with_static=with_static)
-        # Print the prompt
-        if debug:
-            print(prompt.format(query=query))
+    def _answer_question(self, question: str, n: int, classes: list[Classes]) -> Answer:
+        self.dprint(f"Answer to: {question}", color="magenta", indent=False)
+        facts = self._query_facts(question, n, classes)
+        answer = self.summarizer.summarize_facts(
+            question,
+            [Document(page_content=self.FACT_PROMPT.format(**f)) for f in facts],
+        )
+        self.dprint(answer)
+        return {"question": question, "answer": answer}
 
-        chain = LLMChain(llm=self.llm, prompt=prompt)
-        return chain.run(query=query)
+    def _conclude_step(
+        self, step: str, query: str, n: int, classes: list[Classes]
+    ) -> Conclusion:
+        self.dprint(f"Questions to solve: {step}", color="cyan")
+        questions = self._query(
+            self.queries_template(), "-", r"\-", query=query, step=step, n=n
+        )
+        answers = [self._answer_question(q, n, classes) for q in questions]
+        self.dprint(f"Solved: {step}", color="cyan")
+        conclusion = self._query(self.answers_template(answers), query=query, step=step)
+        return {"step": step, "conclusion": conclusion}
+
+    def query(self, query: str, n: int = 3, classes: list[Classes] = []):
+        self.dprint(f"Steps to answer: {query}", color="green")
+        steps = self._query(self.steps_template(), "1.", r"\d+(?:\.)", query=query, n=n)
+        conclusions = [self._conclude_step(s, query, n, classes) for s in steps]
+        self.dprint(f"Answer: {query}", color="green")
+        return self._query(self.conclusions_template(conclusions), query=query)

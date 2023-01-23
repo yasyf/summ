@@ -40,16 +40,10 @@ class Factifier(Chain):
         input_variables=["chunk"],
     )
 
-    def _parse(self, results: list[str]):
-        return [
-            g.strip()
-            for r in results
-            for p in [re.search(r"-(?:\s*)(?P<fact>.*)", r)]
-            for g in [p and p.group("fact")]
-            if p and g
-        ]
+    def parse(self, results: list[str]):
+        return self._parse(results, prefix="-")
 
     def factify(self, doc: Document) -> list[str]:
         chain = LLMChain(llm=self.llm, prompt=self.PROMPT_TEMPLATE)
-        results = self.cached("factify", chain, doc)
+        results = "-" + self.cached("factify", chain, doc)
         return self._parse(results.splitlines())

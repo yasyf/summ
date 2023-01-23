@@ -30,6 +30,7 @@ dependencies = [
   "redis[hiredis]",
   "redis-om",
   "joblib",
+  "termcolor",
 ]
 dynamic = ["version"]
 

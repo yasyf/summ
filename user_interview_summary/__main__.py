@@ -23,7 +23,13 @@ def populate():
 
 def query():
     querier = Querier()
-    res = querier.query("What are the hardest processes?", n=10, classes=[])
+    res = querier.query(
+        "What is the best product for RPA?",
+        n=10,
+        classes=[],
+        with_static=False,
+        debug=True,
+    )
     print(res)
 
 

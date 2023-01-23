@@ -73,7 +73,18 @@ class Querier(Chain):
             example_separator="\n",
         ).format()
 
-    def prompt_template(self, examples):
+    def prompt_template(self, examples, with_static: bool = True):
+        static_examples = dedent(
+            f"""
+             Here is an example:
+                EXAMPLE:
+                ==================================================
+                {self.examples()}
+                ==================================================
+
+                Do not use the content from the above example in your answer. It is only there to demonstrate the format.
+            """
+        )
         return FewShotPromptTemplate(
             examples=examples,
             example_prompt=self.EXAMPLE_PROMPT,
@@ -84,13 +95,7 @@ class Querier(Chain):
 	            (2) a set of facts as well as their context and attributes about the user
 
                 Based on the given query, your job is to read through the facts and related context and give an answer to the query.
-
-                Here is an example:
-                EXAMPLE:
-                ==================================================
-                {self.examples()}
-                ==================================================
-
+                {static_examples if with_static else ""}
                 The current query, and facts with their user attributes and context will follow. Reply with your response to the query.
 
                 """
@@ -104,7 +109,14 @@ class Querier(Chain):
             example_separator="\n",
         )
 
-    def query(self, query: str, n=10, classes: list[Classes] = []):
+    def query(
+        self,
+        query: str,
+        n=10,
+        classes: list[Classes] = [],
+        with_static: bool = False,
+        debug: bool = False,
+    ):
         embedding = self.embeddings.embed_query(query)
         filter = {"$or": [{"classes": c.value} for c in classes]} if classes else None
         results = self.index.query(
@@ -126,8 +138,13 @@ class Querier(Chain):
             if e
         ]
 
-        # Print the prompt
-        print(self.prompt_template(examples).format(query=query))
+        if not examples:
+            raise RuntimeError("No vectors found!")
 
-        chain = LLMChain(llm=self.llm, prompt=self.prompt_template(examples))
+        prompt = self.prompt_template(examples, with_static=with_static)
+        # Print the prompt
+        if debug:
+            print(prompt.format(query=query))
+
+        chain = LLMChain(llm=self.llm, prompt=prompt)
         return chain.run(query=query)

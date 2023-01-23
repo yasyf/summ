@@ -1,14 +1,16 @@
+import logging
 from operator import attrgetter
-from typing import Callable, Union, cast, get_type_hints
+from typing import Callable, TypeVar, Union, cast, get_type_hints, overload
 
 from langchain.chains import TransformChain
 from langchain.chains.base import Chain as LChain
 from langchain.docstore.document import Document
 from langchain.llms import OpenAI
 
-from user_interview_summary.cache.cacher import ChainCacheItem
+from user_interview_summary.cache.cacher import CacheDocument, ChainCacheItem
 
-TExtract = Callable[[Document], Union[str, dict[str, str]]]
+TDoc = TypeVar("TDoc", bound=Union[Document, list[Document]])
+TExtract = Callable[[TDoc], Union[str, dict[str, str], TDoc]]
 
 
 class Chain:
@@ -29,23 +31,48 @@ class Chain:
             transform=transform_func,
         )
 
+    @overload
     def cached(
         self,
         name: str,
         chain: LChain,
         doc: Document,
-        extract: TExtract = attrgetter("page_content"),
+        extract: TExtract[Document] = attrgetter("page_content"),
+    ) -> str:
+        ...
+
+    @overload
+    def cached(
+        self,
+        name: str,
+        chain: LChain,
+        doc: list[Document],
+        extract: TExtract[list[Document]],
+    ) -> str:
+        ...
+
+    def cached(
+        self,
+        name: str,
+        chain: LChain,
+        doc: TDoc,
+        extract: TExtract[TDoc] = cast(TExtract[Document], attrgetter("page_content")),
     ):
-        item = ChainCacheItem(
+        item = ChainCacheItem.passthrough(
             klass=self.__class__.__name__,
             name=name,
-            document=doc,
+            document=[CacheDocument.from_doc(d) for d in doc]
+            if isinstance(doc, list)
+            else CacheDocument.from_doc(doc),
         )
-        if cached := cast(ChainCacheItem, ChainCacheItem.get(item.pk)):
-            return cached.result
+
+        if item.result:
+            logging.info(f"Cache hit for {item.pk}")
+            return item.result
         else:
-            if isinstance((args := extract(doc)), str):
-                item.result = chain.run(args)
+            logging.warning(f"Cache miss for {item.pk}")
+            if not isinstance((args := extract(doc)), dict):
+                item.result = chain.run(args)  # type: ignore
             else:
                 item.result = chain.run(**args)
             item.save()

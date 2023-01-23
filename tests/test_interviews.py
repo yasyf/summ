@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import pytest
+import requests_mock
 
 from user_interview_summary.classify.classes import Classes
 from user_interview_summary.classify.classifier import (
@@ -18,7 +19,7 @@ from user_interview_summary.splitter.splitter import Splitter
 class TestInterviews:
     @pytest.fixture
     def interviews(self):
-        return (Path(__file__).parent.parent / "interviews").glob("*.txt")
+        return list((Path(__file__).parent.parent / "interviews").glob("*.txt"))
 
     @pytest.fixture
     def interview(self, interviews):
@@ -110,3 +111,24 @@ class TestInterviews:
         pipe = pipeline.run([f.open(mode="r") for f in interviews])
         doc = next(pipe)
         assert doc.metadata["facts"] is not None
+
+    def test_cache(
+        self,
+        interviews: list[Path],
+        pipeline: Pipeline,
+        requests_mock: requests_mock.Mocker,
+    ):
+        pipe = pipeline.run([f.open(mode="r") for f in interviews])
+        requests_mock.stop()
+        doc1 = next(pipe)
+        doc2 = next(pipe)
+        assert doc1.metadata["facts"] is not None
+        assert doc2.metadata["facts"] != doc1.metadata["facts"]
+        requests_mock.start()
+
+        pipe = pipeline.run([f.open(mode="r") for f in interviews])
+        doc1p = next(pipe)
+        doc2p = next(pipe)
+        assert doc1p.metadata["facts"] == doc1.metadata["facts"]
+        assert doc2p.metadata["facts"] == doc2.metadata["facts"]
+        assert doc2p.metadata["facts"] != doc1p.metadata["facts"]

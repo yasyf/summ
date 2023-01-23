@@ -1,4 +1,6 @@
 import logging
+import os
+import traceback
 from itertools import chain
 from pathlib import Path
 from typing import Generator, Iterable, TextIO
@@ -32,7 +34,10 @@ class Pipeline(Chain):
                 self.embedder.persist(doc) if self.persist else self.embedder.embed(doc)
             )
         except Exception as e:
-            logging.error(f"Error processing {doc.metadata['file']}: {e}")
+            logging.error(f"Error processing {doc.metadata['file']}")
+            traceback.print_exception(e)
+            if "PYTEST_CURRENT_TEST" in os.environ:
+                raise e
         finally:
             return doc
 

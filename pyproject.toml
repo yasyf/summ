@@ -42,7 +42,7 @@ Source = "https://github.com/unknown/user-interview-summary"
 path = "user_interview_summary/__about__.py"
 
 [tool.hatch.envs.default]
-dependencies = ["pytest", "pytest-cov"]
+dependencies = ["pytest", "pytest-cov", "requests-mock"]
 [tool.hatch.envs.default.scripts]
 cov = "pytest --cov-report=term-missing --cov-config=pyproject.toml --cov=user_interview_summary --cov=tests {args}"
 no-cov = "cov --no-cov {args}"

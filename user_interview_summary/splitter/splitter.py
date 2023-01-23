@@ -1,5 +1,20 @@
+from typing import Sequence, cast
+
 from langchain.docstore.document import Document
 from langchain.text_splitter import RecursiveCharacterTextSplitter
+
+
+class UnsharedDictList(Sequence):
+    def __init__(self, d: dict, n: int) -> None:
+        super().__init__()
+        self._d = d
+        self._n = n
+
+    def __getitem__(self, _n: int):
+        return self._d.copy()
+
+    def __len__(self):
+        return self._n
 
 
 class Splitter:
@@ -16,4 +31,6 @@ class Splitter:
             for speaker_chunk in [utterance.split("\n")]
             if "\n" in utterance and "markie" not in speaker_chunk[0].lower()
         ]
-        return self.splitter.create_documents(chunks, [{"file": title}] * len(chunks))
+        return self.splitter.create_documents(
+            chunks, cast(list, UnsharedDictList({"file": title}, len(chunks)))
+        )

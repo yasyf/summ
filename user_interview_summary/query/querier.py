@@ -97,7 +97,8 @@ class Querier(Chain):
                 "attributes": e.document.metadata["classes"].values(),
             }
             for r in results
-            for e in [cast(Embedding, Embedding.get(r["id"]))]
+            for e in [Embedding.safe_get(r["id"])]
+            if e
         ]
 
         # Print the prompt

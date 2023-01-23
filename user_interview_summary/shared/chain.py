@@ -1,5 +1,6 @@
 import itertools
 import logging
+import os
 import re
 import textwrap
 from collections import defaultdict
@@ -106,7 +107,10 @@ class DPrinter:
         formatted = indent_ + colored(
             indent_.join(
                 itertools.chain.from_iterable(
-                    [textwrap.wrap(l) for l in s.splitlines()]
+                    [
+                        textwrap.wrap(l, width=os.get_terminal_size().columns - 30)
+                        for l in s.splitlines()
+                    ]
                 )
             ),
             color=color,

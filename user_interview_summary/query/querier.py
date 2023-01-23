@@ -1,5 +1,5 @@
 import itertools
-from typing import cast
+from typing import TypedDict
 
 import metrohash
 import pinecone
@@ -12,18 +12,39 @@ from user_interview_summary.shared.chain import Chain
 from user_interview_summary.shared.utils import dedent
 
 
+class Example(TypedDict):
+    fact: str
+    context: str
+    attributes: str
+
+
 class Querier(Chain):
     INDEX = "rpa-user-interviews"
-    EXAMPLES = [
+    EXAMPLES: list[Example] = [
         {
             "fact": "The hardest process is accounts payable, it costs us 200 man-hours.",
             "context": "We do lots of proccesses, and try to stack rack them by the amount of man hours. I've done 11 bots while I've been here. Accounts payable has been hard, but others too. I've done a lot of bespoke bots for the FDA too. It's hard because these bots break all the time, but they save us a lot of money.",
-            "attributes": "JOB_TITLE_INDIVIDUAL_CONTRIBUTOR, DEPARTMENT_ENGINEERING, COMPANY_CATEGORY_CUSTOMER, DEPARTMENT_FINANCE, INDUSTRY_CONSTRUCTION",
+            "attributes": ", ".join(
+                [
+                    Classes.JOB_TITLE_INDIVIDUAL_CONTRIBUTOR,
+                    Classes.DEPARTMENT_ENGINEERING,
+                    Classes.COMPANY_CATEGORY_CUSTOMER,
+                    Classes.DEPARTMENT_FINANCE,
+                    Classes.INDUSTRY_CONSTRUCTION,
+                ]
+            ),
         },
         {
             "fact": "Ugh, all the invoice stuff really sucks, and it's been expensive for the org",
             "context": "OCR is the future since invoice processing is so hard. It's hard because even Google's OCR isn't good at capturing all the handwritten letters, maybe 70% hit rate. Invoice has been really expensive for us, but we spend 3m+ annually on our automation doing invoice processing.",
-            "attributes": "JOB_TITLE_MANAGER, DEPARTMENT_FINANCE, COMPANY_CATEGORY_CUSTOMER, INDUSTRY_ENERGY_UTILITIES_WASTE",
+            "attributes": ", ".join(
+                [
+                    Classes.JOB_TITLE_MANAGER,
+                    Classes.DEPARTMENT_FINANCE,
+                    Classes.COMPANY_CATEGORY_CUSTOMER,
+                    Classes.INDUSTRY_ENERGY_UTILITIES_WASTE,
+                ]
+            ),
         },
     ]
     EXAMPLE_PROMPT = PromptTemplate(
@@ -33,7 +54,7 @@ class Querier(Chain):
                 FACT: {fact}
                 CONTEXT: {context}
                 ATTTRIBUTES: {attributes}
-                """
+            """
         ),
     )
 
@@ -44,7 +65,7 @@ class Querier(Chain):
 
     def examples(self):
         return FewShotPromptTemplate(
-            examples=self.EXAMPLES,
+            examples=self.EXAMPLES,  # type: ignore
             example_prompt=self.EXAMPLE_PROMPT,
             prefix="",
             suffix="",
@@ -87,14 +108,18 @@ class Querier(Chain):
         embedding = self.embeddings.embed_query(query)
         filter = {"$or": [{"classes": c.value} for c in classes]} if classes else None
         results = self.index.query(
-            embedding, top_k=n, include_metadata=True  # type: ignore
+            embedding, top_k=n, include_metadata=True, filter=filter  # type: ignore
         )["matches"]
 
-        examples = [
+        examples: list[Example] = [
             {
                 "fact": e.fact,
                 "context": e.document.metadata["summary"],
-                "attributes": e.document.metadata["classes"].values(),
+                "attributes": ", ".join(
+                    itertools.chain.from_iterable(
+                        e.document.metadata["classes"].values()
+                    )
+                ),
             }
             for r in results
             for e in [Embedding.safe_get(r["id"])]
@@ -102,7 +127,7 @@ class Querier(Chain):
         ]
 
         # Print the prompt
-        # print(self.prompt_template(examples).format(query="What are the hardest processes?"))
+        print(self.prompt_template(examples).format(query=query))
 
         chain = LLMChain(llm=self.llm, prompt=self.prompt_template(examples))
         return chain.run(query=query)

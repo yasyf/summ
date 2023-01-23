@@ -2,14 +2,12 @@ import signal
 import sys
 from pathlib import Path
 
-from tqdm import tqdm
-
 from user_interview_summary.classify.classes import Classes
 from user_interview_summary.embed.embedder import Embedder
 from user_interview_summary.pipeline import Pipeline
 from user_interview_summary.query.querier import Querier
 
-signal.signal(signal.SIGINT, lambda _s, _f: sys.exit(0))
+signal.signal(signal.SIGINT, lambda _s, _f: sys.exit(1))
 
 
 def populate():
@@ -20,10 +18,7 @@ def populate():
 
     interviews = (Path(__file__).parent.parent / "interviews").glob("*.txt")
     pipeline = Pipeline(persist=True)
-    pipe = tqdm(pipeline.run([f.open(mode="r") for f in interviews]))
-
-    for doc in pipe:
-        pipe.set_description(f"Processing {doc.metadata['file']}")
+    pipeline.runp(map(Path.open, interviews))
 
 
 def query():

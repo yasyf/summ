@@ -27,9 +27,9 @@ dependencies = [
   "tiktoken",
   "pinecone-client",
   "metrohash",
-  "tqdm",
   "redis[hiredis]",
   "redis-om",
+  "joblib",
 ]
 dynamic = ["version"]
 

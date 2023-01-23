@@ -39,10 +39,12 @@ class Embedder:
     def embed(self, doc: Document) -> Generator[Embedding, None, None]:
         for fact in doc.metadata["facts"]:
             embedding = Embedding.passthrough(fact=fact)
+
             if not embedding.embedding:
-                embedding.document = CacheDocument(**doc.dict())
-                embedding.embeddings = self.embeddings.embed_documents([fact])[0]
+                embedding.document = CacheDocument.from_doc(doc)
+                embedding.embedding = self.embeddings.embed_documents([fact])[0]
                 embedding.save()
+
             yield embedding
 
     def persist(self, doc: Document) -> list[Embedding]:

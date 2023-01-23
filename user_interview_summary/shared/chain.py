@@ -70,7 +70,7 @@ class Chain:
             logging.info(f"Cache hit for {item.pk}")
             return item.result
         else:
-            logging.warning(f"Cache miss for {item.pk}")
+            logging.info(f"Cache miss for {item.pk}")
             if not isinstance((args := extract(doc)), dict):
                 item.result = chain.run(args)  # type: ignore
             else:

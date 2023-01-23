@@ -23,13 +23,17 @@ class CacheDocument(EmbeddedJsonModel):
 
 class CacheItem(JsonModel):
     @classmethod
-    def passthrough(cls, *args, **kwargs) -> Self:
-        instance = cls.construct(*args, **kwargs)
+    def passthrough(cls, **kwargs) -> Self:
+        instance = cls.construct(**kwargs)
         instance.pk = cls.make_pk(instance)
         if cached := cls.safe_get(instance.pk):
             return cached
+
+        for k in cls.__fields__.keys() - kwargs.keys():
+            setattr(instance, k, None)
+
         try:
-            return cast(Self, cls(*args, **kwargs).save())
+            return cast(Self, instance.save())
         except Exception:
             return instance
 
@@ -59,7 +63,7 @@ class ChainCacheItem(CacheItem):
     klass: str
     name: str
     document: Union[CacheDocument, list[CacheDocument]]
-    result: Optional[str] = None
+    result: str
 
     def page_contents(self) -> list[str]:
         if isinstance(self.document, list):

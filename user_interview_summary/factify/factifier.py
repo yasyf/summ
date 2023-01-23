@@ -42,10 +42,11 @@ class Factifier(Chain):
 
     def _parse(self, results: list[str]):
         return [
-            p.group("fact")
+            g.strip()
             for r in results
             for p in [re.search(r"-(?:\s*)(?P<fact>.*)", r)]
-            if p
+            for g in [p and p.group("fact")]
+            if p and g
         ]
 
     def factify(self, doc: Document) -> list[str]:

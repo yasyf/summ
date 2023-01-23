@@ -219,29 +219,30 @@ class Querier(Chain):
         return facts
 
     def _answer_question(self, question: str, n: int, classes: list[Classes]) -> Answer:
-        self.dprint(f"Answer to: {question}", color="magenta", indent=False)
+        self.dprint(f"Answer to: {question}", color="magenta")
         facts = self._query_facts(question, n, classes)
         answer = self.summarizer.summarize_facts(
             question,
             [Document(page_content=self.FACT_PROMPT.format(**f)) for f in facts],
         )
         self.dprint(answer)
+        self.dprint.flush("magenta")
         return {"question": question, "answer": answer}
 
     def _conclude_step(
         self, step: str, query: str, n: int, classes: list[Classes]
     ) -> Conclusion:
-        self.dprint(f"Questions to solve: {step}", color="cyan")
+        self.dprint(f"Questions for: {step}", color="cyan")
         questions = self._query(
             self.queries_template(), "-", r"\-", query=query, step=step, n=n
         )
-        answers = [self._answer_question(q, n, classes) for q in questions]
+        answers = self._pmap(self._answer_question, questions, n, classes)
         self.dprint(f"Solved: {step}", color="cyan")
         conclusion = self._query(self.answers_template(answers), query=query, step=step)
         return {"step": step, "conclusion": conclusion}
 
     def query(self, query: str, n: int = 3, classes: list[Classes] = []):
-        self.dprint(f"Steps to answer: {query}", color="green")
+        self.dprint(f"Steps for: {query}", color="green")
         steps = self._query(self.steps_template(), "1.", r"\d+(?:\.)", query=query, n=n)
         conclusions = [self._conclude_step(s, query, n, classes) for s in steps]
         self.dprint(f"Answer: {query}", color="green")

@@ -2,9 +2,23 @@ import itertools
 import logging
 import re
 import textwrap
+from collections import defaultdict
 from operator import attrgetter
-from typing import Callable, Optional, TypeVar, Union, cast, get_type_hints, overload
+from threading import RLock, current_thread, local, main_thread
+from typing import (
+    Callable,
+    Iterable,
+    Optional,
+    Self,
+    TypeVar,
+    TypeVarTuple,
+    Union,
+    cast,
+    get_type_hints,
+    overload,
+)
 
+from joblib import Parallel, delayed
 from langchain.chains import TransformChain
 from langchain.chains.base import Chain as LChain
 from langchain.docstore.document import Document
@@ -13,21 +27,70 @@ from termcolor import colored
 
 from user_interview_summary.cache.cacher import CacheDocument, ChainCacheItem
 
+T = TypeVar("T")
+Ts = TypeVarTuple("Ts")
+R = TypeVar("R")
+
+
 TDoc = TypeVar("TDoc", bound=Union[Document, list[Document]])
 TExtract = Callable[[TDoc], Union[str, dict[str, Union[str, TDoc]], TDoc]]
 
+thread_local = local()
+print_lock = RLock()
+
 
 class DPrinter:
+    main_indent: int = 0
+
+    @classmethod
+    def get(cls, *args, **kwargs) -> Self:
+        if not hasattr(thread_local, "dprinter"):
+            thread_local.dprinter = cls(*args, **kwargs)
+        return thread_local.dprinter
+
     def __init__(self, debug: bool = False):
         self.debug = debug
-        self._indent = 0
+        self._parent = None
+        self.__indent = 0
         self._indents = set()
+        self._outputs = defaultdict(list)
 
     def indent(self):
         self._indent += 1
 
     def dedent(self):
         self._indent -= 1
+
+    @property
+    def _indent(self) -> int:
+        return self.__class__.main_indent + self.__indent
+
+    @_indent.setter
+    def _indent(self, val: int):
+        if main_thread() == current_thread():
+            self.__class__.main_indent = val
+        else:
+            self.__indent = val
+
+    def flush(self, color: str):
+        self._indents.remove(color)
+        self.dedent()
+        self._print(self._outputs[color])
+        self._outputs[color] = []
+
+    def _print(self, strings: list[str]):
+        with print_lock:
+            for s in strings:
+                if self.debug:
+                    print(s)
+                else:
+                    logging.debug(s)
+
+    def _append(self, s: str):
+        if main_thread() == current_thread():
+            self._print([s])
+        else:
+            self._outputs[self._parent].append(s)
 
     def __call__(
         self,
@@ -37,8 +100,7 @@ class DPrinter:
         dedent: bool = True,
     ):
         if color and color in self._indents and dedent:
-            self._indents.remove(color)
-            self.dedent()
+            self.flush(color)
 
         indent_ = "\n" + ("  " * self._indent)
         formatted = indent_ + colored(
@@ -50,20 +112,27 @@ class DPrinter:
             color=color,
             attrs=["bold"] if color else [],
         )
-        if self.debug:
-            print(formatted)
-        else:
-            logging.debug(formatted)
 
         if color and color not in self._indents and indent:
+            self._parent = color
             self.indent()
             self._indents.add(color)
+            self._append(formatted)
+        elif self._indent:
+            self._append(formatted)
+        else:
+            self._print([formatted])
 
 
 class Chain:
-    def __init__(self, debug: bool = False):
+    def __init__(self, debug: bool = False, verbose: bool = False):
         self.llm = OpenAI(temperature=0.0)
-        self.dprint = DPrinter(debug=debug)
+        self.pool = Parallel(n_jobs=8, prefer="threads", verbose=10 if verbose else 0)
+        self.debug = debug
+
+    @property
+    def dprint(self):
+        return DPrinter.get(debug=self.debug)
 
     def _parse(self, results: list[str], prefix: str = ""):
         return [
@@ -73,6 +142,14 @@ class Chain:
             for g in [p and p.group("res")]
             if p and g
         ]
+
+    def _pmap(
+        self, meth: Callable[[T, *Ts], R], it: Iterable[T], *args: *Ts
+    ) -> list[R]:
+        return self._parallel(meth, [(x, *args) for x in it])
+
+    def _parallel(self, meth: Callable[[*Ts], R], it: Iterable[tuple[*Ts]]) -> list[R]:
+        return self.pool(delayed(meth)(*x) for x in it) or []
 
     @classmethod
     def to_chain(cls, method: str) -> TransformChain:

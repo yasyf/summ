@@ -131,7 +131,7 @@ class DPrinter:
 class Chain:
     def __init__(self, debug: bool = False, verbose: bool = False):
         self.llm = OpenAI(temperature=0.0)
-        self.pool = Parallel(n_jobs=8, prefer="threads", verbose=10 if verbose else 0)
+        self.pool = Parallel(n_jobs=6, prefer="threads", verbose=10 if verbose else 0)
         self.debug = debug
 
     @property

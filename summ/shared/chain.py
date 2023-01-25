@@ -25,8 +25,9 @@ from langchain.chains import TransformChain
 from langchain.chains.base import Chain as LChain
 from langchain.docstore.document import Document
 from langchain.llms import OpenAI
-from summ.cache.cacher import CacheDocument, ChainCacheItem
 from termcolor import colored
+
+from summ.cache.cacher import CacheDocument, ChainCacheItem
 
 T = TypeVar("T")
 Ts = TypeVarTuple("Ts")
@@ -133,7 +134,7 @@ class DPrinter:
 class Chain:
     def __init__(self, debug: bool = False, verbose: bool = False):
         self.llm = OpenAI(temperature=0.0)
-        self.pool = Parallel(n_jobs=6, prefer="threads", verbose=10 if verbose else 0)
+        self.pool = Parallel(n_jobs=3, prefer="threads", verbose=10 if verbose else 0)
         self.debug = debug
 
     @property

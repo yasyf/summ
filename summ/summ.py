@@ -18,9 +18,10 @@ class Summ:
     ):
         pipe = pipe or Pipeline.default(path, self.index)
         try:
+            print("Creating index, this may take a while...")
             pipe.embedder.create_index()
         except Exception:
-            pass
+            print("Index already exists!")
 
         pipe.run(parallel=parallel)
 

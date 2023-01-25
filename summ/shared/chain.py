@@ -1,6 +1,7 @@
 import itertools
 import logging
 import os
+import pprint
 import re
 import textwrap
 from collections import defaultdict
@@ -24,9 +25,8 @@ from langchain.chains import TransformChain
 from langchain.chains.base import Chain as LChain
 from langchain.docstore.document import Document
 from langchain.llms import OpenAI
-from termcolor import colored
-
 from summ.cache.cacher import CacheDocument, ChainCacheItem
+from termcolor import colored
 
 T = TypeVar("T")
 Ts = TypeVarTuple("Ts")
@@ -94,11 +94,14 @@ class DPrinter:
 
     def __call__(
         self,
-        s: str,
+        s: Union[str, dict],
         color: Optional[str] = None,
         indent: bool = True,
         dedent: bool = True,
     ):
+        if isinstance(s, dict):
+            s = pprint.pformat(s, compact=True)
+
         if color and color in self._indents and dedent:
             self.flush(color)
 

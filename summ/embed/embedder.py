@@ -85,7 +85,7 @@ class Embedder:
                     )
 
     def persist(self, doc: Document) -> list[Embedding]:
-        embeddings = set(self.embed(doc, gen_queries=True))
+        embeddings = list(self.embed(doc, gen_queries=True))
         vectors = [
             (
                 e.pk,
@@ -102,4 +102,4 @@ class Embedder:
         ]
         if vectors:
             self.index.upsert(vectors)
-        return list(embeddings)
+        return embeddings

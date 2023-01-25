@@ -27,6 +27,7 @@ dependencies = [
   "redis-om",
   "joblib",
   "termcolor",
+  "retry",
 ]
 dynamic = ["version"]
 

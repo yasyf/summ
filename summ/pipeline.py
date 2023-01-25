@@ -6,6 +6,8 @@ from pathlib import Path
 from typing import Generator, Iterable, Self, TextIO
 
 from langchain.docstore.document import Document
+from openai.error import RateLimitError
+from retry import retry
 
 from summ.classify.classifier import Classifier
 from summ.embed.embedder import Embedder
@@ -45,14 +47,28 @@ class Pipeline(Chain):
         self.importer = importer
         self.persist = persist
 
+    @retry(
+        exceptions=RateLimitError,
+        tries=5,
+        delay=10,
+        backoff=2,
+        max_delay=120,
+        jitter=(0, 10),
+    )
     def _process_doc(self, doc: Document) -> Document:
         try:
-            doc.metadata["facts"] = self.factifier.factify(doc)
-            doc.metadata["classes"] = self.classifier.classify_all(doc)
-            doc.metadata["summary"] = self.summarizer.summarize_doc(doc)
-            doc.metadata["embeddings"] = (
-                self.embedder.persist(doc) if self.persist else self.embedder.embed(doc)
-            )
+            if "facts" not in doc.metadata:
+                doc.metadata["facts"] = self.factifier.factify(doc)
+            if "classes" not in doc.metadata:
+                doc.metadata["classes"] = self.classifier.classify_all(doc)
+            if "summary" not in doc.metadata:
+                doc.metadata["summary"] = self.summarizer.summarize_doc(doc)
+            if "embeddings" not in doc.metadata:
+                doc.metadata["embeddings"] = (
+                    self.embedder.persist(doc)
+                    if self.persist
+                    else self.embedder.embed(doc)
+                )
         except Exception as e:
             logging.error(f"Error processing {doc.metadata['file']}")
             traceback.print_exception(e)

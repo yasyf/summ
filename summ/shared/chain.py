@@ -25,6 +25,8 @@ from langchain.chains import TransformChain
 from langchain.chains.base import Chain as LChain
 from langchain.docstore.document import Document
 from langchain.llms import OpenAI
+from openai.error import RateLimitError
+from retry import retry
 from termcolor import colored
 
 from summ.cache.cacher import CacheDocument, ChainCacheItem
@@ -134,7 +136,7 @@ class DPrinter:
 class Chain:
     def __init__(self, debug: bool = False, verbose: bool = False):
         self.llm = OpenAI(temperature=0.0)
-        self.pool = Parallel(n_jobs=3, prefer="threads", verbose=10 if verbose else 0)
+        self.pool = Parallel(n_jobs=-1, prefer="threads", verbose=10 if verbose else 0)
         self.debug = debug
 
     @property
@@ -171,6 +173,10 @@ class Chain:
             output_variables=["output"],
             transform=transform_func,
         )
+
+    @retry(exceptions=RateLimitError, tries=5, delay=6, jitter=(0, 4))
+    def _run_with_retry(self, chain: LChain, *args, **kwargs):
+        return chain.run(*args, **kwargs)
 
     @overload
     def cached(
@@ -221,8 +227,8 @@ class Chain:
         else:
             logging.info(f"Cache miss for {item.pk}")
             if not isinstance(args, dict):
-                item.result = chain.run(args)  # type: ignore
+                item.result = self._run_with_retry(chain, args)  # type: ignore
             else:
-                item.result = chain.run(**args)
+                item.result = self._run_with_retry(chain, **args)
             item.save()
             return item.result

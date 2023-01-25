@@ -10,7 +10,6 @@ from langchain import (
 )
 from langchain.docstore.document import Document
 from langchain.embeddings import OpenAIEmbeddings
-
 from summ.classify.classes import Classes
 from summ.embed.embedder import Embedding
 from summ.shared.chain import Chain
@@ -216,6 +215,10 @@ class Querier(Chain):
 
         if not facts:
             raise RuntimeError("No vectors found!")
+        else:
+            self.dprint(f"Facts for: {query}", color="yellow")
+            self.dprint(facts)
+            self.dprint.flush("yellow")
         return facts
 
     def _answer_question(self, question: str, n: int, classes: list[Classes]) -> Answer:

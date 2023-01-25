@@ -5,19 +5,25 @@
 
 -----
 
-Summ is an open-source product that utilizes ChatGPT to provide intelligent question-answering and search capabilities across user transcripts. It allows users to easily surface insights and summarize facts across various dimensions such as department, industry, and role. With the help of natural language processing, the tool can understand and respond to complex questions and queries, making it easy for users to find the information they need.
+Summ uses ChatGPT to provide intelligent question-answering and search capabilities across user transcripts!
 
-**Table of Contents**
+Easily surface insights and summarize facts across various dimensions such as department, industry, and role. With the help of natural language processing, the tool can understand and respond to complex questions and queries, making it easy for users to find the information they need.
 
-- [Summ](#summ)
-  - [Installation](#installation)
-  - [License](#license)
+A tool by @markiewagner and @yasyf.
 
 ## Installation
 
 ```console
 pip install summ
 ```
+
+You'll need an instance of [Redis Stack](https://redis.io/docs/stack/get-started/install/) running. We've found that `brew install redis-stack/redis-stack/redis-stack` is the fastest way to get up and running.
+
+You'll also need to set two environment variables: `OPENAI_API_KEY`, and `PINECONE_API_KEY`
+
+## Docs
+
+**TODO: Docs on how to customize**
 
 ## License
 

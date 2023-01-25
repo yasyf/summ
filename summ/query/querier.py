@@ -10,6 +10,7 @@ from langchain import (
 )
 from langchain.docstore.document import Document
 from langchain.embeddings import OpenAIEmbeddings
+
 from summ.classify.classes import Classes
 from summ.embed.embedder import Embedding
 from summ.shared.chain import Chain
@@ -51,6 +52,7 @@ class Querier(Chain):
         self.embeddings = OpenAIEmbeddings()
         self.summarizer = Summarizer()
         self.index = pinecone.Index(index)
+        self.facts = set()
 
     # Questions
 
@@ -195,7 +197,7 @@ class Querier(Chain):
         embedding = self.embeddings.embed_query(query)
         filter = {"$or": [{"classes": c.value} for c in classes]} if classes else None
         results = self.index.query(
-            embedding, top_k=n, include_metadata=True, filter=filter  # type: ignore
+            embedding, top_k=n * 3, filter=filter  # type: ignore
         )["matches"]
 
         facts: list[Fact] = [
@@ -212,6 +214,12 @@ class Querier(Chain):
             for e in [Embedding.safe_get(r["id"])]
             if e
         ]
+
+        new_facts = [f for f in facts if f["fact"] not in self.facts]
+        old_facts = [f for f in facts if f["fact"] in self.facts]
+        facts = (new_facts + old_facts)[:n]
+
+        self.facts.update(f["fact"] for f in facts)
 
         if not facts:
             raise RuntimeError("No vectors found!")

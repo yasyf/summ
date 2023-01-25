@@ -5,6 +5,7 @@ from textwrap import dedent
 from langchain import PromptTemplate
 from langchain.chains import LLMChain
 from langchain.docstore.document import Document
+
 from summ.classify.classes import Classes
 from summ.shared.chain import Chain
 
@@ -45,4 +46,4 @@ class Factifier(Chain):
     def factify(self, doc: Document) -> list[str]:
         chain = LLMChain(llm=self.llm, prompt=self.PROMPT_TEMPLATE)
         results = "-" + self.cached("factify", chain, doc)
-        return self._parse(results.splitlines())
+        return self.parse(results.splitlines())

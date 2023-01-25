@@ -66,7 +66,9 @@ class Embedder:
 
     @cached_property
     def query_chain(self):
-        return LLMChain(llm=OpenAI(temperature=0.7), prompt=self.QUERY_TEMPLATE)
+        return LLMChain(
+            llm=OpenAI(temperature=0.7, cache=False), prompt=self.QUERY_TEMPLATE
+        )
 
     def _generate_query(self, fact: str, doc: Document) -> str:
         return self.query_chain.run(fact=fact, context=doc.metadata["summary"])

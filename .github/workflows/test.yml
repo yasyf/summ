@@ -36,3 +36,6 @@ jobs:
 
       - name: Run tests
         run: hatch run cov
+        env:
+          REDIS_HOST: redis
+          REDIS_PORT: 6379

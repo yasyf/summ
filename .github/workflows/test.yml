@@ -2,9 +2,9 @@ name: test
 
 on:
   push:
-    branches: [main, master]
+    branches: [main]
   pull_request:
-    branches: [main, master]
+    branches: [main]
 
 concurrency:
   group: test-${{ github.head_ref }}
@@ -15,25 +15,24 @@ env:
   FORCE_COLOR: "1"
 
 jobs:
-  run:
-    name: Python ${{ matrix.python-version }} on ${{ startsWith(matrix.os, 'macos-') && 'macOS' || startsWith(matrix.os, 'windows-') && 'Windows' || 'Linux' }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-        python-version: ['3.7', '3.8', '3.9', '3.10', '3.11.0-beta.5 - 3.11']
+  container-job:
+    runs-on: ubuntu-latest
+    container: python:3.11
+
+    services:
+      redis:
+        image: redis:redis-stack
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
-      with:
-        python-version: ${{ matrix.python-version }}
+      - name: Install Hatch
+        run: pip install --upgrade hatch
 
-    - name: Install Hatch
-      run: pip install --upgrade hatch
-
-    - name: Run tests
-      run: hatch run cov
+      - name: Run tests
+        run: hatch run cov

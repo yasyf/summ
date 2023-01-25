@@ -42,6 +42,3 @@ jobs:
 
       - name: Run tests
         run: hatch run cov
-        env:
-          REDIS_URL: redis://@redis:6379
-          REDIS_OM_URL: redis://@redis:6379

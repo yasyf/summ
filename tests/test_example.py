@@ -27,7 +27,7 @@ class TestInterviews:
 
     @pytest.fixture
     def interview(self, interviews):
-        return interviews[0]
+        return sorted(interviews)[2]
 
     @pytest.fixture
     def splitter(self):

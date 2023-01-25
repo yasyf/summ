@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "user-interview-summary"
+name = "summ"
 description = ''
 readme = "README.md"
 requires-python = ">=3.7"
@@ -40,7 +40,7 @@ Issues = "https://github.com/unknown/user-interview-summary/issues"
 Source = "https://github.com/unknown/user-interview-summary"
 
 [tool.hatch.version]
-path = "user_interview_summary/__about__.py"
+path = "summ/__about__.py"
 
 [tool.hatch.envs.default]
 dependencies = ["pytest", "pytest-cov", "requests-mock"]
@@ -54,7 +54,7 @@ python = ["37", "38", "39", "310", "311"]
 [tool.coverage.run]
 branch = true
 parallel = true
-omit = ["user_interview_summary/__about__.py"]
+omit = ["summ/__about__.py"]
 
 [tool.coverage.report]
 exclude_lines = ["no cov", "if __name__ == .__main__.:", "if TYPE_CHECKING:"]

@@ -26,15 +26,14 @@ from langchain.docstore.document import Document
 from langchain.llms import OpenAI
 from termcolor import colored
 
-from user_interview_summary.cache.cacher import CacheDocument, ChainCacheItem
+from summ.cache.cacher import CacheDocument, ChainCacheItem
 
 T = TypeVar("T")
 Ts = TypeVarTuple("Ts")
 R = TypeVar("R")
 
-
 TDoc = TypeVar("TDoc", bound=Union[Document, list[Document]])
-TExtract = Callable[[TDoc], Union[str, dict[str, Union[str, TDoc]], TDoc]]
+TExtract = Callable[[TDoc], Union[str, TDoc, dict[str, str], dict[str, TDoc]]]
 
 thread_local = local()
 print_lock = RLock()

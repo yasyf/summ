@@ -6,7 +6,7 @@ import pinecone
 from langchain.docstore.document import Document
 from langchain.embeddings import OpenAIEmbeddings
 
-from user_interview_summary.cache.cacher import CacheDocument, CacheItem
+from summ.cache.cacher import CacheDocument, CacheItem
 
 
 class Embedding(CacheItem):
@@ -20,21 +20,21 @@ class Embedding(CacheItem):
 
 
 class Embedder:
-    INDEX = "rpa-user-interviews"
-    DIMS = 1536
+    GPT3_DIMS = 1536
 
-    @classmethod
-    def create_index(cls):
+    def create_index(self):
         pinecone.create_index(
-            cls.INDEX,
-            dimension=cls.DIMS,
+            self.index_name,
+            dimension=self.dims,
             metadata_config={"indexed": ["classes"]},
         )
 
-    def __init__(self):
+    def __init__(self, index: str, dims: int = GPT3_DIMS):
         super().__init__()
+        self.index_name = index
+        self.dims = dims
         self.embeddings = OpenAIEmbeddings()
-        self.index = pinecone.Index(self.INDEX)
+        self.index = pinecone.Index(index)
 
     def embed(self, doc: Document) -> Generator[Embedding, None, None]:
         for fact in doc.metadata["facts"]:

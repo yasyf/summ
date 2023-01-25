@@ -24,13 +24,11 @@ class Splitter:
             chunk_overlap=0,
         )
 
+    def get_chunks(self, title: str, text: str) -> list[str]:
+        return text.split("\n\n")
+
     def split(self, title: str, text: str):
-        chunks = [
-            speaker_chunk[1]
-            for utterance in text.split("\n\n")
-            for speaker_chunk in [utterance.split("\n")]
-            if "\n" in utterance and "markie" not in speaker_chunk[0].lower()
-        ]
+        chunks = self.get_chunks(title, text)
         return self.splitter.create_documents(
             chunks, cast(list, UnsharedDictList({"file": title}, len(chunks)))
         )

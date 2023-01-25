@@ -2,8 +2,8 @@ from langchain import PromptTemplate
 from langchain.chains.summarize import load_summarize_chain
 from langchain.docstore.document import Document
 
-from user_interview_summary.shared.chain import Chain, LChain
-from user_interview_summary.shared.utils import dedent
+from summ.shared.chain import Chain, LChain
+from summ.shared.utils import dedent
 
 
 class Summarizer(Chain):

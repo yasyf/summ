@@ -6,8 +6,8 @@ from langchain import PromptTemplate
 from langchain.chains import LLMChain
 from langchain.docstore.document import Document
 
-from user_interview_summary.classify.classes import Classes
-from user_interview_summary.shared.chain import Chain
+from summ.classify.classes import Classes
+from summ.shared.chain import Chain
 
 
 @dataclass

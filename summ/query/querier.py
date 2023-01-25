@@ -11,11 +11,11 @@ from langchain import (
 from langchain.docstore.document import Document
 from langchain.embeddings import OpenAIEmbeddings
 
-from user_interview_summary.classify.classes import Classes
-from user_interview_summary.embed.embedder import Embedding
-from user_interview_summary.shared.chain import Chain
-from user_interview_summary.shared.utils import dedent
-from user_interview_summary.summarize.summarizer import Summarizer
+from summ.classify.classes import Classes
+from summ.embed.embedder import Embedding
+from summ.shared.chain import Chain
+from summ.shared.utils import dedent
+from summ.summarize.summarizer import Summarizer
 
 
 class Fact(TypedDict):
@@ -35,7 +35,6 @@ class Conclusion(TypedDict):
 
 
 class Querier(Chain):
-    INDEX = "rpa-user-interviews"
     FACT_PROMPT = PromptTemplate(
         input_variables=["fact", "context", "attributes"],
         template=dedent(
@@ -47,11 +46,12 @@ class Querier(Chain):
         ),
     )
 
-    def __init__(self, debug: bool = False):
+    def __init__(self, index: str, debug: bool = False):
         super().__init__(debug=debug)
+        self.index_name = index
         self.embeddings = OpenAIEmbeddings()
         self.summarizer = Summarizer()
-        self.index = pinecone.Index(self.INDEX)
+        self.index = pinecone.Index(index)
 
     # Questions
 

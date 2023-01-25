@@ -15,13 +15,13 @@ env:
   FORCE_COLOR: "1"
 
 jobs:
-  container-job:
+  test:
     runs-on: ubuntu-latest
     container: python:3.11
 
     services:
       redis:
-        image: redis:redis-stack
+        image: redis/redis-stack-server
         options: >-
           --health-cmd "redis-cli ping"
           --health-interval 10s

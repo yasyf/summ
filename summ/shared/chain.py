@@ -95,12 +95,12 @@ class DPrinter:
 
     def __call__(
         self,
-        s: Union[str, dict],
+        s: Union[str, dict, list],
         color: Optional[str] = None,
         indent: bool = True,
         dedent: bool = True,
     ):
-        if isinstance(s, dict):
+        if not isinstance(s, str):
             s = pprint.pformat(s, compact=True)
 
         if color and color in self._indents and dedent:

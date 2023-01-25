@@ -21,6 +21,7 @@ jobs:
     services:
       redis:
         image: redis/redis-stack-server
+        ports: ["6379:6379"]
         options: >-
           --health-cmd "redis-cli ping"
           --health-interval 10s
@@ -34,6 +35,7 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: "3.11"
+          cache: "pip"
 
       - name: Install Hatch
         run: pip install --upgrade hatch

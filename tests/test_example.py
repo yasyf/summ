@@ -1,41 +1,48 @@
+import sys
 from pathlib import Path
 
 import pytest
 import requests_mock
 
-from user_interview_summary.classify.classes import Classes
-from user_interview_summary.classify.classifier import (
-    BaseClassifier,
-    CompanyCategoryClassifier,
-    DepartmentClassifier,
-    IndustryClassifier,
-    TitleClassifier,
-)
-from user_interview_summary.factify.factifier import Factifier
-from user_interview_summary.pipeline import Pipeline
-from user_interview_summary.splitter.splitter import Splitter
+from summ.factify.factifier import Factifier
+from summ.pipeline import Pipeline
+from summ.splitter.otter import OtterSplitter
+from summ.splitter.splitter import Splitter
+
+sys.path.append((Path(__file__).parent.parent / "examples" / "otter").as_posix())
+
+from implementation.classes import MyClasses
+from implementation.classifier import *
 
 
 class TestInterviews:
     @pytest.fixture
-    def interviews(self):
-        return list((Path(__file__).parent.parent / "interviews").glob("*.txt"))
+    def interviews_path(self):
+        return Path(__file__).parent.parent / "examples" / "otter" / "interviews"
+
+    @pytest.fixture
+    def interviews(self, interviews_path):
+        print(interviews_path)
+        return list(interviews_path.glob("*.txt"))
 
     @pytest.fixture
     def interview(self, interviews):
-        return next(interviews)
+        return interviews[0]
 
     @pytest.fixture
     def splitter(self):
-        return Splitter()
+        return OtterSplitter(speakers_to_exclude=["markie"])
 
     @pytest.fixture
     def factifier(self):
         return Factifier()
 
     @pytest.fixture
-    def pipeline(self):
-        return Pipeline()
+    def pipeline(self, interviews_path, splitter):
+        pipe = Pipeline.default(interviews_path, "test")
+        pipe.persist = False
+        pipe.splitter = splitter
+        return pipe
 
     @pytest.fixture
     def title_classifier(self):
@@ -63,13 +70,13 @@ class TestInterviews:
         self,
         interview: Path,
         splitter: Splitter,
-        title_classifier: BaseClassifier,
+        title_classifier: TitleClassifier,
     ):
         text = interview.read_text()
         docs = splitter.split(interview.stem, text)
         classes = title_classifier.classify(docs[1])
         print(classes)
-        assert Classes.JOB_TITLE_INDIVIDUAL_CONTRIBUTOR is classes[0]
+        assert MyClasses.JOB_TITLE_INDIVIDUAL_CONTRIBUTOR is classes[0]
 
     def test_company_category_classifier(
         self,
@@ -81,7 +88,7 @@ class TestInterviews:
         docs = splitter.split(interview.stem, text)
         classes = company_category_classifier.classify(docs[1])
         print(classes)
-        assert Classes.COMPANY_CATEGORY_RPA is classes[0]
+        assert MyClasses.COMPANY_CATEGORY_RPA is classes[0]
 
     def test_department_classifier(
         self,
@@ -93,7 +100,7 @@ class TestInterviews:
         docs = splitter.split(interview.stem, text)
         classes = department_classifier.classify(docs[1])
         print(classes)
-        assert Classes.DEPARTMENT_RPA_DEVELOPMENT is classes[0]
+        assert MyClasses.DEPARTMENT_RPA_DEVELOPMENT is classes[0]
 
     def test_industry_classifier(
         self,
@@ -105,20 +112,19 @@ class TestInterviews:
         docs = splitter.split(interview.stem, text)
         classes = industry_classifier.classify(docs[1])
         print(classes)
-        assert Classes.INDUSTRY_RPA_SOFTWARE is classes[0]
+        assert MyClasses.INDUSTRY_RPA_SOFTWARE is classes[0]
 
-    def test_pipeline(self, interviews: list[Path], pipeline: Pipeline):
-        pipe = pipeline.run([f.open(mode="r") for f in interviews])
+    def test_pipeline(self, pipeline: Pipeline):
+        pipe = pipeline.rung()
         doc = next(pipe)
         assert doc.metadata["facts"] is not None
 
     def test_cache(
         self,
-        interviews: list[Path],
         pipeline: Pipeline,
         requests_mock: requests_mock.Mocker,
     ):
-        pipe = pipeline.run([f.open(mode="r") for f in interviews])
+        pipe = pipeline.rung()
         requests_mock.stop()
         doc1 = next(pipe)
         doc2 = next(pipe)
@@ -126,7 +132,7 @@ class TestInterviews:
         assert doc2.metadata["facts"] != doc1.metadata["facts"]
         requests_mock.start()
 
-        pipe = pipeline.run([f.open(mode="r") for f in interviews])
+        pipe = pipeline.rung()
         doc1p = next(pipe)
         doc2p = next(pipe)
         assert doc1p.metadata["facts"] == doc1.metadata["facts"]

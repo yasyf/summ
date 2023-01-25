@@ -1,20 +1,9 @@
-from enum import StrEnum, auto, unique
-from typing import Optional
+from enum import auto
+
+from summ.classify.classes import Classes
 
 
-@unique
-class Classes(StrEnum):
-    @classmethod
-    def get(cls, val: str) -> Optional["Classes"]:
-        val = val.strip()
-        try:
-            return cls(val)
-        except ValueError:
-            try:
-                return cls[val]
-            except KeyError:
-                pass
-
+class MyClasses(Classes):
     # Title
     JOB_TITLE_INDIVIDUAL_CONTRIBUTOR = auto()
     JOB_TITLE_MANAGER = auto()

@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "summ"
-description = ''
+description = 'Summ provides intelligent question-answering and search capabilities across user interivew transcripts.'
 readme = "README.md"
 requires-python = ">=3.7"
 license = "MIT"
@@ -35,9 +35,9 @@ dependencies = [
 dynamic = ["version"]
 
 [project.urls]
-Documentation = "https://github.com/unknown/user-interview-summary#readme"
-Issues = "https://github.com/unknown/user-interview-summary/issues"
-Source = "https://github.com/unknown/user-interview-summary"
+Documentation = "https://github.com/yasyf/summ#readme"
+Issues = "https://github.com/yasyf/summ/issues"
+Source = "https://github.com/yasyf/summ"
 
 [tool.hatch.version]
 path = "summ/__about__.py"

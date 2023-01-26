@@ -35,6 +35,17 @@ class Conclusion(TypedDict):
 
 
 class Querier(Chain):
+    """Queriers are responsible for answering questions about the dataset,
+    using the pre-populated model.
+
+    The high level flow is as follows:
+    1. Determine a set of sub-questions necessary to answer the original.
+    2. For each sub-question, determine a set of queries that would render relevant facts.
+    3. For each query, search the vector store for facts _or_ queries that are similar to the embedded query.
+    4. Extract the facts from these results.
+    5. Recursively summarize up the tree until the original question is answered.
+    """
+
     FACT_PROMPT = PromptTemplate(
         input_variables=["fact", "context", "attributes"],
         template=dedent(
@@ -57,6 +68,8 @@ class Querier(Chain):
     # Questions
 
     def steps_template(self):
+        """The template to determine sub-questions."""
+
         return PromptTemplate(
             template=dedent(
                 """
@@ -77,6 +90,8 @@ class Querier(Chain):
         )
 
     def queries_template(self):
+        """The template to determine sub-question queries."""
+
         return PromptTemplate(
             template=dedent(
                 """
@@ -97,6 +112,8 @@ class Querier(Chain):
     # Answers
 
     def facts_template(self, facts: list[Fact]):
+        """The template to summarize sub-question queries."""
+
         return FewShotPromptTemplate(
             examples=cast(list[dict], facts),
             example_prompt=self.FACT_PROMPT,
@@ -116,6 +133,8 @@ class Querier(Chain):
         )
 
     def answers_template(self, answers: list[Answer]):
+        """The template to summarize sub-questions."""
+
         return FewShotPromptTemplate(
             examples=cast(list[dict], answers),
             example_prompt=PromptTemplate(
@@ -145,6 +164,8 @@ class Querier(Chain):
         )
 
     def conclusions_template(self, conclusions: list[Conclusion]):
+        """The template to summarize the final answer."""
+
         return FewShotPromptTemplate(
             examples=cast(list[dict], conclusions),
             example_prompt=PromptTemplate(
@@ -215,18 +236,15 @@ class Querier(Chain):
             if e
         ]
 
-        new_facts = [f for f in facts if f["fact"] not in self.facts]
-        old_facts = [f for f in facts if f["fact"] in self.facts]
-        facts = (new_facts + old_facts)[:n]
+        new_facts = {f["fact"]: f for f in facts if f["fact"] not in self.facts}
+        old_facts = {f["fact"]: f for f in facts if f["fact"] in self.facts}
+        facts = (list(new_facts.values()) + list(old_facts.values()))[:n]
 
         self.facts.update(f["fact"] for f in facts)
 
         if not facts:
             raise RuntimeError("No vectors found!")
-        else:
-            self.dprint(f"Facts for: {query}", color="yellow")
-            self.dprint(facts)
-            self.dprint.flush("yellow")
+
         return facts
 
     def _answer_question(self, question: str, n: int, classes: list[Classes]) -> Answer:
@@ -253,6 +271,16 @@ class Querier(Chain):
         return {"step": step, "conclusion": conclusion}
 
     def query(self, query: str, n: int = 3, classes: list[Classes] = []):
+        """Runs the entire question-answering process.
+
+        Args:
+            query: The question to ask.
+            n: The number of facts to use from the vector store per query.
+            classes: The interview tags to use as filters (AND).
+
+        Returns:
+            The answer to the question.
+        """
         self.dprint(f"Steps for: {query}", color="green")
         steps = self._query(self.steps_template(), "1.", r"\d+(?:\.)", query=query, n=n)
         conclusions = [self._conclude_step(s, query, n, classes) for s in steps]

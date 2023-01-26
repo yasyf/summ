@@ -14,6 +14,10 @@ from summ.shared.utils import dedent
 
 
 class Embedding(CacheItem):
+    """A serializable embedding vector, representing a query.
+
+    Always has an associated fact."""
+
     document: CacheDocument
     query: str
     fact: str
@@ -25,8 +29,17 @@ class Embedding(CacheItem):
 
 
 class Embedder:
+    """Embedders are responsible for taking fully-populated Documents and embedding them,
+    optionally persiting them to a vector store in the process.
+
+    Currently, only Pinecone is supported.
+    """
+
     GPT3_DIMS = 1536
+
     QUERIES = 1
+    """The number of extra queries to generate per fact."""
+
     QUERY_TEMPLATE = PromptTemplate(
         input_variables=["fact", "context"],
         template=dedent(
@@ -41,6 +54,8 @@ class Embedder:
     )
 
     def create_index(self):
+        """Creates the named index in Pinecone."""
+
         pinecone.create_index(
             self.index_name,
             dimension=self.dims,
@@ -48,6 +63,12 @@ class Embedder:
         )
 
     def __init__(self, index: str, dims: int = GPT3_DIMS):
+        """Creates a new Embedder.
+
+        Args:
+            index: The name of the vector db index to use.
+            dims: The number of dimensions of the vector db index.
+        """
         super().__init__()
         self.index_name = index
         self.dims = dims
@@ -78,6 +99,8 @@ class Embedder:
     def embed(
         self, doc: Document, gen_queries: bool = False
     ) -> Generator[Embedding, None, None]:
+        """Yields a set of embeddings for a given document."""
+
         for fact in doc.metadata["facts"]:
             yield self._embed(query=fact, fact=fact, doc=doc)
             if gen_queries:
@@ -89,6 +112,9 @@ class Embedder:
                     )
 
     def persist(self, doc: Document) -> list[Embedding]:
+        """Collects the set of embeddings for a Document,
+        and persists them to the vector store."""
+
         embeddings = list(self.embed(doc, gen_queries=True))
         vectors = [
             (

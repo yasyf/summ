@@ -1,7 +1,6 @@
 import itertools
 import logging
 import os
-import pprint
 import re
 import textwrap
 from collections import defaultdict
@@ -43,6 +42,8 @@ print_lock = RLock()
 
 
 class DPrinter:
+    """A thread-safe pretty-printer for debug use."""
+
     main_indent: int = 0
 
     @classmethod
@@ -53,7 +54,7 @@ class DPrinter:
 
     def __init__(self, debug: bool = False):
         self.debug = debug
-        self._parent = None
+        self._parents = []
         self.__indent = 0
         self._indents = set()
         self._outputs = defaultdict(list)
@@ -63,6 +64,14 @@ class DPrinter:
 
     def dedent(self):
         self._indent -= 1
+
+    @property
+    def _parent(self) -> str:
+        return self._parents[-1]
+
+    @_parent.setter
+    def _parent(self, color: str):
+        self._parents.append(color)
 
     @property
     def _indent(self) -> int:
@@ -75,11 +84,18 @@ class DPrinter:
         else:
             self.__indent = val
 
-    def flush(self, color: str):
+    def _flush(self, color: str):
+        assert self._parent == color
+        self._parents.pop()
         self._indents.remove(color)
         self.dedent()
         self._print(self._outputs[color])
         self._outputs[color] = []
+
+    def flush(self, color: str):
+        while self._parent != color:
+            self._flush(self._parent)
+        self._flush(color)
 
     def _print(self, strings: list[str]):
         with print_lock:
@@ -95,6 +111,13 @@ class DPrinter:
         else:
             self._outputs[self._parent].append(s)
 
+    def _pprint(self, obj: Union[list[dict[str, T]], dict[str, T]]):
+        if isinstance(obj, list):
+            return "\n⎯\n".join([self._pprint(o) for o in obj])
+        return "\n".join(
+            [colored(k, attrs=["bold"]) + ": " + str(v) for k, v in obj.items() if v]
+        )
+
     def __call__(
         self,
         s: Union[str, dict, list],
@@ -103,7 +126,7 @@ class DPrinter:
         dedent: bool = True,
     ):
         if not isinstance(s, str):
-            s = pprint.pformat(s, compact=True)
+            s = self._pprint(s)
 
         if color and color in self._indents and dedent:
             self.flush(color)
@@ -134,6 +157,11 @@ class DPrinter:
 
 
 class Chain:
+    """The base class of most operations.
+
+    Provides shared facilities for querying LLMs, parsing response, and caching.
+    """
+
     def __init__(self, debug: bool = False, verbose: bool = False):
         self.llm = OpenAI(temperature=0.0)
         self.pool = Parallel(n_jobs=-1, prefer="threads", verbose=10 if verbose else 0)
@@ -205,6 +233,14 @@ class Chain:
         doc: TDoc,
         extract: TExtract[TDoc] = cast(TExtract[Document], attrgetter("page_content")),
     ):
+        """Caches the result of a `langchain.Chain`.
+
+        Args:
+            name: The name of the function calling the cache.
+            chain: The `langchain.Chain` to run.
+            doc: The document to run the chain on.
+            extract: A function to extract the arguments from the document.
+        """
         args = extract(doc)
         meta = (
             {k: v for k, v in args.items() if not isinstance(v, (list, Document))}

@@ -28,6 +28,7 @@ dependencies = [
   "joblib",
   "termcolor",
   "retry",
+  "click",
 ]
 dynamic = ["version"]
 

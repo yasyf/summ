@@ -74,7 +74,7 @@ class TestInterviews:
     ):
         text = interview.read_text()
         docs = splitter.split(interview.stem, text)
-        classes = title_classifier.classify(docs[1])
+        classes = title_classifier.run(docs[1])
         print(classes)
         assert MyClasses.JOB_TITLE_INDIVIDUAL_CONTRIBUTOR is classes[0]
 
@@ -86,7 +86,7 @@ class TestInterviews:
     ):
         text = interview.read_text()
         docs = splitter.split(interview.stem, text)
-        classes = company_category_classifier.classify(docs[1])
+        classes = company_category_classifier.run(docs[1])
         print(classes)
         assert MyClasses.COMPANY_CATEGORY_RPA is classes[0]
 
@@ -98,7 +98,7 @@ class TestInterviews:
     ):
         text = interview.read_text()
         docs = splitter.split(interview.stem, text)
-        classes = department_classifier.classify(docs[1])
+        classes = department_classifier.run(docs[1])
         print(classes)
         assert MyClasses.DEPARTMENT_RPA_DEVELOPMENT is classes[0]
 
@@ -110,7 +110,7 @@ class TestInterviews:
     ):
         text = interview.read_text()
         docs = splitter.split(interview.stem, text)
-        classes = industry_classifier.classify(docs[1])
+        classes = industry_classifier.run(docs[1])
         print(classes)
         assert MyClasses.INDUSTRY_RPA_SOFTWARE is classes[0]
 

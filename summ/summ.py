@@ -7,6 +7,8 @@ from summ.query.querier import Querier
 
 
 class Summ:
+    """The main entry point for both populating and querying the model."""
+
     def __init__(self, index: str = "sum-facts"):
         self.index = index
 
@@ -31,6 +33,6 @@ class Summ:
         n: int = 3,
         classes: list[Classes] = [],
         debug: bool = True,
-    ):
+    ) -> str:
         querier = Querier(index=self.index, debug=debug)
-        querier.query(query, n=n, classes=classes)
+        return querier.query(query, n=n, classes=classes)

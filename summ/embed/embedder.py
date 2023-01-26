@@ -2,11 +2,12 @@ import itertools
 from functools import cached_property
 from typing import Generator, Self
 
-import metrohash
 import pinecone
 from langchain import LLMChain, OpenAI, PromptTemplate
 from langchain.docstore.document import Document
 from langchain.embeddings import OpenAIEmbeddings
+from openai.error import RateLimitError
+from retry import retry
 
 from summ.cache.cacher import CacheDocument, CacheItem
 from summ.shared.utils import dedent
@@ -70,6 +71,7 @@ class Embedder:
             llm=OpenAI(temperature=0.7, cache=False), prompt=self.QUERY_TEMPLATE
         )
 
+    @retry(exceptions=RateLimitError, tries=5, delay=6, jitter=(0, 4))
     def _generate_query(self, fact: str, doc: Document) -> str:
         return self.query_chain.run(fact=fact, context=doc.metadata["summary"])
 

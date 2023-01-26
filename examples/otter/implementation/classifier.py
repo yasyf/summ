@@ -1,7 +1,8 @@
 from typing_extensions import override
 
-from examples.otter.implementation.classes import MyClasses
 from summ.classify.classifier import Classifier, Document
+
+from .classes import MyClasses
 
 
 class TitleClassifier(Classifier, classes=MyClasses):

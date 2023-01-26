@@ -36,7 +36,7 @@ class TitleClassifier(Classifier, classes=MyClasses):
     )
 
     @override
-    def _classify(self, doc: Document) -> dict[str, str]:
+    def classify(self, doc: Document) -> dict[str, str]:
         return {"title": doc.metadata["file"]}
 
 
@@ -74,7 +74,7 @@ class CompanyCategoryClassifier(Classifier, classes=MyClasses):
     )
 
     @override
-    def _classify(self, doc: Document) -> dict[str, str]:
+    def classify(self, doc: Document) -> dict[str, str]:
         return {"title": doc.metadata["file"]}
 
 
@@ -102,7 +102,7 @@ class DepartmentClassifier(Classifier, classes=MyClasses):
     )
 
     @override
-    def _classify(self, doc: Document) -> dict[str, str]:
+    def classify(self, doc: Document) -> dict[str, str]:
         return {"title": doc.metadata["file"]}
 
 
@@ -134,5 +134,5 @@ class IndustryClassifier(Classifier, classes=MyClasses):
     )
 
     @override
-    def _classify(self, doc: Document) -> dict[str, str]:
+    def classify(self, doc: Document) -> dict[str, str]:
         return {"title": doc.metadata["file"]}

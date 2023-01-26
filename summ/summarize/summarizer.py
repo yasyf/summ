@@ -7,6 +7,11 @@ from summ.shared.utils import dedent
 
 
 class Summarizer(Chain):
+    """Summarizers are responsible for compressing a list of documents into a single one.
+
+    Depending on the type of document, various best-practice summarization methods are used.
+    """
+
     def _summarize(self, name: str, chain: LChain, docs: list[Document]):
         return self.cached(name, chain, docs, lambda x: x).strip()
 

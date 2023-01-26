@@ -21,9 +21,20 @@ You'll need an instance of [Redis Stack](https://redis.io/docs/stack/get-started
 
 You'll also need to set two environment variables: `OPENAI_API_KEY`, and `PINECONE_API_KEY`
 
+## Quickstart
+
+You don't need to do any configuration to start using `summ`. Simply use `summ.Pipeline.default` and pass a path to a directory with text files.
+
+However, the tool works much better when users are tagged. In order to do so, you need to specify two things:
+
+1. The categories of tags (and the tags within each category).
+2. A prompt directing how to apply the tags of a given category.
+
+You can see an example of this at [`examples/otter`](examples/otter).
+
 ## Docs
 
-**TODO: Docs on how to customize**
+Check out the [`examples`](examples) directory for some samples, or dive into the full docs at [summ.readthedocs.io](https://summ.readthedocs.io/en/latest/).
 
 ## License
 

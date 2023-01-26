@@ -1,9 +1,9 @@
-from enum import auto
+from enum import StrEnum, auto
 
-from summ.classify.classes import Classes
+from summ.classify import Classes
 
 
-class MyClasses(Classes):
+class MyClasses(Classes, StrEnum):
     # Title
     JOB_TITLE_INDIVIDUAL_CONTRIBUTOR = auto()
     JOB_TITLE_MANAGER = auto()

@@ -1,20 +1,83 @@
-import argparse
+import itertools
 from pathlib import Path
 
+import click
+from pydantic import BaseModel
+
+from summ.classify import Classes, Classifier
 from summ.pipeline import Pipeline
 from summ.summ import Summ
 
 
+class Options(BaseModel):
+    debug: bool
+
+
 class CLI:
+    """Provides a convient way to serve a Summ CLI."""
+
     @staticmethod
     def run(summ: Summ, pipe: Pipeline):
-        parser = argparse.ArgumentParser()
-        parser.add_argument("command", help="Command to run")
-        parser.add_argument("args", nargs="*", help="Arguments to command")
-        args = parser.parse_args()
-        if args.command == "populate":
-            summ.populate(Path(args.args[0]), pipe=pipe)
-        elif args.command == "query":
-            summ.query(args.args[0])
-        else:
-            print("Unknown command")
+        """Starts the CLI.
+
+        Args:
+            summ: The Summ instance to use. You should pre-populate it with the path to your data.
+            pipe: The Pipeline instance to use. You can a specify custom [Splitter](summ.splitter.Splitter) for different sources.
+
+        Example:
+            ```python
+            from pathlib import Path
+
+            from summ import Pipeline, Summ
+            from summ.cli import CLI
+            from summ.splitter.otter import OtterSplitter
+
+            from my.classifiers import *
+
+            if __name__ == "__main__":
+                summ = Summ(index="rpa-user-interviews")
+
+                path = Path(__file__).parent.parent / "interviews"
+                pipe = Pipeline.default(path, summ.index)
+                pipe.splitter = OtterSplitter(speakers_to_exclude=["markie"])
+
+                CLI.run(summ, pipe)
+            ```
+        """
+
+        @click.group()
+        @click.option("--debug/--no-debug", default=True)
+        @click.pass_context
+        def cli(ctx, debug: bool):
+            ctx.obj = Options(debug=debug)
+
+        @cli.command()
+        @click.pass_context
+        def populate(ctx: click.Context):
+            summ.populate(Path(pipe.importer.dir), pipe=pipe)
+
+        class_options = set(
+            itertools.chain.from_iterable(
+                [list(c.classes) for c in Classifier.classifiers.values()]
+            )
+        )
+
+        if not class_options:
+            click.secho("Warning: No classifiers detected.", fg="yellow")
+
+        @cli.command()
+        @click.argument("query", nargs=1)
+        @click.option("--n", default=3)
+        @click.option(
+            "--classes",
+            multiple=True,
+            default=[],
+            type=click.Choice(list(class_options), case_sensitive=False),
+        )
+        @click.pass_context
+        def query(ctx: click.Context, query: str, n: int, classes: list[Classes]):
+            response = summ.query(query, n=n, classes=classes, debug=ctx.obj.debug)
+            if not ctx.obj.debug:
+                click.echo(response)
+
+        cli()

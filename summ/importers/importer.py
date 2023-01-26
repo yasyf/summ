@@ -4,7 +4,11 @@ from typing import Iterable, TextIO
 
 
 class Importer:
+    """Importers are responsible for extracting file-like buffers from a data source."""
+
     def __init__(self, dir: Path):
+        """A default importer which reads from a directory of text files."""
+
         self.dir = dir
 
     @property

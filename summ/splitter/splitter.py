@@ -18,6 +18,11 @@ class UnsharedDictList(Sequence):
 
 
 class Splitter:
+    """Splitters are responsible for taking a file and splitting it into a list of documents (chunks).
+
+    By defauly, we just split on double-newlines (paragraphs).
+    """
+
     def __init__(self) -> None:
         self.splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
             chunk_size=100,

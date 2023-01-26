@@ -11,6 +11,8 @@ from typing_extensions import override
 
 
 class CacheDocument(EmbeddedJsonModel):
+    """A serializable version of a Document."""
+
     page_content: str
     metadata: dict = Field(default_factory=dict)
 
@@ -23,6 +25,8 @@ class CacheDocument(EmbeddedJsonModel):
 
 
 class CacheItem(JsonModel):
+    """A base class for cached responses."""
+
     @classmethod
     def passthrough(cls, **kwargs) -> Self:
         instance = cls.construct(**kwargs)
@@ -61,6 +65,8 @@ class CacheItem(JsonModel):
 
 
 class ChainCacheItem(CacheItem):
+    """A base class for cached langchain LLM responses."""
+
     klass: str
     name: str
     document: Union[CacheDocument, list[CacheDocument]]

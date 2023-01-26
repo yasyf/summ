@@ -19,6 +19,16 @@ from summ.summarize.summarizer import Summarizer
 
 
 class Pipeline(Chain):
+    """The end-to-end population pipeline.
+
+    This class will:
+    - Take an Importer and yield a set of file-like objects.
+    - Split the file-like objects into a set of chunks with a Splitter.
+    - Extract facts from each chunk with a Factifier.
+    - Extract a summary from each chunk with a Summarizer.
+    - Embed, and optionally persist, each chunk with an Embedder.
+    """
+
     importer: Importer
     embedder: Embedder
 
@@ -94,9 +104,16 @@ class Pipeline(Chain):
         return list(self._runpg(blobs))
 
     def rung(self) -> Generator[Document, None, None]:
+        """Yields one Embedding at a time.
+
+        Helpful for when you want to test only a small part of your pipeline.
+        """
+
         yield from self._rung(self.importer.blobs)
 
     def runp(self) -> Iterable[Document]:
+        """Calculates all embeddings in parallel. Very fast!"""
+
         return self._runp(self.importer.blobs)
 
     def run(self, parallel: bool = True) -> Iterable[Document]:

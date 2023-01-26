@@ -13,25 +13,58 @@ C = TypeVar("C", bound=Classes)
 
 
 class Classifier(ABC, Generic[C], Chain):
+    """The base class for specifying custom classifiers to apply tags to an interview.
+
+    Args:
+        classes: A subclass of [`Classes`][summ.classify.Classes] that defines the set of tags to use.
+    """
+
     CATEGORY: str
-    EXAMPLES: list[dict[str, str]]
+    """The name of the category to tag. Must be the prefix of a set of tags in your [`Classes`][summ.classify.Classes] subclass."""
+
     VARS: dict[str, str]
+    """A dictionary mapping variable names to descriptions. These will be used to generate the prompt."""
+
+    EXAMPLES: list[dict[str, str]]
+    """A list of few-shot examples. Each example should be a dictionary with keys corresponding to the keys in `VARS`."""
+
     PREFIX: str
+    """The prompt prefix."""
+
     SUFFIX: str
+    """The prompt suffix."""
 
     classes: Type[C]
+
     classifiers: dict[str, Type[Self]] = {}
+    """A registry of subclasses implementing custom classifiers."""
 
     def __init_subclass__(cls: Type[Self], classes: Type[C], **kwargs):
         super().__init_subclass__(**kwargs)
         cls.classes = classes
+        cls.check()
         cls.classifiers[cls.CATEGORY] = cls
 
     @classmethod
+    def check(cls):
+        """Ensures that the supplied constants are sound."""
+
+        if not any(c for c in cls.classes if c.name.startswith(cls.CATEGORY)):
+            raise ValueError(
+                f"{cls.classes} does not contain any classes with the prefix {cls.CATEGORY}"
+            )
+        if cls.CATEGORY.lower() not in cls.VARS:
+            raise ValueError(f"VARS does not contain the key {cls.CATEGORY.lower()}")
+
+    @classmethod
     def classify_all(cls, doc: Document):
-        return {c: klass().classify(doc) for c, klass in cls.classifiers.items()}
+        """Runs a Document through all registered subclasses."""
+
+        return {c: klass().run(doc) for c, klass in cls.classifiers.items()}
 
     def example_template(self, dynamic=set()) -> str:
+        """The template used to construct one example in the prompt."""
+
         return "\n".join(
             [
                 f"{v}: { '' if k in dynamic else '{' + k + '}' }"
@@ -40,6 +73,8 @@ class Classifier(ABC, Generic[C], Chain):
         )
 
     def prompt_template(self):
+        """The template used to construct the prompt."""
+
         classes = "\n".join(
             [c.value for c in self.classes if c.startswith(self.CATEGORY.lower())]
         )
@@ -64,6 +99,8 @@ class Classifier(ABC, Generic[C], Chain):
         )
 
     def debug_prompt(self, **kwargs: dict[str, str]) -> str:
+        """Returns the prompt with the given variables filled in."""
+
         return self.prompt_template().format(**kwargs)
 
     def _parse(self, results: str) -> list[C]:
@@ -71,16 +108,27 @@ class Classifier(ABC, Generic[C], Chain):
             c for result in results.split(",") for c in [self.classes.get(result)] if c
         ]
 
-    def classify(self, doc: Document) -> list[C]:
+    def run(self, doc: Document) -> list[C]:
+        """Runs a Document through the classifier and returns the tags."""
+
         chain = LLMChain(llm=self.llm, prompt=self.prompt_template())
         results = self.cached(
-            "_classify",
+            "run",
             chain,
             doc,
-            self._classify,
+            self.classify,
         )
         return self._parse(results)
 
     @abstractmethod
-    def _classify(self, doc: Document) -> dict[str, str]:
+    def classify(self, doc: Document) -> dict[str, str]:
+        """Extracts a set of VARS from a Document.
+        This method must be implemented by subclasses.
+
+        Args:
+            doc: The Document to extract from.
+
+        Returns:
+            A dictionary mapping variable names to values. The keys should be a subset of the keys in `VARS`.
+        """
         raise NotImplementedError

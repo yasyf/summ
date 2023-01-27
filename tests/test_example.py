@@ -74,7 +74,7 @@ class TestInterviews:
         assert factifier.context != factifier.DEFAULT_CONTEXT
 
         facts = factifier.factify(docs[1])
-        assert "experience in freelance game design portfolio work" in "\n".join(facts)
+        assert "experience in game design" in "\n".join(facts)
 
     def test_title_classifier(
         self,

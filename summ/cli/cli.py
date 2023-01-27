@@ -11,6 +11,7 @@ from summ.summ import Summ
 
 class Options(BaseModel):
     debug: bool
+    verbose: bool
 
 
 class CLI:
@@ -47,9 +48,14 @@ class CLI:
 
         @click.group()
         @click.option("--debug/--no-debug", default=True)
+        @click.option("--verbose/--no-verbose", default=False)
         @click.pass_context
-        def cli(ctx, debug: bool):
-            ctx.obj = Options(debug=debug)
+        def cli(ctx, debug: bool, verbose: bool):
+            ctx.obj = Options(debug=debug, verbose=verbose)
+            if verbose:
+                import langchain
+
+                langchain.verbose = verbose
 
         @cli.command()
         @click.pass_context

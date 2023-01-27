@@ -10,7 +10,6 @@ from langchain.docstore.document import Document
 from openai.error import RateLimitError
 from retry import retry
 
-from summ.classify.classes import Classes
 from summ.classify.classifier import C, Classifier
 from summ.embed.embedder import Embedder
 from summ.factify.factifier import Factifier

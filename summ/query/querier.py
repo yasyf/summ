@@ -121,6 +121,7 @@ class Querier(Chain):
                 """
                 Your task is to answer a query against a corpus of user interviews.
                 To help answer the question, you are provided with a set of facts (along with the context and attributes of the author of the fact).
+                If it is not possible to answer, say that you do not know the answer.
 
                 The query is: {query}
 

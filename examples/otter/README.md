@@ -36,5 +36,6 @@ $ python -m implementation populate
 And to query it:
 
 ```bash
-$ python -m implementation query "What is the best tool for RPA?"
+$ python -m implementation query "What kind of animal is Cronutt?"
+Cronutt is a California sea lion, a species of marine mammal.
 ```

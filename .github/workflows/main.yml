@@ -10,7 +10,7 @@ on:
 
 concurrency:
   group: test-${{ github.head_ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 env:
   PYTHONUNBUFFERED: "1"

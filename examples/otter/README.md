@@ -1,6 +1,6 @@
-# Otter User Interview Example
+# Otter.ai User Interview Example
 
-This directory has an example of using `symm` with text files exported from [otter.ai](https://otter.ai).
+This directory has an example of using `summ` with text files exported from [otter.ai](https://otter.ai).
 
 ## Setup
 

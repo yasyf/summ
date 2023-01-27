@@ -1,0 +1,15 @@
+.doc-contents .highlight .gp,
+.doc-contents .highlight .go {
+  /* Generic.Prompt, Generic.Output */
+  user-select: none;
+}
+
+.doc-contents .highlight .p,
+.doc-contents .highlight .kn,
+.doc-contents .highlight .nn,
+.doc-contents .highlight .n,
+.doc-contents .highlight .o,
+.doc-contents .highlight .s2 {
+  /* Non-output lines */
+  font-weight: bolder;
+}

@@ -24,7 +24,7 @@ class CLI:
 
         Args:
             summ: The Summ instance to use. You should pre-populate it with the path to your data.
-            pipe: The Pipeline instance to use. You can a specify custom [Splitter](summ.splitter.Splitter) for different sources.
+            pipe: The Pipeline instance to use. You can a specify custom [Splitter][summ.splitter.Splitter] for different sources.
 
         Example:
             ```python

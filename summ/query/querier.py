@@ -281,7 +281,7 @@ class Querier(Chain):
             classes: The interview tags to use as filters (AND).
 
         Returns:
-            The answer to the question.
+            answer (str): The answer to the question.
         """
         self.dprint(f"Steps for: {query}", color="green")
         steps = self._query(self.steps_template(), "1.", r"\d+(?:\.)", query=query, n=n)

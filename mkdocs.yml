@@ -1,0 +1,72 @@
+site_name: summ
+site_url: https://summ.readthedocs.io/en/latest/
+site_description: "Summ provides intelligent question-answering and search capabilities across user interview transcripts."
+repo_url: https://github.com/yasyf/summ
+repo_name: yasyf/summ
+edit_uri: edit/main/docs/
+extra:
+  analytics:
+    provider: google
+    property: G-N5PVRMXLK6
+nav:
+  - Quickstart: index.md
+  - API Reference:
+      - reference/index.md
+      - Pipeline:
+          - reference/pipeline/index.md
+          - reference/pipeline/import.md
+          - reference/pipeline/splitting.md
+          - reference/pipeline/summarize.md
+          - reference/pipeline/classify.md
+          - reference/pipeline/factify.md
+          - reference/pipeline/embed.md
+          - reference/pipeline/query.md
+      - Utils:
+          - reference/utils/index.md
+          - reference/utils/cli.md
+          - reference/utils/cache.md
+          - reference/utils/chain.md
+theme:
+  name: material
+  features:
+    - content.code.annotate
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.expand
+    - navigation.indexes
+    - navigation.top
+    - toc.follow
+    - toc.integrate
+plugins:
+  - search
+  - autorefs
+  - social
+  - git-committers:
+      repository: yasyf/summ
+      branch: main
+  - mkdocstrings:
+      enable_inventory: true
+      handlers:
+        python:
+          import:
+            - https://docs.python.org/3.11/objects.inv
+            - https://typing.readthedocs.io/en/latest/objects.inv
+            - https://langchain.readthedocs.io/en/latest/objects.inv
+          options:
+            show_signature_annotations: true
+            members_order: source
+            docstring_section_style: spacy
+            line_length: 100
+markdown_extensions:
+  - pymdownx.highlight:
+      use_pygments: true
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - toc:
+      permalink: true
+extra_css:
+  - css/code_select.css
+  - css/annotations.css

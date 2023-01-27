@@ -13,11 +13,7 @@ C = TypeVar("C", bound=Classes)
 
 
 class Classifier(ABC, Generic[C], Chain):
-    """The base class for specifying custom classifiers to apply tags to an interview.
-
-    Args:
-        classes: A subclass of [`Classes`][summ.classify.Classes] that defines the set of tags to use.
-    """
+    """The base class for specifying custom classifiers to apply tags to an interview."""
 
     CATEGORY: str
     """The name of the category to tag. Must be the prefix of a set of tags in your [`Classes`][summ.classify.Classes] subclass."""
@@ -35,6 +31,7 @@ class Classifier(ABC, Generic[C], Chain):
     """The prompt suffix."""
 
     classes: Type[C]
+    """A subclass of [`Classes`][summ.classify.Classes] that defines the set of tags to use."""
 
     classifiers: dict[str, Type[Self]] = {}
     """A registry of subclasses implementing custom classifiers."""

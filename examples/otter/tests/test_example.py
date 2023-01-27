@@ -18,7 +18,7 @@ from implementation.classifier import *
 class TestInterviews:
     @pytest.fixture
     def interviews_path(self):
-        return Path(__file__).parent.parent / "examples" / "otter" / "interviews"
+        return Path(__file__).parent.parent / "interviews"
 
     @pytest.fixture
     def interviews(self, interviews_path):
@@ -31,7 +31,14 @@ class TestInterviews:
 
     @pytest.fixture
     def splitter(self):
-        return OtterSplitter(speakers_to_exclude=["markie"])
+        return OtterSplitter(
+            speakers_to_exclude=[
+                "Cindy Buckmaster",
+                "Michelle Greenfield",
+                "Vivica",
+                "Deanna",
+            ]
+        )
 
     @pytest.fixture
     def factifier(self):
@@ -45,26 +52,13 @@ class TestInterviews:
         return pipe
 
     @pytest.fixture
-    def title_classifier(self):
-        return TitleClassifier()
-
-    @pytest.fixture
-    def company_category_classifier(self):
-        return CompanyCategoryClassifier()
-
-    @pytest.fixture
-    def department_classifier(self):
-        return DepartmentClassifier()
-
-    @pytest.fixture
-    def industry_classifier(self):
-        return IndustryClassifier()
+    def classifier(self):
+        return TypeClassifier()
 
     def test_splitter(self, interview: Path, splitter: Splitter):
         text = interview.read_text()
         docs = splitter.split(interview.stem, text)
-        print(docs)
-        assert len(docs) == 62
+        assert len(docs) == 110
 
     def test_factifier(self, interview: Path, splitter: Splitter, factifier: Factifier):
         text = interview.read_text()
@@ -74,55 +68,19 @@ class TestInterviews:
         assert factifier.context != factifier.DEFAULT_CONTEXT
 
         facts = factifier.factify(docs[1])
-        assert "experience in game design" in "\n".join(facts)
+        assert "is a veterinarian" in "\n".join(facts)
 
-    def test_title_classifier(
+    def test_classifier(
         self,
         interview: Path,
         splitter: Splitter,
-        title_classifier: TitleClassifier,
+        classifier: TypeClassifier,
     ):
         text = interview.read_text()
-        docs = splitter.split(interview.stem, text)
-        classes = title_classifier.run(docs[1])
+        docs = splitter.split(interview.stem, text)[:1]
+        classes = classifier.run(docs)
         print(classes)
-        assert MyClasses.JOB_TITLE_INDIVIDUAL_CONTRIBUTOR is classes[0]
-
-    def test_company_category_classifier(
-        self,
-        interview: Path,
-        splitter: Splitter,
-        company_category_classifier: CompanyCategoryClassifier,
-    ):
-        text = interview.read_text()
-        docs = splitter.split(interview.stem, text)
-        classes = company_category_classifier.run(docs[1])
-        print(classes)
-        assert MyClasses.COMPANY_CATEGORY_RPA is classes[0]
-
-    def test_department_classifier(
-        self,
-        interview: Path,
-        splitter: Splitter,
-        department_classifier: DepartmentClassifier,
-    ):
-        text = interview.read_text()
-        docs = splitter.split(interview.stem, text)
-        classes = department_classifier.run(docs[1])
-        print(classes)
-        assert MyClasses.DEPARTMENT_RPA_DEVELOPMENT is classes[0]
-
-    def test_industry_classifier(
-        self,
-        interview: Path,
-        splitter: Splitter,
-        industry_classifier: IndustryClassifier,
-    ):
-        text = interview.read_text()
-        docs = splitter.split(interview.stem, text)
-        classes = industry_classifier.run(docs[1])
-        print(classes)
-        assert MyClasses.INDUSTRY_RPA_SOFTWARE is classes[0]
+        assert MyClasses.SOURCE_PODCAST is classes[0]
 
     def test_pipeline(self, pipeline: Pipeline):
         pipe = pipeline.rung()

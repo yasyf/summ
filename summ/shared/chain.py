@@ -233,11 +233,11 @@ class Chain:
         doc: TDoc,
         extract: TExtract[TDoc] = cast(TExtract[Document], attrgetter("page_content")),
     ):
-        """Caches the result of a `langchain.Chain`.
+        """Caches the result of a [langchain `Chain`][langchain.chains.LLMChain].
 
         Args:
             name: The name of the function calling the cache.
-            chain: The `langchain.Chain` to run.
+            chain (langchain.chains.LLMChain): The Chain to run.
             doc: The document to run the chain on.
             extract: A function to extract the arguments from the document.
         """

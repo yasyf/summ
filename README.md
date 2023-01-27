@@ -9,7 +9,9 @@ Summ uses ChatGPT to provide intelligent question-answering and search capabilit
 
 Easily surface insights and summarize facts across various dimensions such as department, industry, and role. With the help of natural language processing, the tool can understand and respond to complex questions and queries, making it easy for users to find the information they need.
 
-A tool by @markiewagner and @yasyf.
+A tool by [@markiewagner](https://github.com/markiewagner) and [@yasyf](https://github.com/yasyf).
+
+[![asciicast](https://asciinema.org/a/Ys2rH36AlF7RIdzZbJiorhMcc.svg)](https://asciinema.org/a/Ys2rH36AlF7RIdzZbJiorhMcc)
 
 ## Installation
 

@@ -28,10 +28,10 @@ class Classifier(ABC, Generic[C], Chain):
     EXAMPLES: list[dict[str, str]]
     """A list of few-shot examples. Each example should be a dictionary with keys corresponding to the keys in `VARS`."""
 
-    PREFIX: str
+    PREFIX: str = "Your job is to classify the following interview into one of the following categories."
     """The prompt prefix."""
 
-    SUFFIX: str
+    SUFFIX: str = ""
     """The prompt suffix."""
 
     classes: Type[C]
@@ -57,10 +57,10 @@ class Classifier(ABC, Generic[C], Chain):
             raise ValueError(f"VARS does not contain the key {cls.CATEGORY.lower()}")
 
     @classmethod
-    def classify_all(cls, doc: Document):
+    def classify_all(cls, docs: list[Document]) -> dict[str, list[C]]:
         """Runs a Document through all registered subclasses."""
 
-        return {c: klass().run(doc) for c, klass in cls.classifiers.items()}
+        return {c: klass().run(docs) for c, klass in cls.classifiers.items()}
 
     def example_template(self, dynamic=set()) -> str:
         """The template used to construct one example in the prompt."""
@@ -86,7 +86,11 @@ class Classifier(ABC, Generic[C], Chain):
             ),
             prefix=dedent(
                 f"""
-                The following is a title of a user interview. {self.PREFIX}
+                {self.PREFIX}
+                Return a comma-separated list of classes, with no extra text of explanation.
+                For example: "industry_software, role_ic"
+
+                Options:
                 {classes}
 
                 {self.SUFFIX}
@@ -108,25 +112,24 @@ class Classifier(ABC, Generic[C], Chain):
             c for result in results.split(",") for c in [self.classes.get(result)] if c
         ]
 
-    def run(self, doc: Document) -> list[C]:
+    def run(self, docs: list[Document]) -> list[C]:
         """Runs a Document through the classifier and returns the tags."""
-
         chain = LLMChain(llm=self.llm, prompt=self.prompt_template())
         results = self.cached(
             "run",
             chain,
-            doc,
+            docs,
             self.classify,
         )
         return self._parse(results)
 
     @abstractmethod
-    def classify(self, doc: Document) -> dict[str, str]:
-        """Extracts a set of VARS from a Document.
+    def classify(self, docs: list[Document]) -> dict[str, str]:
+        """Extracts a set of VARS from a list of Documents.
         This method must be implemented by subclasses.
 
         Args:
-            doc: The Document to extract from.
+            docs: The Documents resulting from apply the Splitter to an import source.
 
         Returns:
             A dictionary mapping variable names to values. The keys should be a subset of the keys in `VARS`.

@@ -62,6 +62,15 @@ class Embedder:
             metadata_config={"indexed": ["classes"]},
         )
 
+    def has_index(self):
+        """Checks if the named index in Pinecone exists."""
+
+        try:
+            pinecone.describe_index(self.index_name)
+            return True
+        except pinecone.exceptions.NotFoundException:
+            return False
+
     def __init__(self, index: str, dims: int = GPT3_DIMS):
         """Creates a new Embedder.
 

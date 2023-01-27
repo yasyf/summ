@@ -38,4 +38,4 @@ Check out the [`examples`](examples) directory for some samples, or dive into th
 
 ## License
 
-`summ` is distributed under the terms of the [MIT](https://spdx.org/licenses/MIT.html) license.
+`summ` is distributed under the terms of the [AGPL 3.0](https://spdx.org/licenses/AGPL-3.0-only.html) license.

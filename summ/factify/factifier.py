@@ -140,19 +140,21 @@ class Factifier(Chain):
         self.context = context or self.DEFAULT_CONTEXT
 
     def parse(self, results: str) -> tuple[list[str], str]:
-        idx = results.index("Context")
-        facts_raw, context_raw = results[:idx], results[idx:]
+        try:
+            idx = results.lower().index("context")
+            facts_raw, context_raw = results[:idx], results[idx:]
+            context = "\n".join(context_raw.splitlines()[1:])
+        except ValueError:
+            facts_raw, context = results, self.context
 
         facts = self._parse(facts_raw.splitlines(), prefix=r"-+")
-        context = "\n".join(context_raw.splitlines()[1:])
-
         return facts, context
 
     def factify(self, doc: Document) -> list[str]:
         """Returns a list of facts from the given document."""
 
         chain = LLMChain(llm=self.llm, prompt=self.PROMPT_TEMPLATE)
-        results = "-" + self.cached(
+        results = "- " + self.cached(
             "factify",
             chain,
             doc,

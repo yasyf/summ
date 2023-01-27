@@ -142,6 +142,7 @@ class TestInterviews:
         assert doc2.metadata["facts"] != doc1.metadata["facts"]
         requests_mock.start()
 
+        pipeline.factifier = Factifier()
         pipe = pipeline.rung()
         doc1p = next(pipe)
         doc2p = next(pipe)

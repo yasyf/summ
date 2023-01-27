@@ -100,7 +100,7 @@ class Pipeline(Chain):
         for docs in self._pmap(self._split_blob, blobs):
             yield from self._pmap(self._process_doc, docs)
 
-    def _runp(self, blobs: Iterable[TextIO]) -> Iterable[Document]:
+    def _runp(self, blobs: Iterable[TextIO]) -> list[Document]:
         return list(self._runpg(blobs))
 
     def rung(self) -> Generator[Document, None, None]:
@@ -111,10 +111,10 @@ class Pipeline(Chain):
 
         yield from self._rung(self.importer.blobs)
 
-    def runp(self) -> Iterable[Document]:
+    def runp(self) -> list[Document]:
         """Calculates all embeddings in parallel. Very fast!"""
 
         return self._runp(self.importer.blobs)
 
-    def run(self, parallel: bool = True) -> Iterable[Document]:
-        return self.runp() if parallel else self.rung()
+    def run(self, parallel: bool = True) -> list[Document]:
+        return self.runp() if parallel else list(self.rung())

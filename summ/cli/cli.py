@@ -2,6 +2,7 @@ import itertools
 from pathlib import Path
 
 import click
+import langchain
 from pydantic import BaseModel
 
 from summ.classify import Classes, Classifier
@@ -52,15 +53,14 @@ class CLI:
         @click.pass_context
         def cli(ctx, debug: bool, verbose: bool):
             ctx.obj = Options(debug=debug, verbose=verbose)
-            if verbose:
-                import langchain
-
-                langchain.verbose = verbose
+            langchain.verbose = verbose
 
         @cli.command()
         @click.pass_context
         def populate(ctx: click.Context):
-            summ.populate(Path(pipe.importer.dir), pipe=pipe)
+            summ.populate(
+                Path(pipe.importer.dir), pipe=pipe, parallel=not ctx.obj.verbose
+            )
 
         class_options = set(
             itertools.chain.from_iterable(

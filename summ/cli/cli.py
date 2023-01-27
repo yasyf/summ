@@ -73,7 +73,7 @@ class CLI:
 
         @cli.command()
         @click.argument("query", nargs=1)
-        @click.option("--n", default=3)
+        @click.option("-n", default=3)
         @click.option(
             "--classes",
             multiple=True,

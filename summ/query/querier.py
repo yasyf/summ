@@ -95,8 +95,8 @@ class Querier(Chain):
         return PromptTemplate(
             template=dedent(
                 """
-                Your task is to determine a set of queries which would answer a question.
-                The queries run against a database of facts compiled across several user interviews.
+                Your task is to determine a set of natural-language queries which would answer a question.
+                The queries run against a knowledgebase of facts compiled across several user interviews.
 
                 The overall question you are trying to answer is: {query}
                 You are on the following step: {step}
@@ -183,6 +183,7 @@ class Querier(Chain):
             prefix=dedent(
                 """
                 Your task is to take a set of steps that were conducted to answer a question, and use them to answer that question.
+                The final answer should be concise and accurate. First provide exactly the answer to the original question, with no extra information. You can then add references, sources, or details.
 
                 The question you are trying to answer: {query}
 

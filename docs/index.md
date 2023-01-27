@@ -52,7 +52,7 @@ class MyClasses(Classes, StrEnum):
 
 #### Classifiers
 
-The classifiers in [`implementation/classifier.py`](https://github.com/yasyf/summ/tree/main/examples/otter/implementation/classifier.py) use simple parameters to define a prompt for each category of tags. It is normally sufficient to simply provide `CATEGORY`, `VARS`, and `EXAMPLES`. You may also optionally specify a `PREFIX` or `SUFFIX` for the prompt.
+The classifiers in [`implementation/classifier.py`](https://github.com/yasyf/summ/tree/main/examples/otter/implementation/classifier.py) use simple parameters to define a prompt for each category of tags. It is normally sufficient to simply provide [`CATEGORY`][summ.classify.Classifier.CATEGORY], [`VARS`][summ.classify.Classifier.VARS], and [`EXAMPLES`][summ.classify.Classifier.EXAMPLES]. You may also optionally specify a [`PREFIX`][summ.classify.Classifier.PREFIX] or [`SUFFIX`][summ.classify.Classifier.SUFFIX] for the prompt.
 
 ```python
 from textwrap import dedent
@@ -93,9 +93,9 @@ class TypeClassifier(Classifier, classes=MyClasses):
 Finally, in [`implementation/__main__.py`](https://github.com/yasyf/summ/tree/main/examples/otter/implementation/__main__.py), we:
 
 1. Ensure our classifiers are imported
-2. Construct a `Summ` object, passing a `Path` to our training data.
-3. Construct a custom `Pipeline` object which specifies the otter.ai import format.
-4. Pass these two to `summ.cli.CLI`, which creates a command line interface for us.
+2. Construct a [`Summ`][summ.Summ] object, passing a [`Path`][pathlib.Path] to our training data.
+3. Construct a custom [`Pipeline`][summ.pipeline.Pipeline] object which specifies the otter.ai import format.
+4. Pass these two to [`summ.CLI`][summ.cli.CLI], which creates a command line interface for us.
 
 ```python
 from pathlib import Path

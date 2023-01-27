@@ -66,6 +66,16 @@ class TestInterviews:
         print(docs)
         assert len(docs) == 62
 
+    def test_factifier(self, interview: Path, splitter: Splitter, factifier: Factifier):
+        text = interview.read_text()
+        docs = splitter.split(interview.stem, text)[:2]
+
+        factifier.factify(docs[0])
+        assert factifier.context != factifier.DEFAULT_CONTEXT
+
+        facts = factifier.factify(docs[1])
+        assert "experience in freelance game design portfolio work" in "\n".join(facts)
+
     def test_title_classifier(
         self,
         interview: Path,

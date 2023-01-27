@@ -33,6 +33,7 @@ dependencies = [
   "retry",
   "click",
   "jinja2",
+  "dirtyjson",
 ]
 dynamic = ["version"]
 

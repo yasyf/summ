@@ -15,6 +15,7 @@ from summ.embed.embedder import Embedder
 from summ.factify.factifier import Factifier
 from summ.importers.importer import Importer
 from summ.shared.chain import Chain
+from summ.splitter.gpt_splitter import GPTSplitter
 from summ.splitter.splitter import Splitter
 from summ.summarize.summarizer import Summarizer
 
@@ -106,6 +107,12 @@ class Pipeline(Chain, Generic[C]):
 
     def _runp(self, blobs: Iterable[TextIO]) -> list[Document]:
         return list(self._runpg(blobs))
+
+    def corpus(self) -> Generator[Document, None, None]:
+        """Yields the extracted source corpus"""
+        self.splitter = GPTSplitter.wrap(self.splitter)
+        for docs in self._pmap(self._split_blob, self.importer.blobs):
+            yield from docs
 
     def rung(self) -> Generator[Document, None, None]:
         """Yields one Embedding at a time.

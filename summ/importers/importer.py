@@ -1,6 +1,9 @@
-from abc import ABC
 from pathlib import Path
 from typing import Iterable, TextIO
+
+from langchain.docstore.document import Document
+
+from summ.splitter.gpt_splitter import GPTSplitter
 
 
 class Importer:
@@ -18,3 +21,6 @@ class Importer:
     @property
     def blobs(self) -> Iterable[TextIO]:
         return map(Path.open, self.paths)
+
+    def docs(self) -> Iterable[Document]:
+        return [Document(page_content=blob.read()) for blob in self.blobs]

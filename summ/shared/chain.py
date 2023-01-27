@@ -11,6 +11,7 @@ from typing import (
     Iterable,
     Optional,
     Self,
+    Type,
     TypeVar,
     TypeVarTuple,
     Union,
@@ -114,6 +115,8 @@ class DPrinter:
     def _pprint(self, obj: Union[list[dict[str, T]], dict[str, T]]):
         if isinstance(obj, list):
             return "\n⎯\n".join([self._pprint(o) for o in obj])
+        if hasattr(obj, "dict"):
+            obj = obj.dict()
         return "\n".join(
             [colored(k, attrs=["bold"]) + ": " + str(v) for k, v in obj.items() if v]
         )
@@ -165,7 +168,11 @@ class Chain:
     def __init__(self, debug: bool = False, verbose: bool = False):
         self.llm = OpenAI(temperature=0.0)
         self.pool = Parallel(n_jobs=-1, prefer="threads", verbose=10 if verbose else 0)
+        self.verbose = verbose
         self.debug = debug
+
+    def spawn(self, cls: Type[T], **kwargs) -> T:
+        return cls(debug=self.debug, verbose=self.verbose, **kwargs)
 
     @property
     def dprint(self):

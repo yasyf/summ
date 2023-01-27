@@ -27,42 +27,6 @@ class Fact:
     source: str
 
 
-# Your task is to take the context of a conversation, and a paragraph, and extract any pertinent facts from it.
-# The facts should only cover new information introduced in the paragraph. The context is only for background; do not use it to generate facts.
-
-# You will also generate a new context, by taking the old context and modifying it if needed to account for the additional paragraph. You do not need to change the old context if it is suitable; simply return it again.
-
-# Here is an example:
-
-# ---
-# Context:
-# The conversation so far has covered the backround of the speaker. He is in sales at UiPath.
-
-# Paragraph:
-# Well, it's a mix in the case of like, for example, invoices, so, sorry, in the case of currency there's an ML model, just for that, but but it's a simpler one. It's not like a deep learning one because it's not necessary for that and the compute cost is like customers don't have. They don't want to do and don't want to spend money on GPUs left and right, because they, they don't afford
-
-# Facts:
-# - At UiPath, there is an ML model for currency.
-# - The ML model for currency at UiPath is not a deep learning one.
-# - Customers of UiPath do not want to spend money on GPUs.
-
-# Context:
-# The conversation has detailed the ML model for currency at UiPath, as told by a salesperson.
-# ---
-
-# Now the real one:
-
-# ---
-# Context:
-# {context}
-
-# Paragraph:
-# {chunk}
-
-# Facts:
-# -
-
-
 class Factifier(Chain):
     """Factifiers are responsible for taking a Document with a chunk,
     and extracting a list of facts."""

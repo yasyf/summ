@@ -1,6 +1,8 @@
 from pathlib import Path
 from typing import Optional
 
+from langchain.docstore.document import Document
+
 from summ.classify.classes import Classes
 from summ.pipeline import Pipeline
 from summ.query.querier import Querier
@@ -43,6 +45,7 @@ class Summ:
         question: str,
         n: int = 3,
         classes: list[Classes] = [],
+        corpus: list[Document] = [],
         debug: bool = True,
     ) -> str:
         """
@@ -55,4 +58,4 @@ class Summ:
             debug (bool, optional): Whether to print intermediate steps.
         """
         querier = Querier(index=self.index, debug=debug)
-        return querier.query(question, n=n, classes=classes)
+        return querier.query(question, n=n, classes=classes, corpus=corpus)

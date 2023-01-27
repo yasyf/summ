@@ -82,7 +82,13 @@ class CLI:
         )
         @click.pass_context
         def query(ctx: click.Context, query: str, n: int, classes: list[Classes]):
-            response = summ.query(query, n=n, classes=classes, debug=ctx.obj.debug)
+            response = summ.query(
+                query,
+                n=n,
+                classes=classes,
+                corpus=list(pipe.corpus()),
+                debug=ctx.obj.debug,
+            )
             if not ctx.obj.debug:
                 click.echo(response)
 

@@ -1,4 +1,5 @@
 import itertools
+import json
 from typing import TypedDict, cast, overload
 
 import pinecone
@@ -15,6 +16,7 @@ from summ.classify.classes import Classes
 from summ.embed.embedder import Embedding
 from summ.shared.chain import Chain
 from summ.shared.utils import dedent
+from summ.structurer.structurer import Structurer
 from summ.summarize.summarizer import Summarizer
 
 
@@ -164,7 +166,7 @@ class Querier(Chain):
             input_variables=["query", "step"],
         )
 
-    def conclusions_template(self, conclusions: list[Conclusion]):
+    def conclusions_template(self, conclusions: list[Conclusion], metrics: dict):
         """The template to summarize the final answer."""
 
         return FewShotPromptTemplate(
@@ -182,17 +184,22 @@ class Querier(Chain):
                 input_variables=["step", "conclusion"],
             ),
             prefix=dedent(
-                """
+                f"""
                 Your task is to take a set of steps that were conducted to answer a question, and use them to answer that question.
+                Answer the question in the format requested. For example, if the question specifies a list of properties, render a table with that list.
                 The final answer should be concise and accurate. First provide exactly the answer to the original question, with no extra information. You can then add references, sources, or details.
 
-                The question you are trying to answer: {query}
+                The question you are trying to answer: {{{{ query }}}}
+
+                The structured data you collected along the way:
+                {json.dumps(metrics)}
 
                 The steps you went through to answer this question are:
                 """
             ),
             suffix="Final answer:\n",
             input_variables=["query"],
+            template_format="jinja2",
         )
 
     @overload
@@ -272,19 +279,31 @@ class Querier(Chain):
         conclusion = self._query(self.answers_template(answers), query=query, step=step)
         return {"step": step, "conclusion": conclusion}
 
-    def query(self, query: str, n: int = 3, classes: list[Classes] = []):
+    def _conclusions(self, query: str, n: int = 3, classes: list[Classes] = []):
+        self.dprint(f"Steps for: {query}", color="green")
+        steps = self._query(self.steps_template(), "1.", r"\d+(?:\.)", query=query, n=n)
+        conclusions = [self._conclude_step(s, query, n, classes) for s in steps]
+        self.dprint(f"Answer: {query}", color="green")
+        return conclusions
+
+    def query(
+        self,
+        query: str,
+        n: int = 3,
+        classes: list[Classes] = [],
+        corpus: list[Document] = [],
+    ):
         """Runs the entire question-answering process.
 
         Args:
             query: The question to ask.
             n: The number of facts to use from the vector store per query.
             classes: The interview tags to use as filters (AND).
+            corpus: The corpus of documents to use for structured data extraction.
 
         Returns:
             answer (str): The answer to the question.
         """
-        self.dprint(f"Steps for: {query}", color="green")
-        steps = self._query(self.steps_template(), "1.", r"\d+(?:\.)", query=query, n=n)
-        conclusions = [self._conclude_step(s, query, n, classes) for s in steps]
-        self.dprint(f"Answer: {query}", color="green")
-        return self._query(self.conclusions_template(conclusions), query=query)
+        metrics = self.spawn(Structurer, query=query).extract(corpus)
+        conclusions = self._conclusions(query, n, classes)
+        return self._query(self.conclusions_template(conclusions, metrics), query=query)

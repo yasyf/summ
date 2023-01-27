@@ -1,6 +1,6 @@
-from typing import Sequence, cast
+import os
+from typing import Self, Sequence, Type, cast
 
-from langchain.docstore.document import Document
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 
@@ -22,6 +22,21 @@ class Splitter:
 
     By defauly, we just split on double-newlines (paragraphs).
     """
+
+    @classmethod
+    def wrap(cls: Type[Self], other: "Splitter") -> "Splitter":
+        """Wrap an existing splitter to chain processing."""
+
+        class WrappedSplitter(cls):  # type: ignore
+            def split(self, title: str, text: str):
+                docs = other.split(title, text)
+                prefix = os.path.commonprefix([doc.page_content for doc in docs])
+                return super().split(
+                    title,
+                    "\n\n".join(doc.page_content.removesuffix(prefix) for doc in docs),
+                )
+
+        return WrappedSplitter()
 
     def __init__(self) -> None:
         self.splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(

@@ -29,6 +29,7 @@ dependencies = [
   "termcolor",
   "retry",
   "click",
+  "jinja2",
 ]
 dynamic = ["version"]
 

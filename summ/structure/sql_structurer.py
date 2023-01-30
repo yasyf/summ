@@ -9,10 +9,12 @@ from langchain import LLMChain, PromptTemplate
 from langchain.docstore.document import Document
 
 from summ.shared.utils import dedent
-from summ.structurer.structurer import Structurer, TVal_
+from summ.structure.structurer import Structurer, TVal_
 
 
 class SQLStructurer(Structurer):
+    """Constructs an in-memory SQLite database to store and query the structured data."""
+
     def __init__(self, query: str, **kwargs):
         super().__init__(query, **kwargs)
         self.llm.max_tokens = 1024

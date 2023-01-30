@@ -17,8 +17,8 @@ from summ.classify.classes import Classes
 from summ.embed.embedder import Embedding
 from summ.shared.chain import Chain
 from summ.shared.utils import dedent
-from summ.structurer.sql_structurer import SQLStructurer
-from summ.structurer.structurer import Structurer
+from summ.structure.sql_structurer import SQLStructurer
+from summ.structure.structurer import Structurer
 from summ.summarize.summarizer import Summarizer
 
 

@@ -63,6 +63,8 @@ class MetricValue(Generic[TVal], WithSafeParse):
 
 
 class Structurer(Chain):
+    """Structurers infer a set of structured data to extract based on the query, then extract that data from every source document."""
+
     def __init__(self, query: str, **kwargs):
         super().__init__(**kwargs)
         self.query = query

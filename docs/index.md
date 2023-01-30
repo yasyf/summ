@@ -4,14 +4,14 @@ Intelligent question-answering and search for user interviews, powered by GPT-3.
 
 ## Demo
 
-<script id="asciicast-Ys2rH36AlF7RIdzZbJiorhMcc" src="https://asciinema.org/a/Ys2rH36AlF7RIdzZbJiorhMcc.js" async></script>
+<script id="asciicast-wMwNAXKzFZtpxo5hV0Rxj0GhW" src="https://asciinema.org/a/wMwNAXKzFZtpxo5hV0Rxj0GhW.js" async></script>
 
 ## How it works
 
 Summ starts with a corpus of user interview transcripts. These can be in any text format, such as exports from [Otter.ai](https://otter.ai).
 
 We flow these through a pipeline:
-[Import][summ.importers.Importer] -> [Split][summ.splitter.Splitter] -> [Classify][summ.classify.Classifier] | [Factify][summ.factify.Factifier] | [Summarize][summ.summarize.Summarizer] -> [Embed][summ.embed.Embedder] to create a model which can answer questions across your entire dataset. Vector embeddings are persisted to [Pinecone](https://www.pinecone.io/).
+[Import][summ.importers.Importer] -> [Split][summ.splitter.Splitter] -> [Classify][summ.classify.Classifier] | [Factify][summ.factify.Factifier] | [Structure][summ.structure.Structurer] | [Summarize][summ.summarize.Summarizer] -> [Embed][summ.embed.Embedder] to create a model which can answer questions across your entire dataset. Vector embeddings are persisted to [Pinecone](https://www.pinecone.io/).
 
 Finally, we enable flexible [Querying][summ.query.Querier], following a recursive question-answering scheme.
 

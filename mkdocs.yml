@@ -18,6 +18,7 @@ nav:
           - reference/pipeline/splitting.md
           - reference/pipeline/summarize.md
           - reference/pipeline/classify.md
+          - reference/pipeline/structure.md
           - reference/pipeline/factify.md
           - reference/pipeline/embed.md
           - reference/pipeline/query.md

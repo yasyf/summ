@@ -149,6 +149,7 @@ class Structurer(Chain):
                 Your task is to take a set of extracted metrics and clean them up.
                 Each metric will have a spec. You can use the spec to determine how to clean the metric.
                 The goal is to minimize variance and make this data useful for aggregation.
+                If elements are semantically equivalent, they should be combined.
 
                 For example:
                 Query: In each department, how many times did people prefer Google over Bing.
@@ -251,7 +252,9 @@ class Structurer(Chain):
             logging.error(e)
             metrics = {}
 
-        self.dprint(list(metrics.values()))
+        self.dprint(
+            [{"metric": m.metric.metric, "value": m.value} for m in metrics.values()],
+        )
         self.dprint.flush("green")
         return metrics
 
@@ -274,8 +277,7 @@ class Structurer(Chain):
             logging.error(e)
             return metrics
 
-    def extract(self, docs: list[Document]) -> dict[str, TVal_]:
-        """Extract metrics from all documents"""
+    def _extract(self, docs: list[Document]) -> dict[str, TVal_]:
         metrics = self._pmap(self.extract_metrics, docs)
         formatted: dict[str, TVal_] = {
             m.metric: m.collect_fn(cs)
@@ -283,3 +285,11 @@ class Structurer(Chain):
             for cs in [[x for v in metrics for x in [v.get(m.metric, None)] if x]]
         }
         return self.clean(formatted)
+
+    def extract(self, docs: list[Document]) -> dict[str, TVal_]:
+        """Extract metrics from all documents"""
+        try:
+            return self._extract(docs)
+        except Exception as e:
+            logging.error(e)
+            return {}

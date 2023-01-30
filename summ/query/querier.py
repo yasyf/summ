@@ -186,8 +186,7 @@ class Querier(Chain):
             prefix=dedent(
                 f"""
                 Your task is to take a set of steps that were conducted to answer a question, and use them to answer that question.
-                Answer the question in the format requested. For example, if the question specifies a list of properties, render a table with that list.
-                The final answer should be concise and accurate. First provide exactly the answer to the original question, with no extra information. You can then add references, sources, or details.
+                Answer the question in a structured manner, using the format requested. For example, if the question specifies a list of properties, render a table with that list.
 
                 The question you are trying to answer: {{{{ query }}}}
 

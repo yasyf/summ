@@ -1,0 +1,80 @@
+InputWithLabel.required Label {
+  text-style: bold;
+  color: $error;
+}
+
+SettingsScreen Button#save {
+  width: 50%;
+  margin: 1;
+}
+
+Container#buttons-container {
+  align-horizontal: center;
+  height: auto;
+}
+
+MainScreen #corpus-tree {
+  dock: left;
+  width: 20%;
+}
+
+Content,
+Home {
+  height: 100%;
+}
+
+Home #container {
+  padding-left: 2;
+  background: $surface;
+}
+
+Home #buttons-container {
+  layout: horizontal;
+}
+
+Home #output-tree {
+  height: auto;
+  max-height: 65%;
+  overflow-y: scroll;
+}
+
+Home Button {
+  width: 25%;
+  margin: 1;
+}
+
+Home Output {
+  margin-bottom: 2;
+}
+
+OutputTree {
+  background: $surface-lighten-1;
+  padding: 1;
+}
+
+OutputTree > .tree--cursor {
+  background: $background;
+  color: $text;
+  text-style: bold;
+}
+
+OutputTree > .tree--highlight {
+  text-style: none;
+}
+
+Output {
+  height: auto;
+  color: $text-disabled;
+  text-style: italic;
+}
+
+Output.final {
+  color: $text;
+}
+
+Label.heading {
+  text-style: bold underline;
+  color: $text;
+  margin-bottom: 1;
+  margin-top: 1;
+}

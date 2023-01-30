@@ -230,7 +230,7 @@ class Structurer(Chain):
 
     def extract_metrics(self, doc: Document) -> dict[str, MetricValue]:
         """Extract the metrics from the document"""
-        self.dprint(f"Metrics for: {doc.metadata['file']}", color="green")
+        self.dprint(f"Metrics for", doc.metadata["file"], color="yellow")
         results = self.cached(
             "extract_metrics",
             LLMChain(llm=self.llm, prompt=self.doc_template()),
@@ -254,10 +254,9 @@ class Structurer(Chain):
             logging.info(e)
             metrics = {}
 
-        self.dprint(
-            [{"metric": m.metric.metric, "value": m.value} for m in metrics.values()],
-        )
-        self.dprint.flush("green")
+        for metric in metrics.values():
+            self.dprint(metric.metric.metric, metric.value)
+
         return metrics
 
     def clean(self, metrics: dict[str, TVal_]) -> dict[str, TVal_]:

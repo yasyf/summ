@@ -4,7 +4,8 @@ from summ import Pipeline, Summ
 from summ.cli import CLI
 from summ.splitter.otter import OtterSplitter
 
-if __name__ == "__main__":
+
+def summ_and_pipe():
     summ = Summ(index="cronutt-facts")
 
     path = Path(__file__).parent.parent / "interviews"
@@ -18,4 +19,9 @@ if __name__ == "__main__":
         ]
     )
 
+    return summ, pipe
+
+
+if __name__ == "__main__":
+    summ, pipe = summ_and_pipe()
     CLI.run(summ, pipe)

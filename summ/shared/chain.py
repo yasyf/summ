@@ -4,10 +4,14 @@ import os
 import re
 import textwrap
 from collections import defaultdict
+from contextlib import contextmanager
+from contextvars import ContextVar
 from operator import attrgetter
-from threading import RLock, current_thread, local, main_thread
+from threading import RLock, current_thread
 from typing import (
+    Any,
     Callable,
+    ClassVar,
     Iterable,
     Optional,
     Self,
@@ -26,6 +30,7 @@ from langchain.chains.base import Chain as LChain
 from langchain.docstore.document import Document
 from langchain.llms import OpenAI
 from openai.error import RateLimitError
+from pydantic import BaseModel
 from retry import retry
 from termcolor import colored
 
@@ -38,110 +43,154 @@ R = TypeVar("R")
 TDoc = TypeVar("TDoc", bound=Union[Document, list[Document]])
 TExtract = Callable[[TDoc], Union[str, TDoc, dict[str, str], dict[str, TDoc]]]
 
-thread_local = local()
-print_lock = RLock()
+audit_lock = RLock()
 
 
 class DPrinter:
     """A thread-safe pretty-printer for debug use."""
 
-    main_indents = defaultdict(int)
+    class Entry(BaseModel):
+        thread: int
+        color: Optional[str]
+        indent: int
+        title: str
+        text: str
+
+        class Config:
+            frozen = True
+
+    main_thread: ClassVar[int] = 0
+    main_indents: ClassVar[dict[Type["Chain"], int]] = defaultdict(int)
+    instances: ContextVar[dict[Type["Chain"], Self]] = ContextVar("instances")
+
+    auditors: list[Callable[[Entry], None]] = list()
 
     @classmethod
-    def get(cls, instance, *args, **kwargs) -> Self:
-        if not hasattr(thread_local, "dprinters"):
-            thread_local.dprinters = {}
-        if instance not in thread_local.dprinters:
-            thread_local.dprinters[instance] = cls(instance, *args, **kwargs)
-        return thread_local.dprinters[instance]
+    def get(cls, instance: Type["Chain"], *args, **kwargs) -> Self:
+        if not cls.main_thread:
+            cls.main_thread = current_thread().native_id
+        instances = cls.instances.get({})
+        if instance not in instances:
+            instances[instance] = cls(instance, *args, **kwargs)
+            cls.instances.set(instances)
+        return instances[instance]
 
-    def __init__(self, instance, debug: bool = False):
+    @classmethod
+    def register_auditor(cls, auditor: Callable[[Entry], None]):
+        with audit_lock:
+            cls.auditors.append(auditor)
+
+        def unregister():
+            with audit_lock:
+                cls.auditors.remove(auditor)
+
+        return unregister
+
+    @classmethod
+    def audit(cls, indent: int, color: Optional[str], title: str, text: str):
+        entry = cls.Entry(
+            color=color,
+            indent=indent,
+            title=title,
+            text=text,
+            thread=current_thread().native_id,
+        )
+        with audit_lock:
+            for auditor in cls.auditors:
+                auditor(entry)
+
+    def __init__(self, instance: Type["Chain"], debug: bool = False):
         self.instance = instance
         self.debug = debug
-        self._parents = []
         self.__indent = 0
-        self._indents = set()
-        self._outputs = defaultdict(list)
+        self._outputs: dict[int, dict[int, list[str]]] = defaultdict(
+            lambda: defaultdict(list)
+        )
+
+    @contextmanager
+    def indent_children(self):
+        self.indent()
+        yield
+        self.dedent()
 
     def indent(self):
         self._indent += 1
 
     def dedent(self):
         self._indent -= 1
+        self._flush()
 
     def reset(self):
         self._indent = 0
 
     @property
-    def _parent(self) -> str:
-        return self._parents[-1]
-
-    @_parent.setter
-    def _parent(self, color: str):
-        self._parents.append(color)
-
-    @property
     def _indent(self) -> int:
-        if main_thread() == current_thread():
+        if self._is_main:
             return self.__class__.main_indents[self.instance]
         else:
             return self.__class__.main_indents[self.instance] + self.__indent
 
     @_indent.setter
     def _indent(self, val: int):
-        if main_thread() == current_thread():
+        if self._is_main:
             self.__class__.main_indents[self.instance] = val
         else:
             self.__indent = val
 
-    def _flush(self, color: str):
-        assert self._parent == color
-        self._print(self._outputs[color])
-        self.dedent()
-        self._parents.pop()
-        self._indents.remove(color)
-        self._outputs[color] = []
+    @property
+    def _is_main(self):
+        return current_thread().native_id == self.main_thread
 
-    def flush(self, color: str):
-        while self._parent != color:
-            self._flush(self._parent)
-        self._flush(color)
+    def _flush(self):
+        if not self._is_main:
+            return
+        for tid, outputs in self._outputs.items():
+            for indent, strings in sorted(outputs.items()):
+                self._print(strings)
+                self._outputs[tid][indent] = list()
 
     def _print(self, strings: list[str]):
-        with print_lock:
-            for s in strings:
-                if self.debug:
-                    print(s)
-                else:
-                    logging.debug(s)
+        for s in strings:
+            if self.debug:
+                print(s)
+            else:
+                logging.debug(s)
 
     def _append(self, s: str):
-        if main_thread() == current_thread():
+        if self._is_main:
             self._print([s])
         else:
-            self._outputs[self._parent].append(s)
+            self._outputs[current_thread().native_id][self._indent].append(s)
 
     def _pprint(self, obj: Union[list[dict[str, T]], dict[str, T]]):
         if isinstance(obj, list):
             return "\n⎯\n".join([self._pprint(o) for o in obj])
-        if hasattr(obj, "dict"):
+        elif hasattr(obj, "dict"):
             obj = obj.dict()
-        return "\n".join(
-            [colored(k, attrs=["bold"]) + ": " + str(v) for k, v in obj.items() if v]
-        )
+            return "\n".join(
+                [
+                    colored(k, attrs=["bold"]) + ": " + str(v)
+                    for k, v in obj.items()
+                    if v
+                ]
+            )
+        return str(obj)
 
     def __call__(
         self,
         s: Union[str, dict, list],
+        obj: Optional[Any] = None,
         color: Optional[str] = None,
-        indent: bool = True,
-        dedent: bool = True,
     ):
         if not isinstance(s, str):
             s = self._pprint(s)
 
-        if color and color in self._indents and dedent:
-            self.flush(color)
+        if obj:
+            pprinted = self._pprint(obj)
+            self.audit(self._indent, color, s, pprinted)
+            s = f"{s}: {pprinted}"
+        else:
+            self.audit(self._indent, color, "", s)
 
         indent_ = "\n" + ("  " * self._indent)
         formatted = indent_ + colored(
@@ -157,12 +206,7 @@ class DPrinter:
             attrs=["bold"] if color else [],
         )
 
-        if color and color not in self._indents and indent:
-            self._parent = color
-            self.indent()
-            self._indents.add(color)
-            self._append(formatted)
-        elif self._indent:
+        if self._indent:
             self._append(formatted)
         else:
             self._print([formatted])

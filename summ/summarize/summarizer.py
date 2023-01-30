@@ -1,4 +1,4 @@
-from langchain import PromptTemplate
+from langchain import LLMChain, PromptTemplate
 from langchain.chains.summarize import load_summarize_chain
 from langchain.docstore.document import Document
 
@@ -34,11 +34,14 @@ class Summarizer(Chain):
                 A series of user interviews were conducted to try and answer the question: "{query}".
                 Your job is to answer the question by summarizing the responses across all interviews.
 
-                Here is the first interview:
+                The summary so far is:
+                <empty>
+
+                Here is the next interview:
 
                 {text}
 
-                The summary so far is:
+                The new summary so far is:
                 """
             ),
             input_variables=["text", "query"],
@@ -72,4 +75,29 @@ class Summarizer(Chain):
             chain,
             docs,
             lambda d: {"input_documents": d, "query": query},
+        ).strip()
+
+    def summarize_structured_answer(self, query: str, answer: str):
+        prompt = PromptTemplate(
+            template=dedent(
+                """
+                Question: {query}
+                Answer:
+                {answer}
+
+                If the answer is a structured format (such as a table), return a new paragraph with a short 1 sentence plain-text summary of the answer.
+                If the answer is not in a structured format, return an empty code block.
+
+                Return:
+                ```
+                """
+            ),
+            input_variables=["query", "answer"],
+        )
+
+        return self.cached(
+            "summarize_structured_answer",
+            LLMChain(llm=self.llm, prompt=prompt),
+            [],
+            lambda _: {"query": query, "answer": answer, "stop": "```"},
         ).strip()

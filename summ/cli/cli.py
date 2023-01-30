@@ -89,7 +89,7 @@ class CLI:
                 corpus=list(pipe.corpus()),
                 debug=ctx.obj.debug,
             )
-            if not ctx.obj.debug:
-                click.echo(response)
+            click.echo("\n")
+            click.secho(response)
 
         cli()

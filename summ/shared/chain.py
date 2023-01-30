@@ -45,15 +45,18 @@ print_lock = RLock()
 class DPrinter:
     """A thread-safe pretty-printer for debug use."""
 
-    main_indent: int = 0
+    main_indents = defaultdict(int)
 
     @classmethod
-    def get(cls, *args, **kwargs) -> Self:
-        if not hasattr(thread_local, "dprinter"):
-            thread_local.dprinter = cls(*args, **kwargs)
-        return thread_local.dprinter
+    def get(cls, instance, *args, **kwargs) -> Self:
+        if not hasattr(thread_local, "dprinters"):
+            thread_local.dprinters = {}
+        if instance not in thread_local.dprinters:
+            thread_local.dprinters[instance] = cls(instance, *args, **kwargs)
+        return thread_local.dprinters[instance]
 
-    def __init__(self, debug: bool = False):
+    def __init__(self, instance, debug: bool = False):
+        self.instance = instance
         self.debug = debug
         self._parents = []
         self.__indent = 0
@@ -66,6 +69,9 @@ class DPrinter:
     def dedent(self):
         self._indent -= 1
 
+    def reset(self):
+        self._indent = 0
+
     @property
     def _parent(self) -> str:
         return self._parents[-1]
@@ -76,21 +82,24 @@ class DPrinter:
 
     @property
     def _indent(self) -> int:
-        return self.__class__.main_indent + self.__indent
+        if main_thread() == current_thread():
+            return self.__class__.main_indents[self.instance]
+        else:
+            return self.__class__.main_indents[self.instance] + self.__indent
 
     @_indent.setter
     def _indent(self, val: int):
         if main_thread() == current_thread():
-            self.__class__.main_indent = val
+            self.__class__.main_indents[self.instance] = val
         else:
             self.__indent = val
 
     def _flush(self, color: str):
         assert self._parent == color
+        self._print(self._outputs[color])
+        self.dedent()
         self._parents.pop()
         self._indents.remove(color)
-        self.dedent()
-        self._print(self._outputs[color])
         self._outputs[color] = []
 
     def flush(self, color: str):
@@ -172,11 +181,13 @@ class Chain:
         self.debug = debug
 
     def spawn(self, cls: Type[T], **kwargs) -> T:
-        return cls(debug=self.debug, verbose=self.verbose, **kwargs)
+        instance = cls(debug=self.debug, verbose=self.verbose, **kwargs)
+        instance.dprint._indent = self.dprint._indent
+        return instance
 
     @property
     def dprint(self):
-        return DPrinter.get(debug=self.debug)
+        return DPrinter.get(instance=self.__class__, debug=self.debug)
 
     def _parse(self, results: list[str], prefix: str = ""):
         return [

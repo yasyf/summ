@@ -216,7 +216,7 @@ class Structurer(Chain):
                 if m is not None
             ]
         except Exception as e:
-            logging.error(e)
+            logging.info(e)
             return []
 
     def metric(self, metric: str) -> Metric:
@@ -249,7 +249,7 @@ class Structurer(Chain):
                 if m and m.value is not None
             }
         except Exception as e:
-            logging.error(e)
+            logging.info(e)
             metrics = {}
 
         self.dprint(
@@ -259,7 +259,8 @@ class Structurer(Chain):
         return metrics
 
     def clean(self, metrics: dict[str, TVal_]) -> dict[str, TVal_]:
-        """Extract metrics from all documents"""
+        """Clean up a set of extracted metrics."""
+
         results = self.cached(
             "clean_metrics",
             LLMChain(llm=self.llm, prompt=self.clean_template()),
@@ -274,7 +275,7 @@ class Structurer(Chain):
         try:
             return dirtyjson.loads(results)
         except Exception as e:
-            logging.error(e)
+            logging.info(e)
             return metrics
 
     def _extract(self, docs: list[Document]) -> dict[str, TVal_]:
@@ -291,5 +292,5 @@ class Structurer(Chain):
         try:
             return self._extract(docs)
         except Exception as e:
-            logging.error(e)
+            logging.info(e)
             return {}

@@ -9,7 +9,7 @@ class GPTSplitter(Splitter):
 
     def __init__(self) -> None:
         self.splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
-            chunk_size=3000,
+            chunk_size=2500,
             chunk_overlap=200,
         )
 

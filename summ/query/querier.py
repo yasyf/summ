@@ -1,6 +1,7 @@
 import itertools
 import json
-from typing import TypedDict, cast, overload
+import re
+from typing import Type, TypedDict, cast, overload
 
 import pinecone
 from langchain import (
@@ -16,6 +17,7 @@ from summ.classify.classes import Classes
 from summ.embed.embedder import Embedding
 from summ.shared.chain import Chain
 from summ.shared.utils import dedent
+from summ.structurer.sql_structurer import SQLStructurer
 from summ.structurer.structurer import Structurer
 from summ.summarize.summarizer import Summarizer
 
@@ -53,7 +55,7 @@ class Querier(Chain):
         template=dedent(
             """
                 The user was tagged as: {attributes}.
-                Their respoonse was: {fact}
+                Their response was: {fact}
                 A summary of the whole interview is: {context}
             """
         ),
@@ -75,7 +77,7 @@ class Querier(Chain):
         return PromptTemplate(
             template=dedent(
                 """
-                Your task is to determine a set of up to {n} steps which would answer a question.
+                Your task is to determine a set of at most {n} steps which would answer a question.
                 You must not answer the question, merely determine the best way to answer it.
 
                 For example, if the question was "What is the most popular house colors?":
@@ -103,7 +105,7 @@ class Querier(Chain):
                 The overall question you are trying to answer is: {query}
                 You are on the following step: {step}
 
-                Generate a bulleted list of up to {n} natural-language queries to complete this step.
+                Generate a bulleted list of at most {n} natural-language queries to complete this step.
 
                 -
                 """
@@ -166,8 +168,8 @@ class Querier(Chain):
             input_variables=["query", "step"],
         )
 
-    def conclusions_template(self, conclusions: list[Conclusion], metrics: dict):
-        """The template to summarize the final answer."""
+    def conclusions_template(self, conclusions: list[Conclusion]):
+        """The template to summarize the final answer from a set of conclusions."""
 
         return FewShotPromptTemplate(
             examples=cast(list[dict], conclusions),
@@ -184,8 +186,26 @@ class Querier(Chain):
                 input_variables=["step", "conclusion"],
             ),
             prefix=dedent(
-                f"""
+                """
                 Your task is to take a set of steps that were conducted to answer a question, and use them to answer that question.
+                Answer the question in a structured manner, using the format requested. For example, if the question specifies a list of properties, render a table with that list.
+
+                The question you are trying to answer: {query}
+
+                The steps you went through to answer this question are:
+                """
+            ),
+            suffix="Final answer:\n",
+            input_variables=["query"],
+        )
+
+    def structured_data_template(self, metrics: dict):
+        """The template to summarize the final answer from the collection of structured data."""
+
+        return PromptTemplate(
+            template=dedent(
+                f"""
+                Your task is to take a set of data that was collected about a collection of interviews, and use it to answer a question.
                 Answer the question in a structured manner, using the format requested. For example, if the question specifies a list of properties, render a table with that list.
 
                 The question you are trying to answer: {{{{ query }}}}
@@ -193,12 +213,46 @@ class Querier(Chain):
                 The structured data you collected along the way:
                 {json.dumps(metrics)}
 
-                The steps you went through to answer this question are:
+                Your answer:
                 """
             ),
-            suffix="Final answer:\n",
             input_variables=["query"],
             template_format="jinja2",
+        )
+
+    def meta_conclusions_template(self, answers: list[dict]):
+        """The template to pick between several final answers."""
+
+        return FewShotPromptTemplate(
+            examples=answers,
+            example_prompt=PromptTemplate(
+                template=dedent(
+                    """
+                    Method:
+                    {method}
+
+                    Answer:
+                    ```
+                    {answer}
+                    ```
+                """
+                ),
+                input_variables=["method", "answer"],
+            ),
+            prefix=dedent(
+                """
+                An answer was procuced for a question using several different methods.
+                First, evaluate how clear, specific, and thorough each answer is.
+                Then, select the best one and return it inside a code block.
+                If you are unsure what the best answer is, use most thorough one.
+                You can clean up the answer as you return it, but do not change the meaning.
+
+                The question is: {query}
+
+                """
+            ),
+            suffix="Evaluation and Returned Answer:\nEvaluation:\n1.",
+            input_variables=["query"],
         )
 
     @overload
@@ -212,11 +266,17 @@ class Querier(Chain):
         ...
 
     def _query(
-        self, prompt: BasePromptTemplate, initial: str = "", prefix: str = "", **kwargs
+        self,
+        prompt: BasePromptTemplate,
+        initial: str = "",
+        prefix: str = "",
+        quiet: bool = False,
+        **kwargs,
     ):
         chain = LLMChain(llm=self.llm, prompt=prompt)
         results = initial + chain.run(**kwargs)
-        self.dprint(results)
+        if not quiet:
+            self.dprint(results)
         if initial and prefix:
             return self._parse(results.splitlines(), prefix)
         else:
@@ -285,6 +345,14 @@ class Querier(Chain):
         self.dprint(f"Answer: {query}", color="green")
         return conclusions
 
+    def _collect_data(
+        self, query: str, klass: Type[Structurer], corpus: list[Document]
+    ):
+        self.dprint(f"Collecting data ({klass.__name__}) for: {query}", color="green")
+        data = self.spawn(klass, query=query).extract(corpus)
+        self.dprint(f"Answer: {query}", color="green")
+        return self._query(self.structured_data_template(data), query=query)
+
     def query(
         self,
         query: str,
@@ -303,6 +371,39 @@ class Querier(Chain):
         Returns:
             answer (str): The answer to the question.
         """
-        metrics = self.spawn(Structurer, query=query).extract(corpus)
-        conclusions = self._conclusions(query, n, classes)
-        return self._query(self.conclusions_template(conclusions, metrics), query=query)
+        answers = [
+            {
+                "method": "extract structured data",
+                "answer": self._collect_data(query, Structurer, corpus),
+            },
+            {
+                "method": "construct a SQL table",
+                "answer": self._collect_data(query, SQLStructurer, corpus),
+            },
+            {
+                "method": "summarization of facts",
+                "answer": self._query(
+                    self.conclusions_template(self._conclusions(query, n, classes)),
+                    query=query,
+                ),
+            },
+        ]
+
+        self.dprint.reset()
+        self.dprint(f"Select best answer: {query}", color="blue")
+        self.dprint.flush("blue")
+
+        resp = self._query(
+            self.meta_conclusions_template(answers), query=query, quiet=True
+        )
+        if res := re.search(r"```(.*)(```)?", resp, re.DOTALL):
+            answer = res.group(1).replace("```", "").strip()
+        elif res := re.search(r"Returned Answer:(.*)(```)?", resp, re.DOTALL):
+            answer = res.group(1).strip()
+        else:
+            answer = resp.replace("```", "").strip()
+
+        if summary := self.summarizer.summarize_structured_answer(query, answer):
+            return answer + "\n\n" + summary
+        else:
+            return answer

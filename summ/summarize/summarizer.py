@@ -86,18 +86,18 @@ class Summarizer(Chain):
                 {answer}
 
                 If the answer is a structured format (such as a table), return a new paragraph with a short 1 sentence plain-text summary of the answer.
-                If the answer is not in a structured format, return an empty code block.
+                If the answer is not in a structured format, return the string None.
 
                 Return:
-                ```
                 """
             ),
             input_variables=["query", "answer"],
         )
 
-        return self.cached(
+        result = self.cached(
             "summarize_structured_answer",
             LLMChain(llm=self.llm, prompt=prompt),
             [],
-            lambda _: {"query": query, "answer": answer, "stop": "```"},
+            lambda _: {"query": query, "answer": answer},
         ).strip()
+        return None if result == "None" else result

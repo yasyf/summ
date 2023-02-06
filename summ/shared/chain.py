@@ -46,24 +46,40 @@ TExtract = Callable[[TDoc], Union[str, TDoc, dict[str, str], dict[str, TDoc]]]
 audit_lock = RLock()
 
 
+def locked(lock: RLock):
+    def decorator(func: Callable[..., R]) -> Callable[..., R]:
+        def wrapper(*args, **kwargs):
+            with lock:
+                return func(*args, **kwargs)
+
+        return wrapper
+
+    return decorator
+
+
+class Entry(BaseModel):
+    thread: int
+    color: Optional[str]
+    indent: int
+    title: str
+    text: str
+    parent: Optional["Entry"]
+
+    class Config:
+        frozen = True
+
+
 class DPrinter:
     """A thread-safe pretty-printer for debug use."""
 
-    class Entry(BaseModel):
-        thread: int
-        color: Optional[str]
-        indent: int
-        title: str
-        text: str
-
-        class Config:
-            frozen = True
+    Entry = Entry
 
     main_thread: ClassVar[int] = 0
     main_indents: ClassVar[dict[Type["Chain"], int]] = defaultdict(int)
-    instances: ContextVar[dict[Type["Chain"], Self]] = ContextVar("instances")
+    instances: ClassVar[ContextVar[dict[Type["Chain"], Self]]] = ContextVar("instances")
+    auditors: ClassVar[list[Callable[[Entry], None]]] = list()
 
-    auditors: list[Callable[[Entry], None]] = list()
+    last_entry: Optional[Entry] = None
 
     @classmethod
     def get(cls, instance: Type["Chain"], *args, **kwargs) -> Self:
@@ -80,23 +96,25 @@ class DPrinter:
         with audit_lock:
             cls.auditors.append(auditor)
 
+        @locked(audit_lock)
         def unregister():
-            with audit_lock:
-                cls.auditors.remove(auditor)
+            cls.auditors.remove(auditor)
 
         return unregister
 
-    @classmethod
-    def audit(cls, indent: int, color: Optional[str], title: str, text: str):
-        entry = cls.Entry(
+    def audit(self, color: Optional[str], title: str, text: str):
+        entry = self.last_entry = self.Entry(
             color=color,
-            indent=indent,
+            indent=self._indent,
             title=title,
             text=text,
             thread=current_thread().native_id,
+            parent=self.last_entry.copy(update={"parent": None})
+            if self.last_entry
+            else None,
         )
         with audit_lock:
-            for auditor in cls.auditors:
+            for auditor in self.auditors:
                 auditor(entry)
 
     def __init__(self, instance: Type["Chain"], debug: bool = False):
@@ -110,8 +128,10 @@ class DPrinter:
     @contextmanager
     def indent_children(self):
         self.indent()
-        yield
-        self.dedent()
+        try:
+            yield
+        finally:
+            self.dedent()
 
     def indent(self):
         self._indent += 1
@@ -135,7 +155,7 @@ class DPrinter:
         if self._is_main:
             self.__class__.main_indents[self.instance] = val
         else:
-            self.__indent = val
+            self.__indent = val - self.__class__.main_indents[self.instance]
 
     @property
     def _is_main(self):
@@ -187,10 +207,10 @@ class DPrinter:
 
         if obj:
             pprinted = self._pprint(obj)
-            self.audit(self._indent, color, s, pprinted)
+            self.audit(color, s, pprinted)
             s = f"{s}: {pprinted}"
         else:
-            self.audit(self._indent, color, "", s)
+            self.audit(color, "", s)
 
         indent_ = "\n" + ("  " * self._indent)
         formatted = indent_ + colored(
@@ -241,6 +261,16 @@ class Chain:
             for g in [p and p.group("res")]
             if p and g
         ]
+
+    def _pprogress(self):
+        if self.pool._original_iterator is None:
+            return (self.pool.n_completed_tasks, self.pool.n_dispatched_tasks)
+        else:
+            return (self.pool.n_completed_tasks, None)
+
+    def _ppprogress(self):
+        done, total = self._pprogress()
+        return f"[{done}/{total}]" if total else f"[?/{done}]"
 
     def _pmap(
         self, meth: Callable[[T, *Ts], R], it: Iterable[T], *args: *Ts

@@ -32,11 +32,15 @@ class Summ:
         if not pipe.embedder.has_index():
             try:
                 print("Creating index, this may take a while...")
+                pipe.dprint("Create Index", pipe.embedder.index_name)
                 pipe.embedder.create_index()
             except Exception as e:
                 if "already exists" not in str(e):
                     raise e
                 print("Index already exists!")
+                pipe.dprint("Index already exists!")
+        else:
+            pipe.dprint("Index already exists!")
 
         pipe.run(parallel=parallel)
 

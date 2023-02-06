@@ -14,7 +14,7 @@ class InputWithLabel(Static):
         yield Input(**self.kwargs)
 
     def on_mount(self):
-        if self.required and not self.kwargs["value"]:
+        if self.required and not self.kwargs.get("value"):
             self.add_class("required")
 
     def on_input_changed(self, event: Input.Changed):

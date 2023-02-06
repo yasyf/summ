@@ -1,13 +1,11 @@
 import os
 from enum import Enum
-from typing import Any, TypeVarTuple
 
 from textual import events
 from textual.app import ComposeResult
-from textual.containers import Container, Horizontal, Vertical
+from textual.containers import Horizontal, Vertical
 from textual.reactive import reactive
-from textual.widget import Widget
-from textual.widgets import Button, DirectoryTree, Footer, Header, Input, Label, Static
+from textual.widgets import DirectoryTree, Footer, Header, Static
 
 from summ.cli.screens.screen import Screen
 from summ.cli.utils import push_screen
@@ -29,7 +27,7 @@ class Content(Static):
         self.mount(self.widget())
 
     def render_home(self):
-        return Home()
+        return Home(self.app.summ, self.app.pipe)
 
     def render_file(self, path: str):
         return File(path)

@@ -12,6 +12,8 @@ from langchain import (
 )
 from langchain.docstore.document import Document
 from langchain.embeddings import OpenAIEmbeddings
+from openai.error import RateLimitError
+from retry import retry
 
 from summ.classify.classes import Classes
 from summ.embed.embedder import Embedding
@@ -265,6 +267,14 @@ class Querier(Chain):
     ) -> list[str]:
         ...
 
+    @retry(
+        exceptions=RateLimitError,
+        tries=5,
+        delay=10,
+        backoff=2,
+        max_delay=120,
+        jitter=(0, 10),
+    )
     def _query(
         self,
         prompt: BasePromptTemplate,

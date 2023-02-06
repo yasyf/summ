@@ -1,5 +1,6 @@
 import json
 import logging
+import traceback
 from collections import Counter
 from enum import StrEnum
 from functools import cached_property
@@ -230,7 +231,6 @@ class Structurer(Chain):
 
     def extract_metrics(self, doc: Document) -> dict[str, MetricValue]:
         """Extract the metrics from the document"""
-        self.dprint(f"Metrics for", doc.metadata["file"], color="yellow")
         results = self.cached(
             "extract_metrics",
             LLMChain(llm=self.llm, prompt=self.doc_template()),
@@ -251,11 +251,8 @@ class Structurer(Chain):
                 if m and m.value is not None
             }
         except Exception as e:
-            logging.info(e)
+            traceback.print_exc()
             metrics = {}
-
-        for metric in metrics.values():
-            self.dprint(metric.metric.metric, metric.value)
 
         return metrics
 
@@ -286,7 +283,11 @@ class Structurer(Chain):
             for m in self.metrics
             for cs in [[x for v in metrics for x in [v.get(m.metric, None)] if x]]
         }
-        return self.clean(formatted)
+        if cleaned := self.clean(formatted):
+            for k, v in cleaned.items():
+                self.dprint("Metric", k, color="yellow")
+                self.dprint("", v)
+        return cleaned
 
     def extract(self, docs: list[Document]) -> dict[str, TVal_]:
         """Extract metrics from all documents"""

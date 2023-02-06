@@ -6,6 +6,7 @@ from itertools import chain
 from pathlib import Path
 from typing import Generator, Generic, Iterable, Self, TextIO, Type
 
+import metrohash
 from langchain.docstore.document import Document
 from openai.error import RateLimitError
 from retry import retry
@@ -68,26 +69,39 @@ class Pipeline(Chain, Generic[C]):
         jitter=(0, 10),
     )
     def _process_doc(self, doc: Document, classes: dict[str, list[C]]) -> Document:
-        try:
-            if "classes" not in doc.metadata:
-                doc.metadata["classes"] = classes
-            if "facts" not in doc.metadata:
-                doc.metadata["facts"] = self.factifier.factify(doc)
-            if "summary" not in doc.metadata:
-                doc.metadata["summary"] = self.summarizer.summarize_doc(doc)
-            if "embeddings" not in doc.metadata:
-                doc.metadata["embeddings"] = (
-                    self.embedder.persist(doc)
-                    if self.persist
-                    else self.embedder.embed(doc)
-                )
-        except Exception as e:
-            logging.error(f"Error processing {doc.metadata['file']}")
-            traceback.print_exception(e)
-            if "PYTEST_CURRENT_TEST" in os.environ:
-                raise e
-        finally:
-            return doc
+        self.dprint(
+            f"Document {self._ppprogress()}",
+            metrohash.hash64(doc.page_content).hex()[:5],
+            color="magenta",
+        )
+        with self.dprint.indent_children():
+            try:
+                if "classes" not in doc.metadata:
+                    doc.metadata["classes"] = classes
+
+                self.dprint("Factify", color="yellow")
+                if "facts" not in doc.metadata:
+                    doc.metadata["facts"] = self.factifier.factify(doc)
+                self.dprint("", doc.metadata["facts"])
+
+                self.dprint("Summarize", color="yellow")
+                if "summary" not in doc.metadata:
+                    doc.metadata["summary"] = self.summarizer.summarize_doc(doc)
+                self.dprint("", doc.metadata["summary"])
+
+                if "embeddings" not in doc.metadata:
+                    doc.metadata["embeddings"] = (
+                        self.embedder.persist(doc)
+                        if self.persist
+                        else self.embedder.embed(doc)
+                    )
+            except Exception as e:
+                logging.error(f"Error processing {doc.metadata['file']}")
+                traceback.print_exception(e)
+                if "PYTEST_CURRENT_TEST" in os.environ:
+                    raise e
+            finally:
+                return doc
 
     def _split_blob(self, blob: TextIO) -> list[Document]:
         return self.splitter.split(Path(blob.name).stem, blob.read())
@@ -101,9 +115,18 @@ class Pipeline(Chain, Generic[C]):
         yield from chain.from_iterable(map(self._process_blob, blobs))
 
     def _runpg(self, blobs: Iterable[TextIO]) -> Generator[Document, None, None]:
-        for docs in self._pmap(self._split_blob, blobs):
-            classes = self.classifier.classify_all(docs)
-            yield from self._pmap(self._process_doc, docs, classes)
+        all_docs = self._pmap(self._split_blob, blobs)
+        for i, docs in enumerate(all_docs):
+            self.dprint(
+                f"File [{i}/{len(all_docs)}]",
+                docs[0].metadata["file"][:5],
+                color="green",
+            )
+            with self.dprint.indent_children():
+                self.dprint("Classify", color="cyan")
+                classes = self.classifier.classify_all(docs)
+                self.dprint("", {k: [x.name for x in v] for k, v in classes.items()})
+                yield from self._pmap(self._process_doc, docs, classes)
 
     def _runp(self, blobs: Iterable[TextIO]) -> list[Document]:
         return list(self._runpg(blobs))

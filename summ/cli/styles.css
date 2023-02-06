@@ -47,6 +47,11 @@ Home Output {
   margin-bottom: 2;
 }
 
+Home Spinner {
+  content-align: center middle;
+  height: 1;
+}
+
 OutputTree {
   background: $surface-lighten-1;
   padding: 1;

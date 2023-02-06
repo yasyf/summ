@@ -159,7 +159,6 @@ class SQLStructurer(Structurer):
 
     def extract_metrics(self, doc: Document):
         """Extract the metrics from the document"""
-        self.dprint("Metrics", doc.metadata["file"], color="green")
         results = self.cached(
             "extract_metrics",
             LLMChain(llm=self.llm, prompt=self.doc_template()),
@@ -171,7 +170,6 @@ class SQLStructurer(Structurer):
                 "stop": "```",
             },
         )
-        self.dprint("Metrics", results)
         return results
 
     def clean(self, metrics: list[sqlite3.Row]) -> list[dict]:
@@ -209,4 +207,9 @@ class SQLStructurer(Structurer):
             .execute(f"SELECT * FROM {self.table_name} ORDER BY RANDOM() LIMIT 50;")
             .fetchall()
         )
-        return {"data": self.clean(metrics)}
+        if cleaned := self.clean(metrics):
+            for metric in cleaned[0].keys():
+                self.dprint("Metric", metric, color="yellow")
+                self.dprint("", "\n--\n".join([str(x[metric]) for x in cleaned[:5]]))
+
+        return {"data": cleaned}

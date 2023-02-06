@@ -1,4 +1,8 @@
+import asyncio
 import itertools
+import os
+import signal
+import sys
 from pathlib import Path
 
 import click
@@ -6,6 +10,7 @@ import langchain
 from pydantic import BaseModel
 
 from summ.classify import Classes, Classifier
+from summ.cli.app import SummApp
 from summ.pipeline import Pipeline
 from summ.summ import Summ
 
@@ -47,13 +52,29 @@ class CLI:
             ```
         """
 
-        @click.group()
+        def handler(signum, frame):
+            print("Cleaning up...")
+            with open(os.devnull, "w") as devnull:
+                sys.stdout = sys.stderr = devnull
+                if task := asyncio.current_task():
+                    task.cancel()
+                if loop := asyncio.get_event_loop():
+                    loop.stop()
+                    loop.close()
+                os._exit(1)
+
+        signal.signal(signal.SIGINT, handler)
+
+        @click.group(invoke_without_command=True)
         @click.option("--debug/--no-debug", default=True)
         @click.option("--verbose/--no-verbose", default=False)
         @click.pass_context
         def cli(ctx, debug: bool, verbose: bool):
             ctx.obj = Options(debug=debug, verbose=verbose)
             langchain.verbose = verbose
+
+            if not ctx.invoked_subcommand:
+                SummApp(summ, pipe).run()
 
         @cli.command()
         @click.pass_context

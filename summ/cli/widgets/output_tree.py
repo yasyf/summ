@@ -13,12 +13,14 @@ Node = DPrinter.Entry
 
 
 class OutputTree(Tree[Node]):
-    last_node: TreeNode[Node]
     unregister: Optional[Callable]
 
     displayed_node: reactive[Optional[TreeNode[Node]]] = reactive(
         None, init=False, repaint=False
     )
+    last_node: reactive[TreeNode[Node]] = reactive(None, init=False)
+    question: reactive[str] = reactive("", init=False)
+    title: reactive[str] = reactive("Question", init=False)
 
     class RecordOutput(Message):
         def __init__(self, sender: MessageTarget, text: str) -> None:
@@ -27,31 +29,77 @@ class OutputTree(Tree[Node]):
 
     def __init__(self, question: str, **kwargs) -> None:
         self.outputs: dict[Node, str] = {}
+        self.nodes: dict[Node, TreeNode[Node]] = {}
 
-        root = Node(color="green", indent=-1, text=question, title="Question", thread=0)
+        root = Node(
+            color="green",
+            indent=-1,
+            text=question,
+            title=self.title,
+            thread=DPrinter.main_thread,
+            parent=None,
+        )
         super().__init__(root.title, root, **kwargs)
+
+        self.question = question
         self.last_node = self.root
         self.root.expand()
 
+    def watch_title(self, title: str):
+        self.root.data = self.root.data.copy(update={"title": title})
+        self.root.set_label(title)
+        self.root._reset()
+        self.root._tree._invalidate()
+
+    def watch_question(self, question: str):
+        self.root.data = self.root.data.copy(update={"text": question})
+        self.root._reset()
+        self.root._tree._invalidate()
+
+    def watch_last_node(self, last_node: TreeNode[Node]):
+        self.scroll_to_node(last_node)
+
     def _update_output(self, evt: RecordOutput):
-        self.parent.parent.on_output_tree_record_output(evt)
+        # LOL big hack
+        try:
+            self.parent.parent.on_output_tree_record_output(evt)
+        except AttributeError:
+            # We're in shutdown
+            pass
+
+    def _attach_output(self, entry: Node, parent: TreeNode[Node]):
+        while parent.data in self.outputs:
+            if not parent.parent:
+                return
+            parent = parent.parent
+        self.outputs[parent.data] = entry.text
 
     def _on_node(self, entry: Node):
         self.log(entry)
 
-        if not entry.color:
-            self.outputs[self.last_node.data] = entry.text
-            # LOL big hack
-            self._update_output(self.RecordOutput(self, entry.text))
+        if entry.parent:
+            parent = self.nodes.get(entry.parent)
+        else:
+            parent = self.last_node
+
+        if not parent:
+            self.log("No parent", entry)
             return
 
-        parent = self.last_node
-        while parent.data.indent >= entry.indent:
+        cleaned = entry.copy(update={"text": entry.text.replace("\n", " ").strip()})
+        normalized = entry.copy(update={"parent": None})
+
+        if not entry.color:
+            self._attach_output(entry, parent)
+            self._update_output(self.RecordOutput(self, entry.text))
+            self.nodes[normalized] = parent
+            return
+
+        while parent.parent and parent.data.indent >= entry.indent:
             parent = parent.parent
 
-        entry = entry.copy(update={"text": entry.text.replace("\n", " ").strip()})
-        self.last_node = parent.add(entry.title, entry, expand=True)
-        self.scroll_to_node(self.last_node)
+        self.last_node = parent.add(cleaned.title, cleaned, expand=True)
+        self.nodes[normalized] = self.last_node
 
     def auditor(self):
         app = self.app
@@ -80,10 +128,13 @@ class OutputTree(Tree[Node]):
         self._update_output(self.RecordOutput(self, output))
 
     def render_label(self, node: TreeNode[Node], base_style: Style, style: Style):
-        prefix = node._label.copy().append(": ")
+        data = cast(Node, node.data)
+
+        prefix = node._label.copy().append(": ") if node._label else Text()
+        style = style + Style(color=data.color or "white")
         prefix.stylize(style)
 
-        data = cast(Node, node.data)
+        text = data.text if node._label else (data.text, style)
 
         if self.outputs.get(data):
             arrow = (
@@ -93,8 +144,4 @@ class OutputTree(Tree[Node]):
         else:
             arrow = ("", base_style)
 
-        if data.color:
-            label = (data.text, Style(color=data.color))
-        else:
-            label = data.text
-        return Text.assemble(arrow, prefix, label, style=base_style)
+        return Text.assemble(arrow, prefix, text, style=base_style)

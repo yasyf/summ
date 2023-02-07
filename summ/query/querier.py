@@ -365,7 +365,10 @@ class Querier(Chain):
         self.dprint("Collect Data", klass.__name__, color="green")
         with self.dprint.indent_children():
             data = self.spawn(klass, query=query).extract(corpus)
-            return self._query(self.structured_data_template(data), query=query)
+            if data:
+                return self._query(self.structured_data_template(data), query=query)
+            else:
+                return "No relevant data found."
 
     def query(
         self,

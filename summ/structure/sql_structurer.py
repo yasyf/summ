@@ -51,6 +51,7 @@ class SQLStructurer(Structurer):
                 Write between zero and three SQL statements which will insert data into the table.
                 You do not need to use all three statements.
                 Do not insert data which is not relevant to the query. Do not insert data which is ambiguous. Do not insert data which is noisy or too long.
+                Only insert data that is derived from the document provided. Do not guess or make up data.
                 For each row, record your confidence that the data is relevant to the query as a number from 0 to 100, using the confidence score column.
                 Your response must be valid and complete SQL.
 
@@ -107,7 +108,8 @@ class SQLStructurer(Structurer):
                 )
                 SELECT
                 Department,
-                GROUP_CONCAT(Response, ', ') AS Responses
+                GROUP_CONCAT(Response, ', ') AS Responses,
+                AVG(ConfidenceScore) AS AvgConfidenceScore
                 FROM CleanedData
                 WHERE ConfidenceScore > 80
                 GROUP BY Department

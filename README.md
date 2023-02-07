@@ -11,7 +11,7 @@ Easily surface insights and summarize facts across various dimensions such as de
 
 A tool by [@markiewagner](https://github.com/markiewagner) and [@yasyf](https://github.com/yasyf).
 
-[![asciicast](https://asciinema.org/a/ahkbZ4ibmiVEUnfBODe92wzuh.svg)](https://asciinema.org/a/ahkbZ4ibmiVEUnfBODe92wzuh)
+[![asciicast](https://asciinema.org/a/V2G8wyEfucFcU2bSr6eOCWOfP.svg)](https://asciinema.org/a/V2G8wyEfucFcU2bSr6eOCWOfP)
 
 ## Installation
 

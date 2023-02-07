@@ -351,7 +351,7 @@ class Querier(Chain):
         return {"step": step, "conclusion": conclusion}
 
     def _conclusions(self, query: str, n: int = 3, classes: list[Classes] = []):
-        self.dprint("Sub-Question", query, color="green")
+        self.dprint("Research", color="green")
         with self.dprint.indent_children():
             steps = self._query(
                 self.steps_template(), "1.", r"\d+(?:\.)", query=query, n=n

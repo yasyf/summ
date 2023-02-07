@@ -36,6 +36,7 @@ dependencies = [
   "dirtyjson",
   "textual",
   "python-dotenv",
+  "pyperclip",
 ]
 dynamic = ["version"]
 

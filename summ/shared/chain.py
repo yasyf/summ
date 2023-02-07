@@ -213,13 +213,14 @@ class DPrinter:
             self.audit(color, "", s)
 
         indent_ = "\n" + ("  " * self._indent)
+        try:
+            width = os.get_terminal_size().columns - 30
+        except OSError:
+            width = 80
         formatted = indent_ + colored(
             indent_.join(
                 itertools.chain.from_iterable(
-                    [
-                        textwrap.wrap(l, width=os.get_terminal_size().columns - 30)
-                        for l in s.splitlines()
-                    ]
+                    [textwrap.wrap(l, width=width) for l in s.splitlines()]
                 )
             ),
             color=color,

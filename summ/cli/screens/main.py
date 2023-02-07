@@ -1,7 +1,7 @@
 import os
 from enum import Enum
 
-from textual import events
+import pyperclip
 from textual.app import ComposeResult
 from textual.containers import Horizontal, Vertical
 from textual.reactive import reactive
@@ -10,7 +10,7 @@ from textual.widgets import DirectoryTree, Footer, Header, Static
 from summ.cli.screens.screen import Screen
 from summ.cli.utils import push_screen
 from summ.cli.widgets.file import File
-from summ.cli.widgets.home import Home
+from summ.cli.widgets.home import Home, Output
 from summ.cli.widgets.reactive_tree import ReactiveTree
 
 
@@ -39,6 +39,7 @@ class Content(Static):
 class MainScreen(Screen):
     BINDINGS = [
         ("s", push_screen("settings"), "settings"),
+        ("c", "copy", "copy output"),
         ("h,q,escape", "home", "home"),
     ]
 
@@ -61,6 +62,12 @@ class MainScreen(Screen):
     def action_home(self) -> None:
         content = self.query_one(Content)
         content.data = (ContentType.HOME,)
+
+    def action_copy(self) -> None:
+        content = self.query_one(Content)
+        if content.data[0] != ContentType.HOME:
+            return
+        pyperclip.copy(content.query_one(Home).query_one(Output).text)
 
     def on_directory_tree_file_selected(self, evt: DirectoryTree.FileSelected) -> None:
         content = self.query_one(Content)

@@ -246,7 +246,7 @@ class Querier(Chain):
                 An answer was procuced for a question using several different methods.
                 First, evaluate how clear, specific, and thorough each answer is.
                 Then, select the best one and return it inside a code block.
-                If you are unsure what the best answer is, use most thorough one.
+                If you are unsure what the best answer is, use the most precise one.
                 You can clean up the answer as you return it, but do not change the meaning.
 
                 The question is: {query}

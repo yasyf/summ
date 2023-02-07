@@ -4,7 +4,7 @@ Intelligent question-answering and search for user interviews, powered by GPT-3.
 
 ## Demo
 
-<script id="asciicast-wMwNAXKzFZtpxo5hV0Rxj0GhW" src="https://asciinema.org/a/wMwNAXKzFZtpxo5hV0Rxj0GhW.js" async></script>
+<script id="asciicast-ahkbZ4ibmiVEUnfBODe92wzuh" src="https://asciinema.org/a/ahkbZ4ibmiVEUnfBODe92wzuh.js" async></script>
 
 ## How it works
 

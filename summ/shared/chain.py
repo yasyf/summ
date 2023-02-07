@@ -263,10 +263,13 @@ class Chain:
         ]
 
     def _pprogress(self):
-        if self.pool._original_iterator is None:
-            return (self.pool.n_completed_tasks, self.pool.n_dispatched_tasks)
-        else:
-            return (self.pool.n_completed_tasks, None)
+        try:
+            if self.pool._original_iterator is None:
+                return (self.pool.n_completed_tasks, self.pool.n_dispatched_tasks)
+            else:
+                return (self.pool.n_completed_tasks, None)
+        except AttributeError:
+            return (0, None)
 
     def _ppprogress(self):
         done, total = self._pprogress()

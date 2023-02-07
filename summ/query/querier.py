@@ -418,7 +418,9 @@ class Querier(Chain):
         else:
             answer = resp.replace("```", "").strip()
 
-        if summary := self.summarizer.summarize_structured_answer(query, answer):
+        if (
+            summary := self.summarizer.summarize_structured_answer(query, answer)
+        ) and summary != answer:
             return answer + "\n\n" + summary
         else:
             return answer

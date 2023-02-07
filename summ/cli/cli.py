@@ -3,6 +3,7 @@ import itertools
 import os
 import signal
 import sys
+import warnings
 from pathlib import Path
 
 import click
@@ -64,6 +65,7 @@ class CLI:
                 os._exit(1)
 
         signal.signal(signal.SIGINT, handler)
+        warnings.simplefilter("ignore", ResourceWarning)
 
         @click.group(invoke_without_command=True)
         @click.option("--debug/--no-debug", default=True)

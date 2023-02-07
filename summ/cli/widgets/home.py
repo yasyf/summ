@@ -84,7 +84,7 @@ class Home(Static):
 
     def action_query(self):
         return self.summ.query(
-            self.question, n=2, classes=[], corpus=list(self.pipe.corpus()), debug=True
+            self.question, classes=[], corpus=list(self.pipe.corpus()), debug=True
         )
 
     def action_populate(self):

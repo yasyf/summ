@@ -70,10 +70,12 @@ class CLI:
         @click.group(invoke_without_command=True)
         @click.option("--debug/--no-debug", default=True)
         @click.option("--verbose/--no-verbose", default=False)
+        @click.option("-n", default=3)
         @click.pass_context
-        def cli(ctx, debug: bool, verbose: bool):
+        def cli(ctx, debug: bool, verbose: bool, n: int):
             ctx.obj = Options(debug=debug, verbose=verbose)
             langchain.verbose = verbose
+            summ.n = n
 
             if not ctx.invoked_subcommand:
                 SummApp(summ, pipe).run()
@@ -96,7 +98,6 @@ class CLI:
 
         @cli.command()
         @click.argument("query", nargs=1)
-        @click.option("-n", default=3)
         @click.option(
             "--classes",
             multiple=True,
@@ -107,7 +108,6 @@ class CLI:
         def query(ctx: click.Context, query: str, n: int, classes: list[Classes]):
             response = summ.query(
                 query,
-                n=n,
                 classes=classes,
                 corpus=list(pipe.corpus()),
                 debug=ctx.obj.debug,

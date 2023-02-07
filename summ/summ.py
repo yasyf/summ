@@ -11,8 +11,9 @@ from summ.query.querier import Querier
 class Summ:
     """The main entry point for both populating and querying the model."""
 
-    def __init__(self, index: str = "sum-facts"):
+    def __init__(self, index: str = "sum-facts", n: int = 3):
         self.index = index
+        self.n = n
 
     def populate(
         self,
@@ -47,7 +48,6 @@ class Summ:
     def query(
         self,
         question: str,
-        n: int = 3,
         classes: list[Classes] = [],
         corpus: list[Document] = [],
         debug: bool = True,
@@ -62,4 +62,4 @@ class Summ:
             debug (bool, optional): Whether to print intermediate steps.
         """
         querier = Querier(index=self.index, debug=debug)
-        return querier.query(question, n=n, classes=classes, corpus=corpus)
+        return querier.query(question, n=self.n, classes=classes, corpus=corpus)

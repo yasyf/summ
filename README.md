@@ -15,7 +15,9 @@ A tool by [@markiewagner](https://github.com/markiewagner) and [@yasyf](https://
 
 ## Requirements
 
-You'll need an instance of [Redis Stack](https://redis.io/docs/stack/get-started/install/) running.
+You'll need an instance of [Redis Stack](https://redis.io/docs/stack/get-started/install/) running. If you install `summ` using `brew`, this will be taken care of for you.
+
+If you install `summ` using `pip`, this is the easiest way to get Redis up and running:
 
 ```console
 $ brew install yasyf/summ/redis-stack
@@ -27,8 +29,16 @@ You'll also need to set three environment variables: `OPENAI_API_KEY`, `PINECONE
 
 ## Installation
 
+The easiest installation uses `brew`:
+
 ```console
-pip install summ
+$ brew install yasyf/summ/summ
+```
+
+If you prefer to use `pip`:
+
+```console
+$ pip install summ
 ```
 
 ## Quickstart

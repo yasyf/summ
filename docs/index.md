@@ -17,15 +17,33 @@ Finally, we enable flexible [Querying][summ.query.Querier], following a recursiv
 
 Check out this [blog post](#) for more details.
 
-## Installation
+## Requirements
+
+You'll need an instance of [Redis Stack](https://redis.io/docs/stack/get-started/install/) running. If you install `summ` using `brew`, this will be taken care of for you.
+
+If you install `summ` using `pip`, this is the easiest way to get Redis up and running:
 
 ```console
-pip install summ
+$ brew install yasyf/summ/redis-stack
+$ brew services start yasyf/summ/redis-stack
 ```
 
-You'll need an instance of [Redis Stack](https://redis.io/docs/stack/get-started/install/) running. We've found that `brew install redis-stack/redis-stack/redis-stack` is the fastest way to get up and running.
-
 You'll also need to set three environment variables: `OPENAI_API_KEY`, `PINECONE_API_KEY`, and `PINECONE_ENVIRONMENT`.
+
+
+## Installation
+
+The easiest installation uses `brew`:
+
+```console
+$ brew install yasyf/summ/summ
+```
+
+If you prefer to use `pip`:
+
+```console
+$ pip install summ
+```
 
 ## Quickstart
 

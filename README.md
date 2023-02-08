@@ -22,7 +22,7 @@ $ brew install yasyf/summ/redis-stack
 $ brew services start yasyf/summ/redis-stack
 ```
 
-You'll also need to set two environment variables: `OPENAI_API_KEY`, and `PINECONE_API_KEY`.
+You'll also need to set three environment variables: `OPENAI_API_KEY`, `PINECONE_API_KEY`, and `PINECONE_ENVIRONMENT`.
 
 
 ## Installation

@@ -23,6 +23,7 @@ CONFIG_PATH.parent.mkdir(parents=True, exist_ok=True)
 class Settings(BaseSettings):
     openai_api_key: Optional[str]
     pinecone_api_key: Optional[str]
+    pinecone_environment: Optional[str]
     corpus_path: Optional[str]
 
     class Config:
@@ -63,6 +64,12 @@ class SettingsScreen(Screen):
             id="pinecone_api_key",
             placeholder="...",
             value=self.settings.pinecone_api_key,
+        )
+        yield InputWithLabel(
+            name="Pinecone Environment",
+            id="pinecone_environment",
+            placeholder="us-west1-gcp",
+            value=self.settings.pinecone_environment,
         )
         yield InputWithLabel(
             name="Data Directory",

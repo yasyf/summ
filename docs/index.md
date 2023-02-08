@@ -25,7 +25,7 @@ pip install summ
 
 You'll need an instance of [Redis Stack](https://redis.io/docs/stack/get-started/install/) running. We've found that `brew install redis-stack/redis-stack/redis-stack` is the fastest way to get up and running.
 
-You'll also need to set two environment variables: `OPENAI_API_KEY`, and `PINECONE_API_KEY`.
+You'll also need to set three environment variables: `OPENAI_API_KEY`, `PINECONE_API_KEY`, and `PINECONE_ENVIRONMENT`.
 
 ## Quickstart
 

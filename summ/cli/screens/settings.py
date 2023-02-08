@@ -77,6 +77,12 @@ class SettingsScreen(Screen):
 
         yield Footer()
 
+    def on_mount(self):
+        if not self.settings.corpus_path:
+            self.settings = self.settings.copy(
+                update={"corpus_path": self.app.pipe.importer.dir}
+            )
+
     def on_button_pressed(self, event: Button.Pressed):
         if event.button.id == "save":
             self.settings.write()

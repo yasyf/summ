@@ -88,7 +88,7 @@ class Home(Static):
         )
 
     def action_populate(self):
-        return self.summ.populate(self.pipe.importer.dir, pipe=self.pipe)
+        return self.summ.populate(self.app.settings.corpus_path, pipe=self.pipe)
 
     async def on_button_pressed(self, event: Button.Pressed):
         output, tree = self.query_one(Output), self.query_one(OutputTree)

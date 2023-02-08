@@ -13,15 +13,23 @@ A tool by [@markiewagner](https://github.com/markiewagner) and [@yasyf](https://
 
 [![asciicast](https://asciinema.org/a/V2G8wyEfucFcU2bSr6eOCWOfP.svg)](https://asciinema.org/a/V2G8wyEfucFcU2bSr6eOCWOfP)
 
+## Requirements
+
+You'll need an instance of [Redis Stack](https://redis.io/docs/stack/get-started/install/) running.
+
+```console
+$ brew install yasyf/summ/redis-stack
+$ brew services start yasyf/summ/redis-stack
+```
+
+You'll also need to set two environment variables: `OPENAI_API_KEY`, and `PINECONE_API_KEY`.
+
+
 ## Installation
 
 ```console
 pip install summ
 ```
-
-You'll need an instance of [Redis Stack](https://redis.io/docs/stack/get-started/install/) running. We've found that `brew install redis-stack/redis-stack/redis-stack` is the fastest way to get up and running.
-
-You'll also need to set two environment variables: `OPENAI_API_KEY`, and `PINECONE_API_KEY`
 
 ## Quickstart
 

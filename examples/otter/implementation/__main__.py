@@ -22,6 +22,10 @@ def summ_and_pipe():
     return summ, pipe
 
 
-if __name__ == "__main__":
+def main():
     summ, pipe = summ_and_pipe()
     CLI.run(summ, pipe)
+
+
+if __name__ == "__main__":
+    main()

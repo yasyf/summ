@@ -40,6 +40,9 @@ dependencies = [
 ]
 dynamic = ["version"]
 
+[project.scripts]
+summ-example = "examples.otter.implementation.__main__:main"
+
 [project.urls]
 Documentation = "https://github.com/yasyf/summ#readme"
 Issues = "https://github.com/yasyf/summ/issues"

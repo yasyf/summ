@@ -123,6 +123,16 @@ if __name__ == "__main__":
 
 ### Usage
 
+### TUI
+
+To run the Terminal UI, simply do:
+
+```bash
+$ python -m implementation
+```
+
+You can also run the steps non-interactively, as shown below.
+
 #### Populate
 
 Now, to populate our model, we can do:

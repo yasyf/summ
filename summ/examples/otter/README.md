@@ -2,6 +2,8 @@
 
 This directory has an example of using `summ` with text files exported from [otter.ai](https://otter.ai).
 
+The conversations included discuss [Cronutt](https://magazine.ucsf.edu/cellular-transplant-therapy-pioneered-ucsf-reverses-sea-lions-epilepsy).
+
 ## Setup
 
 ### Classes

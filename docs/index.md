@@ -45,6 +45,14 @@ If you prefer to use `pip`:
 $ pip install summ
 ```
 
+## Demo
+
+You can confirm that `summ` installed properly by running the built-in example.
+
+```console
+$ summ-example
+```
+
 ## Quickstart
 
 This quickstart is taken straight from the otter.ai [`example`](https://github.com/yasyf/summ/tree/main/examples/otter).

@@ -41,6 +41,14 @@ If you prefer to use `pip`:
 $ pip install summ
 ```
 
+## Demo
+
+You can confirm that `summ` installed properly by running the built-in example.
+
+```console
+$ summ-example
+```
+
 ## Quickstart
 
 You don't need to do any configuration to start using `summ`. Simply use `summ.Pipeline.default` and pass a path to a directory with text files.

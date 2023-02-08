@@ -108,7 +108,7 @@ class TypeClassifier(Classifier, classes=MyClasses):
 
 #### CLI
 
-Finally, in [`implementation/__main__.py`](https://github.com/yasyf/summ/tree/main/examples/otter/implementation/__main__.py), we:
+Finally, in [`implementation/__init__.py`](https://github.com/yasyf/summ/tree/main/examples/otter/implementation/__init__.py), we:
 
 1. Ensure our classifiers are imported
 2. Construct a [`Summ`][summ.Summ] object, passing a [`Path`][pathlib.Path] to our training data.

@@ -14,7 +14,7 @@ The classifiers in [`implementation/classifier.py`](implementation/classifier.py
 
 ### CLI
 
-Finally, in [`implementation/__main__.py`](implementation/__main__.py), we:
+Finally, in [`implementation/__init__.py`](implementation/__init__.py), we:
 
 1. Ensure our classifiers are imported
 2. Construct a `Summ` object, passing a `Path` to our training data.

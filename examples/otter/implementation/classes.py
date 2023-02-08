@@ -2,6 +2,8 @@ from enum import StrEnum, auto
 
 from summ.classify import Classes
 
+# https://summ.readthedocs.io/en/stable/#tags
+
 
 class MyClasses(Classes, StrEnum):
     # SOURCE

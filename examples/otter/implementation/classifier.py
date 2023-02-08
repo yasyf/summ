@@ -6,6 +6,8 @@ from summ.classify.classifier import Classifier, Document
 
 from .classes import MyClasses
 
+# https://summ.readthedocs.io/en/stable/#classifiers
+
 
 class TypeClassifier(Classifier, classes=MyClasses):
     CATEGORY = "SOURCE"

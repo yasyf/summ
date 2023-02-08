@@ -1,4 +1,4 @@
-import summex.otter.implementation as otter
+import summ.examples.otter.implementation as otter
 
 
 def main():

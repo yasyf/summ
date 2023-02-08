@@ -51,18 +51,27 @@ $ summ-example
 
 ## Quickstart
 
-You don't need to do any configuration to start using `summ`. Simply use `summ.Pipeline.default` and pass a path to a directory with text files.
+First, create a new project with:
+
+```
+$ summ init /path/to/project
+$ cd /path/to/project
+```
+
+An example implementation can now be found at `/path/to/project/__init__.py`.
+
+As you can see, you don't need to do any configuration to start using `summ`. We simply use `summ.Pipeline.default` and pass a path to a directory with text files.
 
 However, the tool works much better when users are tagged. In order to do so, you need to specify two things:
 
 1. The categories of tags (and the tags within each category).
 2. A prompt directing how to apply the tags of a given category.
 
-You can see an example of this at [`summex/otter`](summex/otter).
+You can see an example of this at [`summ/examples/otter`](summ/examples/otter).
 
 ## Docs
 
-Check out the [`summex`](summex) directory for some samples, or dive into the full docs at [summ.readthedocs.io](https://summ.readthedocs.io/en/latest/).
+Check out the [`summ/examples`](summ/examples) directory for some samples, or dive into the full docs at [summ.readthedocs.io](https://summ.readthedocs.io/en/latest/).
 
 ## License
 

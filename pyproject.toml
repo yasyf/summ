@@ -41,7 +41,8 @@ dependencies = [
 dynamic = ["version"]
 
 [project.scripts]
-summ-example = "summ.example:main"
+summ-example = "summ.tools.example:main"
+summ = "summ.tools.cli:summ"
 
 [project.urls]
 Documentation = "https://github.com/yasyf/summ#readme"

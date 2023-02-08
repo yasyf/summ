@@ -30,6 +30,8 @@ class Settings(BaseSettings):
         env_file = CONFIG_PATH
 
     def valid(self) -> bool:
+        if self.corpus_path and not Path(self.corpus_path).exists():
+            self.corpus_path = None
         return all(self.dict().values())
 
     def write(self):
@@ -85,10 +87,7 @@ class SettingsScreen(Screen):
         yield Footer()
 
     def on_mount(self):
-        if (
-            not self.settings.corpus_path
-            or not Path(self.settings.corpus_path).exists()
-        ):
+        if not self.settings.corpus_path:
             field = self.query_one("#corpus_path", Input)
             field.value = str(self.app.pipe.importer.dir)
             field.focus()

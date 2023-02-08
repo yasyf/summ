@@ -55,14 +55,14 @@ $ summ-example
 
 ## Quickstart
 
-This quickstart is taken straight from the otter.ai [`example`](https://github.com/yasyf/summ/tree/main/examples/otter).
+This quickstart is taken straight from the otter.ai [`example`](https://github.com/yasyf/summ/tree/main/summex/otter).
 
 
 ### Setup
 
 #### Tags
 
-The class `MyClasses` in [`implementation/classes.py`](https://github.com/yasyf/summ/tree/main/examples/otter/implementation/classes.py) sets out one categories of tags: audio source.
+The class `MyClasses` in [`implementation/classes.py`](https://github.com/yasyf/summ/tree/main/summex/otter/implementation/classes.py) sets out one categories of tags: audio source.
 
 ```python
 from enum import StrEnum, auto
@@ -78,7 +78,7 @@ class MyClasses(Classes, StrEnum):
 
 #### Classifiers
 
-The classifiers in [`implementation/classifier.py`](https://github.com/yasyf/summ/tree/main/examples/otter/implementation/classifier.py) use simple parameters to define a prompt for each category of tags. It is normally sufficient to simply provide [`CATEGORY`][summ.classify.Classifier.CATEGORY], [`VARS`][summ.classify.Classifier.VARS], and [`EXAMPLES`][summ.classify.Classifier.EXAMPLES]. You may also optionally specify a [`PREFIX`][summ.classify.Classifier.PREFIX] or [`SUFFIX`][summ.classify.Classifier.SUFFIX] for the prompt.
+The classifiers in [`implementation/classifier.py`](https://github.com/yasyf/summ/tree/main/summex/otter/implementation/classifier.py) use simple parameters to define a prompt for each category of tags. It is normally sufficient to simply provide [`CATEGORY`][summ.classify.Classifier.CATEGORY], [`VARS`][summ.classify.Classifier.VARS], and [`EXAMPLES`][summ.classify.Classifier.EXAMPLES]. You may also optionally specify a [`PREFIX`][summ.classify.Classifier.PREFIX] or [`SUFFIX`][summ.classify.Classifier.SUFFIX] for the prompt.
 
 ```python
 from textwrap import dedent
@@ -116,7 +116,7 @@ class TypeClassifier(Classifier, classes=MyClasses):
 
 #### CLI
 
-Finally, in [`implementation/__init__.py`](https://github.com/yasyf/summ/tree/main/examples/otter/implementation/__init__.py), we:
+Finally, in [`implementation/__init__.py`](https://github.com/yasyf/summ/tree/main/summex/otter/implementation/__init__.py), we:
 
 1. Ensure our classifiers are imported
 2. Construct a [`Summ`][summ.Summ] object, passing a [`Path`][pathlib.Path] to our training data.

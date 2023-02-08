@@ -9,7 +9,7 @@ from summ.pipeline import Pipeline
 from summ.splitter.otter import OtterSplitter
 from summ.splitter.splitter import Splitter
 
-sys.path.append((Path(__file__).parent.parent / "examples" / "otter").as_posix())
+sys.path.append((Path(__file__).parent.parent).as_posix())
 
 from implementation.classes import MyClasses
 from implementation.classifier import *

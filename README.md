@@ -58,11 +58,11 @@ However, the tool works much better when users are tagged. In order to do so, yo
 1. The categories of tags (and the tags within each category).
 2. A prompt directing how to apply the tags of a given category.
 
-You can see an example of this at [`examples/otter`](examples/otter).
+You can see an example of this at [`summex/otter`](summex/otter).
 
 ## Docs
 
-Check out the [`examples`](examples) directory for some samples, or dive into the full docs at [summ.readthedocs.io](https://summ.readthedocs.io/en/latest/).
+Check out the [`summex`](summex) directory for some samples, or dive into the full docs at [summ.readthedocs.io](https://summ.readthedocs.io/en/latest/).
 
 ## License
 

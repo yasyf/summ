@@ -18,6 +18,7 @@ A tool by [@markiewagner](https://github.com/markiewagner) and [@yasyf](https://
 You'll need an instance of [Redis Stack](https://redis.io/docs/stack/get-started/install/) running.
 
 ```console
+$ brew install --cask redis-stack/redis-stack/redis-stack-server
 $ brew install yasyf/summ/redis-stack
 $ brew services start yasyf/summ/redis-stack
 ```

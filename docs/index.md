@@ -19,9 +19,7 @@ Check out this [blog post](#) for more details.
 
 ## Requirements
 
-You'll need an instance of [Redis Stack](https://redis.io/docs/stack/get-started/install/) running. If you install `summ` using `brew`, this will be taken care of for you.
-
-If you install `summ` using `pip`, this is the easiest way to get Redis up and running:
+You'll need an instance of [Redis Stack](https://redis.io/docs/stack/get-started/install/) running.
 
 ```console
 $ brew install yasyf/summ/redis-stack

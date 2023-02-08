@@ -38,7 +38,8 @@ Home #output-tree {
   overflow-y: scroll;
 }
 
-Home Button {
+Home Button,
+WelcomeScreen Button {
   width: 25%;
   margin: 1;
 }
@@ -82,4 +83,27 @@ Label.heading {
   color: $text;
   margin-bottom: 1;
   margin-top: 1;
+}
+
+WelcomeScreen #welcome {
+  align-horizontal: center;
+  padding: 1;
+  margin: 1;
+}
+
+WelcomeScreen #welcome-container {
+  max-width: 82;
+}
+
+WelcomeScreen #buttons-container {
+  align-horizontal: center;
+  height: 5;
+}
+
+WelcomeScreen Static#welcome-md {
+  padding-right: 2;
+}
+
+WelcomeScreen Button#continue {
+  width: 100%;
 }

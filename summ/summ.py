@@ -36,10 +36,14 @@ class Summ:
                 pipe.dprint("Create Index", pipe.embedder.index_name)
                 pipe.embedder.create_index()
             except Exception as e:
-                if "already exists" not in str(e):
+                if "already exists" in str(e):
+                    msg = "Index already exists!"
+                elif "quota" in str(e):
+                    msg = "You have exceeded the number of indexes for your Pinecone tier!"
+                else:
                     raise e
-                print("Index already exists!")
-                pipe.dprint("Index already exists!")
+                print(msg)
+                pipe.dprint(msg)
         else:
             pipe.dprint("Index already exists!")
 

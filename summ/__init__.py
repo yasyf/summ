@@ -3,7 +3,13 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 import os
 
+import click
+
+click.secho("Starting up, please hold...", fg="yellow")
+
 import langchain
+
+# pinecone makes network requests when imported
 import pinecone
 from langchain.cache import RedisCache
 from redis import Redis

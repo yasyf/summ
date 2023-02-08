@@ -29,7 +29,8 @@ def summ_and_pipe():
 
 def main():
     summ, pipe = summ_and_pipe()
-    CLI.run(summ, pipe)
+    # Remove is_demo=True for your own app!
+    CLI.run(summ, pipe, is_demo=True)
 
 
 if __name__ == "__main__":

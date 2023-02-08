@@ -25,7 +25,7 @@ class CLI:
     """Provides a convient way to serve a Summ CLI."""
 
     @staticmethod
-    def run(summ: Summ, pipe: Pipeline):
+    def run(summ: Summ, pipe: Pipeline, is_demo: bool = False):
         """Starts the CLI.
 
         Args:
@@ -78,7 +78,7 @@ class CLI:
             summ.n = n
 
             if not ctx.invoked_subcommand:
-                SummApp(summ, pipe).run()
+                SummApp(summ, pipe, is_demo=is_demo).run()
 
         @cli.command()
         @click.pass_context

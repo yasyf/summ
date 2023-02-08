@@ -7,7 +7,7 @@ from pydantic import BaseSettings
 from textual.app import ComposeResult
 from textual.containers import Container
 from textual.reactive import reactive
-from textual.widgets import Button, Footer, Header, Input, Label, Static
+from textual.widgets import Button, Footer, Header, Input
 
 from summ.cli.screens.screen import Screen
 from summ.cli.widgets.input_with_label import InputWithLabel

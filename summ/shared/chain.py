@@ -257,7 +257,7 @@ class Chain:
 
     def __init__(self, debug: bool = False, verbose: bool = False):
         self.llm = OpenAI(temperature=0.0)
-        self.pool = Parallel(n_jobs=4, prefer="threads", verbose=10 if verbose else 0)
+        self.pool = Parallel(n_jobs=-1, prefer="threads", verbose=10 if verbose else 0)
         self.verbose = verbose
         self.debug = debug
 
@@ -397,11 +397,13 @@ class CallbackHandler(OpenAICallbackHandler, metaclass=CallbackHandlerMeta):
     def __init__(self, klass: Type["Chain"]) -> None:
         super().__init__()
         self.klass = klass
+        self._total_tokens = 0
 
     @property
     def total_tokens(self) -> int:
-        return self.klass.tokens_used()
+        return self._total_tokens
 
     @total_tokens.setter
     def total_tokens(self, value: int) -> None:
-        self.klass.increment_n_tokens(value)
+        self.klass.increment_n_tokens(value - self._total_tokens)
+        self._total_tokens = value

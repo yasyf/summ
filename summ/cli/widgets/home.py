@@ -36,7 +36,7 @@ class Spinner(Static):
 
     def watch_in_progress(self) -> None:
         if self.in_progress:
-            self.update(RSpinner("runner", speed=0.5))
+            self.update(RSpinner("runner", speed=0.1))
         else:
             self.update("")
 

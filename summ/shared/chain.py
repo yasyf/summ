@@ -3,6 +3,7 @@ import logging
 import os
 import re
 import textwrap
+from abc import ABCMeta
 from collections import defaultdict
 from contextlib import contextmanager
 from contextvars import ContextVar
@@ -25,6 +26,8 @@ from typing import (
 )
 
 from joblib import Parallel, delayed
+from langchain.callbacks import get_callback_manager
+from langchain.callbacks.openai_info import OpenAICallbackHandler
 from langchain.chains import TransformChain
 from langchain.chains.base import Chain as LChain
 from langchain.docstore.document import Document
@@ -44,6 +47,7 @@ TDoc = TypeVar("TDoc", bound=Union[Document, list[Document]])
 TExtract = Callable[[TDoc], Union[str, TDoc, dict[str, str], dict[str, TDoc]]]
 
 audit_lock = RLock()
+n_tokens_lock = RLock()
 
 
 def locked(lock: RLock):
@@ -239,6 +243,18 @@ class Chain:
     Provides shared facilities for querying LLMs, parsing response, and caching.
     """
 
+    _n_tokens: ClassVar[int] = 0
+
+    @classmethod
+    @locked(n_tokens_lock)
+    def increment_n_tokens(cls, n: int):
+        cls._n_tokens += n
+
+    @classmethod
+    @locked(n_tokens_lock)
+    def tokens_used(cls) -> int:
+        return cls._n_tokens
+
     def __init__(self, debug: bool = False, verbose: bool = False):
         self.llm = OpenAI(temperature=0.0)
         self.pool = Parallel(n_jobs=4, prefer="threads", verbose=10 if verbose else 0)
@@ -364,3 +380,28 @@ class Chain:
                 item.result = self._run_with_retry(chain, **args)
             item.save()
             return item.result
+
+
+class CallbackHandlerMeta(ABCMeta):
+    registered: ClassVar[bool] = False
+
+    def __new__(mcs, name, bases, namespace, **kwargs):
+        cls = super().__new__(mcs, name, bases, namespace, **kwargs)
+        if not mcs.registered:
+            mcs.registered = True
+            get_callback_manager().add_handler(cls(Chain))
+        return cls
+
+
+class CallbackHandler(OpenAICallbackHandler, metaclass=CallbackHandlerMeta):
+    def __init__(self, klass: Type["Chain"]) -> None:
+        super().__init__()
+        self.klass = klass
+
+    @property
+    def total_tokens(self) -> int:
+        return self.klass.tokens_used()
+
+    @total_tokens.setter
+    def total_tokens(self, value: int) -> None:
+        self.klass.increment_n_tokens(value)

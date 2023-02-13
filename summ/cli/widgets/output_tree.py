@@ -7,7 +7,7 @@ from textual.message import Message, MessageTarget
 from textual.reactive import reactive
 from textual.widgets._tree import TOGGLE_STYLE, Tree, TreeNode
 
-from summ.shared.chain import DPrinter
+from summ.shared.chain import Chain, DPrinter
 
 Node = DPrinter.Entry
 
@@ -25,6 +25,11 @@ class OutputTree(Tree[Node]):
     class RecordOutput(Message):
         def __init__(self, sender: MessageTarget, text: str) -> None:
             self.text = text
+            super().__init__(sender)
+
+    class UpdateTokens(Message):
+        def __init__(self, sender: MessageTarget, tokens: int) -> None:
+            self.tokens = tokens
             super().__init__(sender)
 
     def __init__(self, question: str, **kwargs) -> None:
@@ -76,6 +81,7 @@ class OutputTree(Tree[Node]):
 
     def _on_node(self, entry: Node):
         self.log(entry)
+        self.screen.post_message_no_wait(self.UpdateTokens(self, Chain.tokens_used()))
 
         if entry.parent:
             parent = self.nodes.get(entry.parent)

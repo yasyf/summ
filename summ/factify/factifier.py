@@ -36,13 +36,15 @@ class Factifier(Chain):
     EXAMPLES = [
         {
             "context": "The conversation so far has covered the backround of the speaker. He is in sales at UiPath.",
-            "chunk": "Well, it's a mix in the case of like, for example, invoices, so, sorry, in the case of currency there's an ML model, just for that, but but it's a simpler one. It's not like a deep learning one because it's not necessary for that and the compute cost is like customers don't have. They don't want to do and don't want to spend money on GPUs left and right, because they, they don't afford",
+            "chunk": "We had a client where they would, they had like a huge database legacy database of like their inventory in the store. Whenever they would whenever they would do any type of like inventory accounts, they would shut down for like eight hours but they wouldn't go in there and see the differences between like the database and it will take them 16 hours to do. Yes, insane. We built a bot that will go in there and do like we like to call it, auditing and reconciliation of all the inventories, as long as they gave us like a spreadsheet, and you could do it in an hour.",
             "facts": [
-                "At UiPath, there is an ML model for currency.",
-                "The ML model for currency at UiPath is not a deep learning one.",
-                "Customers of UiPath do not want to spend money on GPUs.",
+                "A client had a large legacy database for inventory in their store.",
+                "The inventory reconciliation process would shut down the store for 8 hours.",
+                "The process of reconciling the database would take 16 hours to complete.",
+                "A bot was built to perform inventory auditing and reconciliation.",
+                "The bot can complete the process in an hour as long as a spreadsheet is provided.",
             ],
-            "new_context": "The conversation so far has detailed the ML model for currency at UiPath, as told by a salesperson.",
+            "new_context": " An RPA developer talks about a bot he made. The bot was created to reconcile a client's inventory database which used to take 16 hours to complete and shut down the store for 8 hours, and can now be done in an hour.",
         }
     ]
 

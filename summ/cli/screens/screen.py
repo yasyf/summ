@@ -16,8 +16,11 @@ class Screen(TScreen):
         return self.TITLE
 
     def on_screen_resume(self) -> None:
-        self.app.sub_title = self.title
+        self.refresh_title()
         self.query_one(Footer)._focus_changed(self)
 
     def on_screen_suspend(self) -> None:
         self.app.sub_title = ""
+
+    def refresh_title(self):
+        self.app.sub_title = self.title

@@ -11,6 +11,7 @@ from summ.cli.screens.screen import Screen
 from summ.cli.utils import push_screen
 from summ.cli.widgets.file import File
 from summ.cli.widgets.home import Home, Output
+from summ.cli.widgets.output_tree import OutputTree
 from summ.cli.widgets.reactive_tree import ReactiveTree
 
 
@@ -44,6 +45,7 @@ class MainScreen(Screen):
     ]
 
     path = reactive(os.getcwd)
+    tokens = reactive(0)
 
     def compute_path(self) -> str:
         return os.path.relpath(self.app.settings.corpus_path or os.getcwd())
@@ -55,9 +57,14 @@ class MainScreen(Screen):
         if tree := self.query(ReactiveTree):
             tree.first(ReactiveTree).path = path
 
+    def on_output_tree_update_tokens(self, event: OutputTree.UpdateTokens):
+        self.tokens = event.tokens
+        self.refresh_title()
+
     @property
     def title(self) -> str:
-        return self.path
+        cost = round(0.0200 * (self.tokens / 1000), 3)
+        return f"{self.path} — {self.tokens} Tokens (${cost})"
 
     def action_home(self) -> None:
         content = self.query_one(Content)

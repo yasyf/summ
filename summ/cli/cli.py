@@ -105,7 +105,7 @@ class CLI:
             type=click.Choice(list(class_options), case_sensitive=False),
         )
         @click.pass_context
-        def query(ctx: click.Context, query: str, n: int, classes: list[Classes]):
+        def query(ctx: click.Context, query: str, classes: list[Classes]):
             response = summ.query(
                 query,
                 classes=classes,

@@ -65,7 +65,10 @@ class WelcomeScreen(Screen):
                     id="buttons-container",
                 ),
                 Static(Markdown(self.MESSAGE[1], justify="full"), classes="welcome-md"),
-                Button("Continue", variant="success", id="continue"),
+                Container(
+                    Button("Continue", variant="success", id="continue"),
+                    id="continue-container",
+                ),
                 id="welcome-container",
             ),
             id="welcome",

@@ -87,8 +87,6 @@ Label.heading {
 
 WelcomeScreen #welcome {
   align-horizontal: center;
-  padding: 1;
-  margin: 1;
 }
 
 WelcomeScreen #welcome-container {
@@ -100,10 +98,15 @@ WelcomeScreen #buttons-container {
   height: 5;
 }
 
-WelcomeScreen Static#welcome-md {
+WelcomeScreen Static.welcome-md {
   padding-right: 2;
 }
 
+WelcomeScreen #continue-container {
+  align-horizontal: center;
+  height: 5;
+}
+
 WelcomeScreen Button#continue {
-  width: 100%;
+  width: 80%;
 }

@@ -28,16 +28,16 @@ You'll also need to set three environment variables: `OPENAI_API_KEY`, `PINECONE
 
 ## Installation
 
-The easiest installation uses `brew`:
-
-```console
-$ brew install yasyf/summ/summ
-```
-
-If you prefer to use `pip`:
+The easiest installation uses `pip`:
 
 ```console
 $ pip install summ
+```
+
+If you prefer to use `brew`:
+
+```console
+$ brew install yasyf/summ/summ
 ```
 
 **n.b `summ` requires Python 3.10+.**

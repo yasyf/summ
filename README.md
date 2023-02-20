@@ -40,6 +40,8 @@ If you prefer to use `pip`:
 $ pip install summ
 ```
 
+**n.b `summ` requires Python 3.10+.**
+
 ## Demo
 
 You can confirm that `summ` installed properly by running the built-in example.

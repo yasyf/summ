@@ -22,7 +22,6 @@ class TestInterviews:
 
     @pytest.fixture
     def interviews(self, interviews_path):
-        print(interviews_path)
         return list(interviews_path.glob("*.txt"))
 
     @pytest.fixture
@@ -58,7 +57,7 @@ class TestInterviews:
     def test_splitter(self, interview: Path, splitter: Splitter):
         text = interview.read_text()
         docs = splitter.split(interview.stem, text)
-        assert len(docs) == 110
+        assert len(docs) == 171
 
     def test_factifier(self, interview: Path, splitter: Splitter, factifier: Factifier):
         text = interview.read_text()
@@ -68,7 +67,7 @@ class TestInterviews:
         assert factifier.context != factifier.DEFAULT_CONTEXT
 
         facts = factifier.factify(docs[1])
-        assert "is a veterinarian" in "\n".join(facts)
+        assert "National Animal Interest Alliance" in "\n".join(facts)
 
     def test_classifier(
         self,

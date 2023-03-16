@@ -1,3 +1,4 @@
+import sys
 from typing import Any, cast
 
 from textual.app import App, ComposeResult
@@ -30,6 +31,14 @@ class SummApp(App):
         self.is_demo = is_demo
         self.summ = summ
         self.pipe = pipe
+
+    def _begin_batch(self) -> None:
+        sys.stderr = sys.__stderr__
+        super()._begin_batch()
+
+    def _end_batch(self) -> None:
+        super()._end_batch()
+        sys.stderr = sys.__stderr__
 
     @property
     def settings(self) -> Settings:

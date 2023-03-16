@@ -4,6 +4,7 @@ from typing import Optional
 from langchain.docstore.document import Document
 
 from summ.classify.classes import Classes
+from summ.embed.embedder import Embedder
 from summ.pipeline import Pipeline
 from summ.query.querier import Querier
 
@@ -65,5 +66,9 @@ class Summ:
             classes (list[Classes], optional): The set of tags to use as filters (AND).
             debug (bool, optional): Whether to print intermediate steps.
         """
+        if not Embedder(self.index).has_index():
+            raise Exception(
+                f"Index {self.index} not found! Please run `summ populate` first."
+            )
         querier = Querier(index=self.index, debug=debug)
         return querier.query(question, n=self.n, classes=classes, corpus=corpus)

@@ -3,7 +3,7 @@ from typing import Callable, Optional, cast
 
 from rich.style import Style
 from rich.text import Text
-from textual.message import Message, MessageTarget
+from textual.message import Message
 from textual.reactive import reactive
 from textual.widgets._tree import TOGGLE_STYLE, Tree, TreeNode
 
@@ -23,14 +23,14 @@ class OutputTree(Tree[Node]):
     title: reactive[str] = reactive("Question", init=False)
 
     class RecordOutput(Message):
-        def __init__(self, sender: MessageTarget, text: str) -> None:
+        def __init__(self, text: str) -> None:
             self.text = text
-            super().__init__(sender)
+            super().__init__()
 
     class UpdateTokens(Message):
-        def __init__(self, sender: MessageTarget, tokens: int) -> None:
+        def __init__(self, tokens: int) -> None:
             self.tokens = tokens
-            super().__init__(sender)
+            super().__init__()
 
     def __init__(self, question: str, **kwargs) -> None:
         self.outputs: dict[Node, str] = {}
@@ -81,7 +81,7 @@ class OutputTree(Tree[Node]):
 
     def _on_node(self, entry: Node):
         self.log(entry)
-        self.screen.post_message_no_wait(self.UpdateTokens(self, Chain.tokens_used()))
+        self.screen.post_message(self.UpdateTokens(Chain.tokens_used()))
 
         if entry.parent:
             parent = self.nodes.get(entry.parent)
@@ -97,7 +97,7 @@ class OutputTree(Tree[Node]):
 
         if not entry.color:
             self._attach_output(entry, parent)
-            self._update_output(self.RecordOutput(self, entry.text))
+            self._update_output(self.RecordOutput(entry.text))
             self.nodes[normalized] = parent
             return
 
@@ -131,7 +131,7 @@ class OutputTree(Tree[Node]):
         if not (output := self.outputs.get(node.data)) or node == self.displayed_node:
             return
         self.displayed_node = node
-        self._update_output(self.RecordOutput(self, output))
+        self._update_output(self.RecordOutput(output))
 
     def render_label(self, node: TreeNode[Node], base_style: Style, style: Style):
         data = cast(Node, node.data)

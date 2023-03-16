@@ -34,7 +34,7 @@ dependencies = [
   "click",
   "jinja2",
   "dirtyjson",
-  "textual",
+  "textual==0.15.1",
   "python-dotenv",
   "pyperclip",
 ]

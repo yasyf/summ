@@ -37,6 +37,7 @@ dependencies = [
   "textual==0.15.1",
   "python-dotenv",
   "pyperclip",
+  "GitPython",
 ]
 dynamic = ["version"]
 

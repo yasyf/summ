@@ -1,11 +1,11 @@
-import importlib
 import shutil
 import site
-import sys
+import tempfile
 from pathlib import Path
 from textwrap import dedent
 
 import click
+from git import Repo
 
 
 @click.group()
@@ -16,14 +16,22 @@ def summ():
 @summ.command()
 @click.option("--template", "-t", default="otter", type=click.Choice(["otter"]))
 @click.argument(
-    "destination", type=click.Path(exists=False, writable=True, path_type=Path)
+    "destination",
+    type=click.Path(
+        exists=False,
+        writable=True,
+        path_type=Path,
+        dir_okay=False,
+        file_okay=False,
+        resolve_path=True,
+    ),
 )
 def init(template: str, destination: Path):
-    example = importlib.import_module(f"summ.examples.{template}")
-    shutil.copytree(Path(example.__file__).parent, destination)
+    with tempfile.TemporaryDirectory() as tempdir:
+        Repo.clone_from("https://github.com/yasyf/summ.git", tempdir)
+        shutil.copytree(Path(tempdir) / "summ" / "examples" / template, destination)
 
     (destination / "__init__.py").unlink()
-    shutil.rmtree(destination / "__pycache__")
 
     impl_init = destination / "implementation" / "__init__.py"
     impl_init.write_text(

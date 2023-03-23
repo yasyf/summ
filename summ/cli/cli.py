@@ -19,6 +19,7 @@ from summ.summ import Summ
 class Options(BaseModel):
     debug: bool
     verbose: bool
+    model_name: str
 
 
 class CLI:

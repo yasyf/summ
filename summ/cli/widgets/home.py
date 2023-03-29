@@ -74,6 +74,7 @@ class Home(Static):
                 name="Model Name",
                 id="model_name",
                 placeholder="gpt-3.5-turbo",
+                value="gpt-3.5-turbo",
             ),
             Container(
                 Button("Query", variant="success", id="query", disabled=True),

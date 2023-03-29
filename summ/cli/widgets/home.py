@@ -44,6 +44,7 @@ class Spinner(Static):
 class Home(Static):
     in_progress = reactive(False, init=False)
     question: reactive[str] = reactive("", init=False)
+    model_name: reactive[str] = reactive("", init=False)
 
     def __init__(self, summ: Summ, pipe: Pipeline, **kwargs) -> None:
         self.summ = summ
@@ -69,6 +70,11 @@ class Home(Static):
                 id="question",
                 placeholder="What type of animal is Cronutt?",
             ),
+            InputWithLabel(
+                name="Model Name",
+                id="model_name",
+                placeholder="gpt-3.5-turbo",
+            ),
             Container(
                 Button("Query", variant="success", id="query", disabled=True),
                 Button("Populate", variant="warning", id="populate"),
@@ -84,7 +90,7 @@ class Home(Static):
 
     def action_query(self):
         return self.summ.query(
-            self.question, classes=[], corpus=list(self.pipe.corpus()), debug=True
+            self.question, classes=[], corpus=list(self.pipe.corpus()), debug=True, model_name=self.model_name
         )
 
     def action_populate(self):

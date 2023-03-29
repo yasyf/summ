@@ -31,7 +31,7 @@ from langchain.callbacks.openai_info import OpenAICallbackHandler
 from langchain.chains import TransformChain
 from langchain.chains.base import Chain as LChain
 from langchain.docstore.document import Document
-from langchain.llms import OpenAI
+from langchain.llms import ChatOpenAI
 from openai.error import RateLimitError
 from pydantic import BaseModel
 from retry import retry
@@ -255,8 +255,8 @@ class Chain:
     def tokens_used(cls) -> int:
         return cls._n_tokens
 
-    def __init__(self, debug: bool = False, verbose: bool = False, model_name: str = "text-davinci-003"):
-        self.llm = OpenAI(temperature=0.0, model_name=model_name)
+    def __init__(self, debug: bool = False, verbose: bool = False, model_name: str = "gpt-3.5-turbo"):
+        self.llm = ChatOpenAI(temperature=0.0, model_name=model_name)
         self.pool = Parallel(n_jobs=-1, prefer="threads", verbose=10 if verbose else 0)
         self.verbose = verbose
         self.debug = debug

@@ -21,7 +21,7 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
 dependencies = [
-  "langchain==0.0.113",
+  "langchain==0.0.121",
   "openai",
   "tiktoken",
   "pinecone-client",

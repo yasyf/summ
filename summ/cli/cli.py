@@ -19,6 +19,7 @@ from summ.summ import Summ
 class Options(BaseModel):
     debug: bool
     verbose: bool
+    model_name: str
 
 
 class CLI:
@@ -71,9 +72,10 @@ class CLI:
         @click.option("--debug/--no-debug", default=True)
         @click.option("--verbose/--no-verbose", default=False)
         @click.option("-n", default=3)
+        @click.option("--model-name", default="gpt-3.5-turbo")
         @click.pass_context
-        def cli(ctx, debug: bool, verbose: bool, n: int):
-            ctx.obj = Options(debug=debug, verbose=verbose)
+        def cli(ctx, debug: bool, verbose: bool, model_name: str, n: int):
+            ctx.obj = Options(debug=debug, verbose=verbose, model_name=model_name)
             langchain.verbose = verbose
             summ.n = n
 
@@ -111,6 +113,7 @@ class CLI:
                 classes=classes,
                 corpus=list(pipe.corpus()),
                 debug=ctx.obj.debug,
+                model_name=ctx.obj.model_name
             )
             click.echo("\n")
             click.secho(response)

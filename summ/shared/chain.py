@@ -30,12 +30,14 @@ from langchain.callbacks import get_callback_manager
 from langchain.callbacks.openai_info import OpenAICallbackHandler
 from langchain.chains import TransformChain
 from langchain.chains.base import Chain as LChain
+from langchain.chat_models import ChatOpenAI
 from langchain.docstore.document import Document
 from langchain.llms import OpenAI
 from openai.error import RateLimitError
 from pydantic import BaseModel
 from retry import retry
 from termcolor import colored
+
 
 from summ.cache.cacher import CacheDocument, ChainCacheItem
 
@@ -256,7 +258,8 @@ class Chain:
         return cls._n_tokens
 
     def __init__(self, debug: bool = False, verbose: bool = False):
-        self.llm = OpenAI(temperature=0.0)
+        self.llm = ChatOpenAI(temperature=0.0, model_name="gpt-4")
+        print("initializing with gpt-4")
         self.pool = Parallel(n_jobs=-1, prefer="threads", verbose=10 if verbose else 0)
         self.verbose = verbose
         self.debug = debug

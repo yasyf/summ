@@ -63,8 +63,8 @@ class Querier(Chain):
         ),
     )
 
-    def __init__(self, index: str, debug: bool = False):
-        super().__init__(debug=debug)
+    def __init__(self, index: str, debug: bool = False, model_name: str = "gpt-3.5-turbo"):
+        super().__init__(debug=debug, model_name=model_name)
         self.index_name = index
         self.embeddings = OpenAIEmbeddings()
         self.summarizer = Summarizer()

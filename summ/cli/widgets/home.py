@@ -114,11 +114,14 @@ class Home(Static):
         self.in_progress = False
 
     def on_input_changed(self, event: Input.Changed):
-        self.question = event.value
-        self.query_one(OutputTree).question = event.value
-        if event.value:
-            self.query_one("#query", Button).disabled = False
-            self.query_one("#populate", Button).disabled = True
-        else:
-            self.query_one("#query", Button).disabled = True
-            self.query_one("#populate", Button).disabled = False
+        if event.sender.id == "question":
+            self.question = event.value
+            self.query_one(OutputTree).question = event.value
+            if event.value:
+                self.query_one("#query", Button).disabled = False
+                self.query_one("#populate", Button).disabled = True
+            else:
+                self.query_one("#query", Button).disabled = True
+                self.query_one("#populate", Button).disabled = False
+        elif event.sender.id == "model_name":
+            self.model_name = event.value

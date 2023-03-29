@@ -56,7 +56,7 @@ class Summ:
         classes: list[Classes] = [],
         corpus: list[Document] = [],
         debug: bool = True,
-        model_name: str = "gpt-3-turbo",
+        model_name: str = "gpt-3.5-turbo",
     ) -> str:
         """
         Query a pre-populated model with a given question.

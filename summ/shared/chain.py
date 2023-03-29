@@ -31,7 +31,7 @@ from langchain.callbacks.openai_info import OpenAICallbackHandler
 from langchain.chains import TransformChain
 from langchain.chains.base import Chain as LChain
 from langchain.docstore.document import Document
-from langchain.llms import ChatOpenAI
+from langchain.chat_models import ChatOpenAI
 from openai.error import RateLimitError
 from pydantic import BaseModel
 from retry import retry

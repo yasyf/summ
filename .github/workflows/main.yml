@@ -32,6 +32,21 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Verify the tagged commit is on main
+        if: github.event_name == 'create' && startsWith(github.ref, 'refs/tags')
+        env:
+          TAG_SHA: ${{ github.sha }}
+        run: |
+          git fetch --no-tags --quiet origin main
+          if git merge-base --is-ancestor "$TAG_SHA" FETCH_HEAD; then
+            echo "✓ ${GITHUB_REF_NAME} (${TAG_SHA}) is on main."
+          else
+            echo "::error title=Tag not on main::${GITHUB_REF_NAME} points at ${TAG_SHA}, which is not on main. Refusing to publish."
+            exit 1
+          fi
 
       - name: Set up Python 3.11
         uses: actions/setup-python@v4

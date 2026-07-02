@@ -44,6 +44,7 @@ class Spinner(Static):
 class Home(Static):
     in_progress = reactive(False, init=False)
     question: reactive[str] = reactive("", init=False)
+    model_name: reactive[str] = reactive("", init=False)
 
     def __init__(self, summ: Summ, pipe: Pipeline, **kwargs) -> None:
         self.summ = summ
@@ -69,6 +70,12 @@ class Home(Static):
                 id="question",
                 placeholder="What type of animal is Cronutt?",
             ),
+            InputWithLabel(
+                name="Model Name",
+                id="model_name",
+                placeholder="gpt-3.5-turbo",
+                value="gpt-3.5-turbo",
+            ),
             Container(
                 Button("Query", variant="success", id="query", disabled=True),
                 Button("Populate", variant="warning", id="populate"),
@@ -84,7 +91,7 @@ class Home(Static):
 
     def action_query(self):
         return self.summ.query(
-            self.question, classes=[], corpus=list(self.pipe.corpus()), debug=True
+            self.question, classes=[], corpus=list(self.pipe.corpus()), debug=True, model_name=self.model_name
         )
 
     def action_populate(self):
@@ -108,11 +115,14 @@ class Home(Static):
         self.in_progress = False
 
     def on_input_changed(self, event: Input.Changed):
-        self.question = event.value
-        self.query_one(OutputTree).question = event.value
-        if event.value:
-            self.query_one("#query", Button).disabled = False
-            self.query_one("#populate", Button).disabled = True
-        else:
-            self.query_one("#query", Button).disabled = True
-            self.query_one("#populate", Button).disabled = False
+        if event.sender.id == "question":
+            self.question = event.value
+            self.query_one(OutputTree).question = event.value
+            if event.value:
+                self.query_one("#query", Button).disabled = False
+                self.query_one("#populate", Button).disabled = True
+            else:
+                self.query_one("#query", Button).disabled = True
+                self.query_one("#populate", Button).disabled = False
+        elif event.sender.id == "model_name":
+            self.model_name = event.value

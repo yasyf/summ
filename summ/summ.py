@@ -56,6 +56,7 @@ class Summ:
         classes: list[Classes] = [],
         corpus: list[Document] = [],
         debug: bool = True,
+        model_name: str = "gpt-3.5-turbo",
     ) -> str:
         """
         Query a pre-populated model with a given question.
@@ -70,5 +71,5 @@ class Summ:
             raise Exception(
                 f"Index {self.index} not found! Please run `summ populate` first."
             )
-        querier = Querier(index=self.index, debug=debug)
+        querier = Querier(index=self.index, debug=debug, model_name=model_name)
         return querier.query(question, n=self.n, classes=classes, corpus=corpus)

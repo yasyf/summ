@@ -5,8 +5,6 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
-  create:
-    tags: ["*"]
 
 concurrency:
   group: test-${{ github.head_ref }}
@@ -17,7 +15,7 @@ env:
   FORCE_COLOR: "1"
 
 jobs:
-  test_and_build:
+  test:
     runs-on: ubuntu-latest
 
     services:
@@ -31,25 +29,10 @@ jobs:
           --health-retries 5
 
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Verify the tagged commit is on main
-        if: github.event_name == 'create' && startsWith(github.ref, 'refs/tags')
-        env:
-          TAG_SHA: ${{ github.sha }}
-        run: |
-          git fetch --no-tags --quiet origin main
-          if git merge-base --is-ancestor "$TAG_SHA" FETCH_HEAD; then
-            echo "✓ ${GITHUB_REF_NAME} (${TAG_SHA}) is on main."
-          else
-            echo "::error title=Tag not on main::${GITHUB_REF_NAME} points at ${TAG_SHA}, which is not on main. Refusing to publish."
-            exit 1
-          fi
+      - uses: actions/checkout@v4
 
       - name: Set up Python 3.11
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
@@ -60,13 +43,3 @@ jobs:
         run: hatch run cov
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-
-      - name: Build package
-        if: github.event_name == 'create' && startsWith(github.ref, 'refs/tags')
-        run: hatch build
-
-      - name: Publish package
-        if: github.event_name == 'create' && startsWith(github.ref, 'refs/tags')
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          password: ${{ secrets.PYPI_API_KEY }}

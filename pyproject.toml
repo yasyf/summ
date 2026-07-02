@@ -4,6 +4,8 @@ build-backend = "hatchling.build"
 
 [project]
 name = "summ"
+# Inert sentinel: the release workflow stamps the real version from the tag (uv version --frozen).
+version = "0.0.0"
 description = 'Summ provides intelligent question-answering and search capabilities across user interview transcripts.'
 readme = "README.md"
 requires-python = ">=3.11"
@@ -39,7 +41,6 @@ dependencies = [
   "pyperclip",
   "GitPython",
 ]
-dynamic = ["version"]
 
 [project.scripts]
 summ-example = "summ.tools.example:main"
@@ -49,9 +50,6 @@ summ = "summ.tools.cli:summ"
 Documentation = "https://github.com/yasyf/summ#readme"
 Issues = "https://github.com/yasyf/summ/issues"
 Source = "https://github.com/yasyf/summ"
-
-[tool.hatch.version]
-path = "summ/__about__.py"
 
 [tool.hatch.envs.default]
 dependencies = [
@@ -80,7 +78,6 @@ python = ["37", "38", "39", "310", "311"]
 [tool.coverage.run]
 branch = true
 parallel = true
-omit = ["summ/__about__.py"]
 
 [tool.coverage.report]
 exclude_lines = ["no cov", "if __name__ == .__main__.:", "if TYPE_CHECKING:"]

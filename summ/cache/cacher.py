@@ -36,7 +36,7 @@ class CacheItem(BaseModel):
         if cached := cls.safe_get(instance.pk):
             return cached
 
-        for k in cls.__fields__.keys() - kwargs.keys():
+        for k in cls.__fields__.keys() - kwargs.keys() - {"pk"}:
             setattr(instance, k, None)
 
         return instance
@@ -53,7 +53,7 @@ class CacheItem(BaseModel):
 
     @classmethod
     def _cache_key(cls, pk: str) -> str:
-        return f"summ:{cls.__module__}.{cls.__qualname__}:{pk}"
+        return f"summ:v1:{cls.__module__}.{cls.__qualname__}:{pk}"
 
     @staticmethod
     def _hash(s: str):

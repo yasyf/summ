@@ -15,6 +15,7 @@ jobs:
     with:
       dist-name: summ
       python-version: "3.11"
+      run-tests: true
 
   # PyPI Trusted Publishing must run in THIS repo's workflow — it authenticates via the OIDC
   # job_workflow_ref claim, which inside a reusable workflow points at homebrew-tap, not here

@@ -25,6 +25,7 @@ def test_passthrough_round_trips_complete_cache_item(monkeypatch):
         meta={"style": "short"},
     )
     assert item.result is None
+    assert item.pk is not None
     assert redis.values == {}
 
     item.result = "summary"
@@ -42,4 +43,4 @@ def test_passthrough_round_trips_complete_cache_item(monkeypatch):
 
 def test_cache_keys_are_scoped_to_model_type():
     pk = "same"
-    assert ChainCacheItem._cache_key(pk).endswith(f"ChainCacheItem:{pk}")
+    assert ChainCacheItem._cache_key(pk).endswith(f"v1:summ.cache.cacher.ChainCacheItem:{pk}")

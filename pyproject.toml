@@ -27,7 +27,6 @@ dependencies = [
   "openai>=0.27,<1",
   "tiktoken",
   "pinecone>=9.1,<10",
-  "typing-extensions",
   "metrohash",
   "redis[hiredis]",
   "joblib",
@@ -41,6 +40,9 @@ dependencies = [
   "pyperclip",
   "GitPython",
 ]
+
+[project.optional-dependencies]
+dev = ["pytest"]
 
 [project.scripts]
 summ-example = "summ.tools.example:main"

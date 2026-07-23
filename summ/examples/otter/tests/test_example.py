@@ -1,3 +1,4 @@
+import os
 import sys
 from pathlib import Path
 
@@ -13,6 +14,11 @@ sys.path.append((Path(__file__).parent.parent).as_posix())
 
 from implementation.classes import MyClasses
 from implementation.classifier import *
+
+pytestmark = pytest.mark.skipif(
+    not os.environ.get("OPENAI_API_KEY"),
+    reason="live example tests require OpenAI and Redis",
+)
 
 
 class TestInterviews:

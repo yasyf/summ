@@ -10,7 +10,7 @@ concurrency:
 
 jobs:
   build:
-    uses: yasyf/homebrew-tap/.github/workflows/release-pypi-build.yml@pypi-v1
+    uses: yasyf/homebrew-tap/.github/workflows/release-pypi-build.yml@8f422c652d836c40f9cc5a9d893d4120b26bc681
     secrets: inherit
     with:
       dist-name: summ

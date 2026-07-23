@@ -30,7 +30,6 @@ dependencies = [
   "typing-extensions",
   "metrohash",
   "redis[hiredis]",
-  "redis-om",
   "joblib",
   "termcolor",
   "retry",

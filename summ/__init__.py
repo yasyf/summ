@@ -9,19 +9,8 @@ import langchain
 
 from langchain.cache import RedisCache
 from redis import Redis
-from redis_om import Migrator, checks
 
 from summ.pipeline import Pipeline as Pipeline
 from summ.summ import Summ as Summ
 
 langchain.llm_cache = RedisCache(redis_=Redis(db=1))
-
-try:
-    if not checks.has_redisearch():
-        raise TypeError
-except TypeError as e:
-    raise Exception(
-        "Redisearch not installed. Try `brew reinstall yasyf/summ/redis-stack"
-    ) from e
-else:
-    Migrator().run()

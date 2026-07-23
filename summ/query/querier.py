@@ -3,7 +3,6 @@ import json
 import re
 from typing import Type, TypedDict, cast, overload
 
-import pinecone
 from langchain import (
     BasePromptTemplate,
     FewShotPromptTemplate,
@@ -13,6 +12,7 @@ from langchain import (
 from langchain.docstore.document import Document
 from langchain.embeddings import OpenAIEmbeddings
 from openai.error import RateLimitError
+from pinecone import Pinecone
 from retry import retry
 
 from summ.classify.classes import Classes
@@ -63,12 +63,17 @@ class Querier(Chain):
         ),
     )
 
-    def __init__(self, index: str, debug: bool = False):
+    def __init__(
+        self,
+        index: str,
+        debug: bool = False,
+        pinecone_client: Pinecone | None = None,
+    ):
         super().__init__(debug=debug)
         self.index_name = index
         self.embeddings = OpenAIEmbeddings()
         self.summarizer = Summarizer()
-        self.index = pinecone.Index(index)
+        self.index = (pinecone_client or Pinecone()).index(name=index)
         self.facts = set()
 
     # Questions
@@ -296,8 +301,8 @@ class Querier(Chain):
         embedding = self.embeddings.embed_query(query)
         filter = {"$or": [{"classes": c.value} for c in classes]} if classes else None
         results = self.index.query(
-            embedding, top_k=n * 3, filter=filter  # type: ignore
-        )["matches"]
+            vector=embedding, top_k=n * 3, filter=filter
+        ).matches
 
         facts: list[Fact] = [
             {
@@ -310,7 +315,7 @@ class Querier(Chain):
                 ),
             }
             for r in results
-            for e in [Embedding.safe_get(r["id"])]
+            for e in [Embedding.safe_get(r.id)]
             if e
         ]
 

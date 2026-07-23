@@ -1,12 +1,13 @@
 import itertools
+import os
 from functools import cached_property
 from typing import Generator, Self
 
-import pinecone
 from langchain import LLMChain, OpenAI, PromptTemplate
 from langchain.docstore.document import Document
 from langchain.embeddings import OpenAIEmbeddings
 from openai.error import RateLimitError
+from pinecone import Pinecone, PodSpec
 from retry import retry
 
 from summ.cache.cacher import CacheDocument, CacheItem
@@ -56,22 +57,26 @@ class Embedder:
     def create_index(self):
         """Creates the named index in Pinecone."""
 
-        pinecone.create_index(
-            self.index_name,
+        self.client.create_index(
+            name=self.index_name,
             dimension=self.dims,
-            metadata_config={"indexed": ["classes"]},
+            spec=PodSpec(
+                environment=os.environ.get("PINECONE_ENVIRONMENT", "us-west1-gcp"),
+                metadata_config={"indexed": ["classes"]},
+            ),
         )
 
     def has_index(self):
         """Checks if the named index in Pinecone exists."""
 
-        try:
-            pinecone.describe_index(self.index_name)
-            return True
-        except pinecone.exceptions.NotFoundException:
-            return False
+        return self.client.has_index(self.index_name)
 
-    def __init__(self, index: str, dims: int = GPT3_DIMS):
+    def __init__(
+        self,
+        index: str,
+        dims: int = GPT3_DIMS,
+        pinecone_client: Pinecone | None = None,
+    ):
         """Creates a new Embedder.
 
         Args:
@@ -81,8 +86,16 @@ class Embedder:
         super().__init__()
         self.index_name = index
         self.dims = dims
+        self._client = pinecone_client
         self.embeddings = OpenAIEmbeddings()
-        self.index = pinecone.Index(index)
+
+    @cached_property
+    def client(self) -> Pinecone:
+        return self._client or Pinecone()
+
+    @cached_property
+    def index(self):
+        return self.client.index(name=self.index_name)
 
     def _embed(self, query: str, fact: str, doc: Document) -> Embedding:
         embedding = Embedding.passthrough(query=query)
@@ -140,5 +153,5 @@ class Embedder:
             for e in embeddings
         ]
         if vectors:
-            self.index.upsert(vectors)
+            self.index.upsert(vectors=vectors)
         return embeddings
